@@ -1,6 +1,40 @@
 .footer {
-    height: 50px;
+    padding: 30px;
+    display: grid;
+    gap: 30px;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 2fr 1fr;
+    background-color: bisque;
+}
+
+.footerLeftCol {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.span2Row {
+    grid-row: 1 / span 2;
+}
+
+.footerRightCol {
+    display: flex;
+    gap: 30px;
+}
+
+.footerRightCol div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.footerRightCol div a {
+    text-decoration: none;
+    color: black;
+}
+
+.acknowledgements {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }

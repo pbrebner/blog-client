@@ -1,12 +1,16 @@
-import Nav from "./Nav";
+import { Link } from "react-router-dom";
 import "./styles/Header.css";
 
 function Header() {
     return (
-        <div className="header">
-            <div className="headerTitle">Blog</div>
-            <Nav />
-        </div>
+        <header className="header">
+            <Link to="/" className="headerTitle">
+                Blog
+            </Link>
+            <Link to="/account/login" className="navLink">
+                Log in
+            </Link>
+        </header>
     );
 }
 

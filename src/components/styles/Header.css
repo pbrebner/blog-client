@@ -1,0 +1,24 @@
+.header {
+    padding: 30px;
+    background-color: bisque;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.headerTitle {
+    text-decoration: none;
+    color: black;
+    font-size: 2.4rem;
+    font-weight: 700;
+}
+
+.navLink {
+    text-decoration: none;
+    color: black;
+    font-size: 1.2rem;
+}
+
+.navLink:hover {
+    scale: 1.1;
+}
