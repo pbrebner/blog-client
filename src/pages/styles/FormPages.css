@@ -1,0 +1,32 @@
+.formPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+}
+
+form {
+    min-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.formElement {
+    display: flex;
+    flex-direction: column;
+}
+
+.formElement label {
+    font-size: 1.2rem;
+}
+
+.formElement input {
+    padding: 3px;
+    font-size: 1rem;
+}
+
+.submitBtn {
+    font-size: 1rem;
+    padding: 5px;
+}

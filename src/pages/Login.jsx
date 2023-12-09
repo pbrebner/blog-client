@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+
+import "./styles/FormPages.css";
 
 // TODO: Add action to form (url of API)
 
 function Login() {
     return (
-        <div className="main">
+        <div className="main formPage">
             <h2>Login Page</h2>
 
             <form action="" method="post">
@@ -18,12 +19,16 @@ function Login() {
                     <input type="text" name="password" id="password" required />
                 </div>
                 <div className="formElement">
-                    <button type="submit">Log in</button>
+                    <button type="submit" className="submitBtn">
+                        Log in
+                    </button>
                 </div>
             </form>
             <p>
                 Don't have and account yet?{" "}
-                <Link to="../signup">Sign up now</Link>
+                <Link to="../signup" className="formLink">
+                    Sign up now
+                </Link>
             </p>
         </div>
     );
