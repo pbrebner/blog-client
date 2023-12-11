@@ -1,1 +1,5 @@
 /* Stylesheet for App */
+.main {
+    flex: 1;
+    padding: 30px;
+}
