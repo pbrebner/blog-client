@@ -5,7 +5,7 @@ function Banner() {
             <p className="bannerPara">
                 Read and share ideas from independent voices, world-class
                 publications, and experts from arpound the globe. Everyone's
-                welcome
+                welcome.
             </p>
         </div>
     );

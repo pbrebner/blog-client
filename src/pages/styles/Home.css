@@ -1,0 +1,11 @@
+.homePage {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.postsContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+}

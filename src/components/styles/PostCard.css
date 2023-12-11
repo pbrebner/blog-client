@@ -1,0 +1,8 @@
+.postCard {
+    text-decoration: none;
+    color: black;
+
+    padding: 15px;
+    border: 1px solid black;
+    min-height: 300px;
+}
