@@ -8,11 +8,15 @@ import "./App.css";
 function App() {
     let [loggedIn, setLoggedIn] = useState(false);
 
+    // Initially checks if logged in when page is refreshed
+    useEffect(() => {
+        setLoggedIn(localStorage.getItem("userAuth") || false);
+    }, []);
+
     return (
         <>
-            <Header />
-            <h1>This is the main App Page</h1>
-            <Outlet />
+            <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+            <Outlet context={[loggedIn, setLoggedIn]} />
             <Footer />
         </>
     );
