@@ -9,27 +9,31 @@ import ErrorPage from "./pages/ErrorPage.jsx";
 import Home from "./pages/Home.jsx";
 import Signup from "./pages/Signup.jsx";
 import Login from "./pages/Login.jsx";
+import Profile from "./pages/Profile.jsx";
+import CreatePost from "./pages/CreatePost.jsx";
 import Post from "./pages/Post.jsx";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <App />,
+        errorElement: <ErrorPage />,
         children: [
-            { index: true, element: <Home />, errorElement: <ErrorPage /> },
+            { index: true, element: <Home /> },
             {
                 path: "account",
-                errorElement: <ErrorPage />,
                 children: [
                     { path: "signup", element: <Signup /> },
                     { path: "login", element: <Login /> },
-                    { path: ":id", element: <Profile /> },
+                    { path: ":userId", element: <Profile /> },
                 ],
             },
             {
-                path: "posts/:id",
-                element: <Post />,
-                errorElement: <ErrorPage />,
+                path: "posts",
+                children: [
+                    { path: "createpost", element: <CreatePost /> },
+                    { path: ":postId", element: <Post /> },
+                ],
             },
         ],
     },
