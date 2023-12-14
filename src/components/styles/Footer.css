@@ -1,10 +1,20 @@
 .footer {
+    color: white;
+    background-color: rgb(34, 34, 34);
     padding: 30px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footerContainer {
+    max-width: 1200px;
+
     display: grid;
     gap: 30px;
     grid-template-columns: 2fr 1fr;
     grid-template-rows: 2fr 1fr;
-    background-color: bisque;
 }
 
 .footerLeftCol {
@@ -30,7 +40,7 @@
 
 .footerRightCol div a {
     text-decoration: none;
-    color: black;
+    color: white;
 }
 
 .acknowledgements {
