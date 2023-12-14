@@ -1,0 +1,26 @@
+.profileSidebar {
+    padding: 40px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.profileSidebar .picture {
+    padding: 5px;
+    background-color: whitesmoke;
+    border: 1px solid grey;
+    width: 120px;
+    height: 120px;
+
+    border-radius: 20px;
+
+    display: flex;
+    align-items: center;
+
+    text-align: center;
+}
+
+.profileSidebar .name {
+    font-size: 1.6rem;
+}
