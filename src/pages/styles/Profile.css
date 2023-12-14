@@ -1,0 +1,34 @@
+.profilePage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profileContainer {
+    max-width: 1200px;
+    width: 100%;
+
+    flex: 1;
+    display: grid;
+    grid-template-columns: 2fr 1px 1fr;
+}
+
+.profileMain {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.profileHeader {
+    font-size: 3rem;
+}
+
+.hl {
+    height: 1px;
+    background-color: rgb(235, 235, 235);
+}
+
+.vl {
+    background-color: rgb(235, 235, 235);
+}

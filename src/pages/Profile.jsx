@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
+import ProfileSidebar from "../components/ProfileSidebar";
+import PostCard from "../components/PostCard";
+import "./styles/Profile.css";
+
 function Profile() {
     const [user, setUser] = useState(null);
     const [error, setError] = useState(null);
@@ -50,9 +54,22 @@ function Profile() {
                 </div>
             )}
             {user && (
-                <div className="userContainer">
-                    <h3>{user.name}</h3>
-                    <p>{user.username}</p>
+                <div className="profileContainer">
+                    <div className="profileMain">
+                        <h2 className="profileHeader">{user.name}</h2>
+                        <div className="hl"></div>
+                        {user.posts.length > 0 ? (
+                            <div className="postsContainer">
+                                {user.posts.map((post) => (
+                                    <PostCard key={post._id} post={post} />
+                                ))}
+                            </div>
+                        ) : (
+                            <div>You haven't made any posts yet.</div>
+                        )}
+                    </div>
+                    <div className="vl"></div>
+                    <ProfileSidebar user={user} />
                 </div>
             )}
         </div>
