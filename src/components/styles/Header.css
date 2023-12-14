@@ -1,9 +1,11 @@
 .header {
-    padding: 30px;
-    background-color: bisque;
+    padding: 30px 40px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    box-shadow: 0px 1px 3px 1px rgb(163, 163, 163);
+    z-index: 2;
 }
 
 .headerTitle {
@@ -13,12 +15,77 @@
     font-weight: 700;
 }
 
+.nav {
+    display: flex;
+    gap: 30px;
+}
+
 .navLink {
+    padding: 5px 10px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    border: 1px solid black;
+    border-radius: 15px;
+}
+
+.nav .signin {
+    color: black;
+}
+
+.nav .signup {
+    color: white;
+    background-color: rgb(32, 32, 32);
+}
+
+.nav .write {
+    border: none;
+    color: rgb(66, 66, 66);
+}
+
+.navLink:hover,
+.menuBtn:hover {
+    scale: 1.05;
+}
+
+.menuBtn {
+    padding: 5px 10px;
+    font-size: 1rem;
+    color: white;
+    background-color: rgb(32, 32, 32);
+    border: none;
+    border-radius: 15px;
+}
+
+/* Styling for menu Tab */
+.menuTab {
+    background-color: white;
+    padding: 20px;
+    width: 200px;
+    box-shadow: 2px 2px 2px 2px grey;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    position: absolute;
+    right: 10px;
+    top: 90px;
+
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+
+    z-index: 3;
+
+    pointer-events: none;
+}
+
+.menuTab.display {
+    opacity: 100;
+    pointer-events: all;
+}
+
+.menuLink {
     text-decoration: none;
     color: black;
     font-size: 1.2rem;
-}
-
-.navLink:hover {
-    scale: 1.1;
 }
