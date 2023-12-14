@@ -1,0 +1,25 @@
+.banner {
+    padding: 50px 70px;
+    background-color: rgb(247, 248, 247);
+
+    box-shadow: inset 0px -1px 3px 1px rgb(163, 163, 163);
+
+    display: flex;
+    justify-content: center;
+}
+
+.bannerContent {
+    max-width: 500px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.bannerTitle {
+    font-size: 3.2rem;
+}
+
+.bannerPara {
+    font-size: 1.2rem;
+}
