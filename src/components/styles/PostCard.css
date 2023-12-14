@@ -4,5 +4,24 @@
 
     padding: 15px;
     border: 1px solid black;
-    min-height: 300px;
+    min-height: 140px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.postCardHeader {
+    display: flex;
+    gap: 30px;
+}
+
+.postCardContent {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.postCardTitle {
+    font-size: 1.4rem;
 }
