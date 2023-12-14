@@ -1,11 +1,16 @@
-.homePage {
+.homeMain {
+    padding: 40px;
+
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    align-items: center;
 }
 
 .postsContainer {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    max-width: 800px;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
     gap: 20px;
 }

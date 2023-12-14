@@ -44,13 +44,15 @@ function Home() {
                     try again later
                 </div>
             )}
-            {posts && (
-                <div className="postsContainer">
-                    {posts.map((post) => (
-                        <PostCard key={post._id} post={post} />
-                    ))}
-                </div>
-            )}
+            <div className="homeMain">
+                {posts && (
+                    <div className="postsContainer">
+                        {posts.map((post) => (
+                            <PostCard key={post._id} post={post} />
+                        ))}
+                    </div>
+                )}
+            </div>
         </div>
     );
 }
