@@ -1,0 +1,25 @@
+.postPage {
+    padding: 40px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.postContainer {
+    max-width: 800px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.postContainer .title {
+    font-size: 3rem;
+    font-weight: 600;
+}
+
+.postContainer .content {
+    font-size: 1.4rem;
+}

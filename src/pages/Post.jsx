@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
+import "./styles/Post.css";
+
 function Post() {
     const [post, setPost] = useState(null);
     const [error, setError] = useState(null);
@@ -42,8 +44,8 @@ function Post() {
             )}
             {post && (
                 <div className="postContainer">
-                    <h3>{post.title}</h3>
-                    <p>{post.content}</p>
+                    <p className="title">{post.title}</p>
+                    <p className="content">{post.content}</p>
                 </div>
             )}
         </div>
