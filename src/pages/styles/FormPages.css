@@ -23,7 +23,8 @@ form {
     font-size: 1.2rem;
 }
 
-.formElement input {
+.formElement input,
+.formElement textarea {
     padding: 3px;
     font-size: 1rem;
 }
