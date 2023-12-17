@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import "./styles/Post.css";
 
@@ -8,6 +8,7 @@ function Post() {
     const [error, setError] = useState(null);
 
     const { postId } = useParams();
+    const navigate = useNavigate();
 
     // Fetch the post and display contents
     useEffect(() => {
@@ -16,6 +17,14 @@ function Post() {
                 const response = await fetch(
                     `https://blog-api-test.fly.dev/api/posts/${postId}`
                 );
+
+                if (response.status == "401") {
+                    navigate("/account/login", {
+                        state: {
+                            message: "Please signin to access blog posts",
+                        },
+                    });
+                }
 
                 if (!response.ok) {
                     throw new Error(

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext, useLocation } from "react-router-dom";
 
 import "./styles/FormPages.css";
 
@@ -8,6 +8,7 @@ import "./styles/FormPages.css";
 function Login() {
     const [loggedIn, setLoggedIn] = useOutletContext();
     const navigate = useNavigate();
+    const location = useLocation();
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -45,6 +46,7 @@ function Login() {
     return (
         <div className="main formPage">
             <h2>Login Page</h2>
+            {location.state && <div>{location.state.message}</div>}
 
             <form onSubmit={handleSubmit}>
                 <div className="formElement">
