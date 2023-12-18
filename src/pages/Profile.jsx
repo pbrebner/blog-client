@@ -7,6 +7,7 @@ import "./styles/Profile.css";
 
 function Profile() {
     const [user, setUser] = useState(null);
+    const [usersProfile, setUsersProfile] = useState(null);
     const [error, setError] = useState(null);
 
     const { userId } = useParams();
@@ -35,45 +36,87 @@ function Profile() {
 
                 const data = await response.json();
                 console.log(data);
-                setUser(data);
+
+                setUser(data.user);
+                setUsersProfile(data.usersProfile);
                 setError(null);
             } catch (err) {
                 setError(err.message);
                 setUser(null);
+                setUsersProfile(null);
             }
         }
         getUser();
     }, []);
 
-    return (
-        <div className="main profilePage">
-            {error && (
-                <div className="errorContainer">
-                    There was problem fetching the data from the server. Please
-                    try again later
-                </div>
-            )}
-            {user && (
-                <div className="profileContainer">
-                    <div className="profileMain">
-                        <h2 className="profileHeader">{user.name}</h2>
-                        <div className="hl"></div>
-                        {user.posts.length > 0 ? (
-                            <div className="postsContainer">
-                                {user.posts.map((post) => (
-                                    <PostCard key={post._id} post={post} />
-                                ))}
-                            </div>
-                        ) : (
-                            <div>You haven't made any posts yet.</div>
-                        )}
+    if (usersProfile) {
+        return (
+            <div className="main profilePage">
+                {error && (
+                    <div className="errorContainer">
+                        There was problem fetching the data from the server.
+                        Please try again later
                     </div>
-                    <div className="vl"></div>
-                    <ProfileSidebar user={user} />
-                </div>
-            )}
-        </div>
-    );
+                )}
+                {user && (
+                    <div className="profileContainer">
+                        <div className="profileMain">
+                            <h2 className="profileHeader">{user.name}</h2>
+                            <div className="hl"></div>
+                            <h3>Drafts? Ability to edit and delete</h3>
+                            {user.posts.length > 0 ? (
+                                <div className="postsContainer">
+                                    {user.posts.map((post) => (
+                                        <PostCard key={post._id} post={post} />
+                                    ))}
+                                </div>
+                            ) : (
+                                <div>You haven't made any posts yet.</div>
+                            )}
+                        </div>
+                        <div className="vl"></div>
+                        <ProfileSidebar
+                            user={user}
+                            usersProfile={usersProfile}
+                        />
+                    </div>
+                )}
+            </div>
+        );
+    } else {
+        return (
+            <div className="main profilePage">
+                {error && (
+                    <div className="errorContainer">
+                        There was problem fetching the data from the server.
+                        Please try again later
+                    </div>
+                )}
+                {user && (
+                    <div className="profileContainer">
+                        <div className="profileMain">
+                            <h2 className="profileHeader">{user.name}</h2>
+                            <div className="hl"></div>
+                            {user.posts.length > 0 ? (
+                                <div className="postsContainer">
+                                    {user.posts.map((post) => (
+                                        <PostCard key={post._id} post={post} />
+                                    ))}
+                                </div>
+                            ) : (
+                                <div>You haven't made any posts yet.</div>
+                            )}
+                        </div>
+                        <div className="vl"></div>
+                        <ProfileSidebar
+                            user={user}
+                            usersProfile={usersProfile}
+                        />
+                    </div>
+                )}
+            </div>
+        );
+    }
 }
 
 export default Profile;
