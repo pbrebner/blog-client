@@ -7,7 +7,11 @@ function PostCard({ post }) {
     return (
         <Link to={`/posts/${post._id}`} className="postCard">
             <div className="postCardHeader">
-                {post.user.name && <p>{post.user.name}</p>}
+                {post.user.name && (
+                    <Link to={`/account/${post.user._id}`} className="userLink">
+                        {post.user.name}
+                    </Link>
+                )}
                 <p>{formatDate(post.timeStamp)}</p>
             </div>
             <div className="postCardContent">
