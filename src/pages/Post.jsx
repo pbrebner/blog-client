@@ -15,10 +15,18 @@ function Post() {
         async function getPost() {
             try {
                 const response = await fetch(
-                    `https://blog-api-test.fly.dev/api/posts/${postId}`
+                    `https://blog-api-test.fly.dev/api/posts/${postId}`,
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                            authorization: `Bearer ${localStorage.getItem(
+                                "token"
+                            )}`,
+                        },
+                    }
                 );
 
-                if (response.status == "401") {
+                if (response.status == "403") {
                     navigate("/account/login", {
                         state: {
                             message: "Please signin to access blog posts",
@@ -33,6 +41,7 @@ function Post() {
                 }
 
                 const data = await response.json();
+                console.log(data);
                 setPost(data);
                 setError(null);
             } catch (err) {
