@@ -35,6 +35,8 @@ function CreatePost() {
         console.log(result);
 
         if (response.ok) {
+            e.target.title.value = "";
+            e.target.content.value = "";
             navigate("/");
         }
     }
