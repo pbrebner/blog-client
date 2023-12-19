@@ -25,3 +25,8 @@
 .postCardTitle {
     font-size: 1.4rem;
 }
+
+.userLink {
+    text-decoration: none;
+    color: black;
+}
