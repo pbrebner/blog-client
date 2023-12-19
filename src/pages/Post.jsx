@@ -8,6 +8,7 @@ import "./styles/Post.css";
 function Post() {
     const [post, setPost] = useState(null);
     const [comments, setComments] = useState(null);
+    const [numComments, setNumComments] = useState(0);
     const [error, setError] = useState(null);
 
     const { postId } = useParams();
@@ -81,6 +82,7 @@ function Post() {
                 console.log(data);
 
                 setComments(data);
+                setNumComments(data.length);
                 setError(null);
             } catch (err) {
                 setError(err.message);
@@ -88,7 +90,39 @@ function Post() {
             }
         }
         getComments();
-    }, []);
+    }, [numComments]);
+
+    async function handleCommentSubmit(e) {
+        e.preventDefault();
+
+        const formData = JSON.stringify({
+            content: e.target.content.value,
+        });
+
+        // Need to add a try/catch to handle errors and display in form
+        const response = await fetch(
+            `https://blog-api-test.fly.dev/api/posts/${post._id}/comments`,
+            {
+                method: "post",
+                body: formData,
+                headers: {
+                    "Content-Type": "application/json",
+                    authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+            }
+        );
+
+        console.log(response);
+
+        const result = await response.json();
+        console.log(result);
+
+        if (response.ok) {
+            e.target.content.value = "";
+            let val = numComments + 1;
+            setNumComments(val);
+        }
+    }
 
     return (
         <div className="main postPage">
@@ -121,11 +155,11 @@ function Post() {
                             <div className="comments">
                                 {comments.length > 0 ? (
                                     comments.map((comment) => (
-                                        <div className="commentOuterContainer">
-                                            <Comment
-                                                key={comment._id}
-                                                comment={comment}
-                                            />
+                                        <div
+                                            key={comment._id}
+                                            className="commentOuterContainer"
+                                        >
+                                            <Comment comment={comment} />
                                             <div className="hl"></div>
                                         </div>
                                     ))
@@ -136,6 +170,26 @@ function Post() {
                                 )}
                             </div>
                         )}
+                        <form
+                            onSubmit={handleCommentSubmit}
+                            className="commentForm"
+                        >
+                            <div className="formElement">
+                                <textarea
+                                    name="content"
+                                    id="content"
+                                    cols="10"
+                                    rows="5"
+                                    placeholder="What are your thoughts?"
+                                    required
+                                ></textarea>
+                            </div>
+                            <div className="formElement">
+                                <button type="submit" className="submitBtn">
+                                    Respond
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             )}
