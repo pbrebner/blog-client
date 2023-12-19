@@ -3,7 +3,7 @@ import { formatDate } from "../utils/dates";
 
 import "./styles/ProfileSidebar.css";
 
-function ProfileSidebar({ user, usersProfile }) {
+function ProfileSidebar({ user, usersProfile, toggleEditProfileOpen }) {
     if (usersProfile) {
         return (
             <div className="profileSidebar">
@@ -20,7 +20,12 @@ function ProfileSidebar({ user, usersProfile }) {
                 <p className="timeStamp">
                     Member since {formatDate(user.timeStamp)}
                 </p>
-                <Link className="editProfileLink">Edit Profile</Link>
+                <button
+                    onClick={toggleEditProfileOpen}
+                    className="editProfileBtn"
+                >
+                    Edit Profile
+                </button>
             </div>
         );
     } else {

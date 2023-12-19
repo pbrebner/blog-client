@@ -32,3 +32,42 @@
 .vl {
     background-color: rgb(235, 235, 235);
 }
+
+/* Styling for edit profile tab */
+
+.editProfileTab {
+    padding: 40px;
+    background-color: white;
+    box-shadow: 2px 2px 2px 2px grey;
+
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -70%);
+
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+
+    z-index: 5;
+
+    pointer-events: none;
+}
+
+.editProfileTab.display {
+    opacity: 100;
+    pointer-events: all;
+}
+
+.editProfileHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.editProfileHeader p {
+    font-size: 2rem;
+}
