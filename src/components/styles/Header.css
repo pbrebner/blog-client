@@ -74,7 +74,7 @@
     opacity: 0;
     transition: opacity 0.2s ease-in-out;
 
-    z-index: 3;
+    z-index: 10;
 
     pointer-events: none;
 }
@@ -88,4 +88,25 @@
     text-decoration: none;
     color: black;
     font-size: 1.2rem;
+}
+
+/* Styling for Modal Background */
+
+.modalBackground {
+    background-color: black;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+
+    z-index: 5;
+
+    pointer-events: none;
+}
+
+.modalBackground.display {
+    opacity: 0.2;
+    pointer-events: all;
 }

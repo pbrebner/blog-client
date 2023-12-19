@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "./styles/Header.css";
 
 function Header({ loggedIn, setLoggedIn }) {
-    const [isMenuOpen, setMenuOpen] = useState(false);
+    const [menuOpen, setMenuOpen] = useState(false);
     const navigate = useNavigate();
 
     function handleLogout() {
@@ -14,12 +14,12 @@ function Header({ loggedIn, setLoggedIn }) {
         navigate("/");
     }
 
-    function handleMenuClick() {
+    function closeMenu() {
         setMenuOpen(false);
     }
 
     function toggleMenuOpen() {
-        isMenuOpen === false ? setMenuOpen(true) : setMenuOpen(false);
+        menuOpen === false ? setMenuOpen(true) : setMenuOpen(false);
     }
 
     if (loggedIn) {
@@ -38,10 +38,10 @@ function Header({ loggedIn, setLoggedIn }) {
                         </button>
                     </div>
                 </header>
-                <div className={`menuTab ${isMenuOpen ? "display" : ""}`}>
+                <div className={`menuTab ${menuOpen ? "display" : ""}`}>
                     <Link
                         to={`/account/${localStorage.getItem("userId")}`}
-                        onClick={handleMenuClick}
+                        onClick={closeMenu}
                         className="menuLink"
                     >
                         Account
@@ -50,6 +50,10 @@ function Header({ loggedIn, setLoggedIn }) {
                         Sign out
                     </Link>
                 </div>
+                <div
+                    className={`modalBackground ${menuOpen ? "display" : ""}`}
+                    onClick={closeMenu}
+                ></div>
             </>
         );
     } else {
