@@ -24,3 +24,17 @@
 .profileSidebar .name {
     font-size: 1.6rem;
 }
+
+.editProfileBtn {
+    font-size: 0.8rem;
+    width: fit-content;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    color: white;
+    background-color: black;
+}
+
+.editProfileBtn:hover {
+    scale: 1.05;
+}

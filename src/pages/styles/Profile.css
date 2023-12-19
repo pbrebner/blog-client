@@ -52,13 +52,13 @@
     opacity: 0;
     transition: opacity 0.2s ease-in-out;
 
-    z-index: 5;
+    z-index: 10;
 
     pointer-events: none;
 }
 
 .editProfileTab.display {
-    opacity: 100;
+    opacity: 1;
     pointer-events: all;
 }
 
@@ -70,4 +70,32 @@
 
 .editProfileHeader p {
     font-size: 2rem;
+}
+
+.closeTabBtn {
+    font-size: 1.8rem;
+    background-color: white;
+    border: none;
+    cursor: pointer;
+}
+
+/* Styling for Modal Background */
+
+.modalBackground {
+    background-color: black;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+
+    z-index: 5;
+
+    pointer-events: none;
+}
+
+.modalBackground.display {
+    opacity: 0.2;
+    pointer-events: all;
 }
