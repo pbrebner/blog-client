@@ -48,13 +48,42 @@ function Profile() {
             }
         }
         getUser();
-    }, []);
+    }, [editProfileOpen]);
 
-    async function handleEditProfileSubmit() {
-        console.log("Submitted the Information");
+    async function handleEditProfileSubmit(e) {
+        e.preventDefault();
+
+        const formData = JSON.stringify({
+            name: e.target.name.value,
+            username: e.target.username.value,
+        });
+
+        // Need to add a try/catch to handle errors and display in form
+        const response = await fetch(
+            `https://blog-api-test.fly.dev/api/users/${user._id}`,
+            {
+                method: "put",
+                body: formData,
+                headers: {
+                    "Content-Type": "application/json",
+                    authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+            }
+        );
+
+        console.log(response);
+
+        const result = await response.json();
+        console.log(result);
+
+        if (response.ok) {
+            setEditProfileOpen(false);
+            e.target.name.value = "";
+            e.target.username.value = "";
+        }
     }
 
-    function handleTabClick() {
+    function closeModal() {
         setEditProfileOpen(false);
     }
 
@@ -109,7 +138,9 @@ function Profile() {
                 >
                     <div className="editProfileHeader">
                         <p>Profile Information</p>
-                        <button onClick={handleTabClick}>Close</button>
+                        <button onClick={closeModal} className="closeTabBtn">
+                            &#10005;
+                        </button>
                     </div>
                     <form
                         onSubmit={handleEditProfileSubmit}
@@ -135,6 +166,12 @@ function Profile() {
                         </div>
                     </form>
                 </div>
+                <div
+                    className={`modalBackground ${
+                        editProfileOpen ? "display" : ""
+                    }`}
+                    onClick={closeModal}
+                ></div>
             </>
         );
     } else {
