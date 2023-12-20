@@ -10,6 +10,7 @@ function Profile() {
     const [usersProfile, setUsersProfile] = useState(null);
     const [error, setError] = useState(null);
     const [editProfileOpen, setEditProfileOpen] = useState(false);
+    const [deletePostOpen, setDeletePostOpen] = useState(false);
 
     const { userId } = useParams();
 
@@ -48,7 +49,7 @@ function Profile() {
             }
         }
         getUser();
-    }, [editProfileOpen]);
+    }, [editProfileOpen, deletePostOpen]);
 
     async function handleEditProfileSubmit(e) {
         e.preventDefault();
@@ -85,6 +86,7 @@ function Profile() {
 
     function closeModal() {
         setEditProfileOpen(false);
+        setDeletePostOpen(false);
     }
 
     function toggleEditProfileOpen() {
@@ -115,6 +117,11 @@ function Profile() {
                                             <PostCard
                                                 key={post._id}
                                                 post={post}
+                                                usersProfile={usersProfile}
+                                                deletePostOpen={deletePostOpen}
+                                                setDeletePostOpen={
+                                                    setDeletePostOpen
+                                                }
                                             />
                                         ))}
                                     </div>
@@ -132,43 +139,50 @@ function Profile() {
                     )}
                 </div>
                 <div
-                    className={`editProfileTab ${
+                    className={`editProfileModal ${
                         editProfileOpen ? "display" : ""
                     }`}
                 >
-                    <div className="editProfileHeader">
-                        <p>Profile Information</p>
-                        <button onClick={closeModal} className="closeTabBtn">
-                            &#10005;
-                        </button>
+                    <button onClick={closeModal} className="closeModalBtn">
+                        &#10005;
+                    </button>
+                    <div className="profileModalContent">
+                        <div className="profileModalHeader">
+                            <p>Profile Information</p>
+                        </div>
+                        <form
+                            onSubmit={handleEditProfileSubmit}
+                            className="profileModalForm"
+                        >
+                            <div className="formElement">
+                                <label htmlFor="name">Name: </label>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    id="name"
+                                    required
+                                />
+                            </div>
+                            <div className="formElement">
+                                <label htmlFor="username">Username: </label>
+                                <input
+                                    type="text"
+                                    name="username"
+                                    id="username"
+                                    required
+                                />
+                            </div>
+                            <div className="formElement">
+                                <button type="submit" className="submitBtn">
+                                    Update
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                    <form
-                        onSubmit={handleEditProfileSubmit}
-                        className="editProfileForm"
-                    >
-                        <div className="formElement">
-                            <label htmlFor="name">Name: </label>
-                            <input type="text" name="name" id="name" required />
-                        </div>
-                        <div className="formElement">
-                            <label htmlFor="username">Username: </label>
-                            <input
-                                type="text"
-                                name="username"
-                                id="username"
-                                required
-                            />
-                        </div>
-                        <div className="formElement">
-                            <button type="submit" className="submitBtn">
-                                Update
-                            </button>
-                        </div>
-                    </form>
                 </div>
                 <div
                     className={`modalBackground ${
-                        editProfileOpen ? "display" : ""
+                        editProfileOpen || deletePostOpen ? "display" : ""
                     }`}
                     onClick={closeModal}
                 ></div>

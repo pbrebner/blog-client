@@ -35,14 +35,14 @@
 
 /* Styling for edit profile tab */
 
-.editProfileTab {
-    padding: 40px;
+.editProfileModal {
+    padding: 20px;
     background-color: white;
     box-shadow: 2px 2px 2px 2px grey;
 
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 15px;
 
     position: absolute;
     top: 50%;
@@ -57,26 +57,35 @@
     pointer-events: none;
 }
 
-.editProfileTab.display {
+.editProfileModal.display {
     opacity: 1;
     pointer-events: all;
 }
 
-.editProfileHeader {
+.profileModalContent {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.profileModalHeader {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.editProfileHeader p {
+.profileModalHeader p {
     font-size: 2rem;
 }
 
-.closeTabBtn {
+.closeModalBtn {
     font-size: 1.8rem;
     background-color: white;
     border: none;
     cursor: pointer;
+
+    align-self: end;
 }
 
 /* Styling for Modal Background */
