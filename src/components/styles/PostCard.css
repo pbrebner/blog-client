@@ -1,7 +1,4 @@
 .postCard {
-    text-decoration: none;
-    color: black;
-
     padding: 15px;
     border: 1px solid black;
     min-height: 140px;
@@ -17,6 +14,9 @@
 }
 
 .postCardContent {
+    text-decoration: none;
+    color: black;
+
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -29,4 +29,68 @@
 .userLink {
     text-decoration: none;
     color: black;
+}
+
+.deletePostBtn {
+    padding: 2px 4px;
+    align-self: end;
+}
+
+/* Styling for delete post modal */
+.deletePostModal {
+    padding: 20px;
+    background-color: white;
+    box-shadow: 2px 2px 2px 2px grey;
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -70%);
+
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+
+    z-index: 10;
+
+    pointer-events: none;
+}
+
+.deletePostModal.display {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.postModalContent {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.postModalHeader {
+    font-size: 2rem;
+}
+
+.postModalContent p {
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.deletePostConfirm {
+    font-size: 1rem;
+    padding: 7px 15px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.deletePostConfirm:hover {
+    scale: 1.05;
 }
