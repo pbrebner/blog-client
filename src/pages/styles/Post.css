@@ -27,9 +27,12 @@
 }
 
 .postContainer .title {
+    width: 100%;
     align-self: start;
     font-size: 3rem;
     font-weight: 600;
+
+    word-wrap: normal;
 }
 
 .postDetails {
@@ -42,9 +45,12 @@
 }
 
 .postContainer .content {
+    width: 100%;
     min-height: 200px;
     font-size: 1.4rem;
     align-self: start;
+
+    word-wrap: break-word;
 }
 
 .commentsContainer {
