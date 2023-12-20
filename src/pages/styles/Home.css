@@ -14,3 +14,15 @@
     flex-direction: column;
     gap: 20px;
 }
+
+.postCardOuterContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.hl {
+    height: 1px;
+    width: 100%;
+    background-color: rgb(235, 235, 235);
+}

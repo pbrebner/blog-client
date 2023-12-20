@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 
 import Banner from "../components/Banner.jsx";
 import PostCard from "../components/PostCard.jsx";
@@ -48,7 +47,10 @@ function Home() {
                 {posts && (
                     <div className="postsContainer">
                         {posts.map((post) => (
-                            <PostCard key={post._id} post={post} />
+                            <div className="postCardOuterContainer">
+                                <PostCard key={post._id} post={post} />
+                                <div className="hl"></div>
+                            </div>
                         ))}
                     </div>
                 )}

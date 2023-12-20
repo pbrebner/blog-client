@@ -58,7 +58,7 @@ function PostCard({ post, usersProfile, deletePostOpen, setDeletePostOpen }) {
                 </div>
                 <Link to={`/posts/${post._id}`} className="postCardContent">
                     <h4 className="postCardTitle">{post.title}</h4>
-                    <div>{post.content}</div>
+                    <p>{post.content}</p>
                 </Link>
                 {usersProfile && (
                     <button

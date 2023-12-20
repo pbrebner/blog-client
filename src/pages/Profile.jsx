@@ -8,6 +8,8 @@ import "./styles/Profile.css";
 function Profile() {
     const [user, setUser] = useState(null);
     const [usersProfile, setUsersProfile] = useState(null);
+    const [name, setName] = useState("");
+    const [username, setUsername] = useState("");
     const [error, setError] = useState(null);
     const [editProfileOpen, setEditProfileOpen] = useState(false);
     const [deletePostOpen, setDeletePostOpen] = useState(false);
@@ -41,6 +43,8 @@ function Profile() {
 
                 setUser(data.user);
                 setUsersProfile(data.usersProfile);
+                setName(data.user.name);
+                setUsername(data.user.username);
                 setError(null);
             } catch (err) {
                 setError(err.message);
@@ -79,8 +83,6 @@ function Profile() {
 
         if (response.ok) {
             setEditProfileOpen(false);
-            e.target.name.value = "";
-            e.target.username.value = "";
         }
     }
 
@@ -114,15 +116,20 @@ function Profile() {
                                 {user.posts.length > 0 ? (
                                     <div className="postsContainer">
                                         {user.posts.map((post) => (
-                                            <PostCard
-                                                key={post._id}
-                                                post={post}
-                                                usersProfile={usersProfile}
-                                                deletePostOpen={deletePostOpen}
-                                                setDeletePostOpen={
-                                                    setDeletePostOpen
-                                                }
-                                            />
+                                            <div className="postCardOuterContainer">
+                                                <PostCard
+                                                    key={post._id}
+                                                    post={post}
+                                                    usersProfile={usersProfile}
+                                                    deletePostOpen={
+                                                        deletePostOpen
+                                                    }
+                                                    setDeletePostOpen={
+                                                        setDeletePostOpen
+                                                    }
+                                                />
+                                                <div className="hl"></div>
+                                            </div>
                                         ))}
                                     </div>
                                 ) : (
@@ -160,6 +167,8 @@ function Profile() {
                                     type="text"
                                     name="name"
                                     id="name"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
                                     required
                                 />
                             </div>
@@ -169,6 +178,10 @@ function Profile() {
                                     type="text"
                                     name="username"
                                     id="username"
+                                    value={username}
+                                    onChange={(e) =>
+                                        setUsername(e.target.value)
+                                    }
                                     required
                                 />
                             </div>
