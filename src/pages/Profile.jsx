@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useOutletContext } from "react-router-dom";
 
 import ProfileSidebar from "../components/ProfileSidebar";
 import PostCard from "../components/PostCard";
@@ -149,7 +149,6 @@ function Profile() {
                             <div className="profileMain">
                                 <h2 className="profileHeader">{user.name}</h2>
                                 <div className="hl"></div>
-                                <h3>Drafts? Ability to edit and delete</h3>
                                 {user.posts.length > 0 ? (
                                     <div className="postsContainer">
                                         {user.posts.map((post) => (
