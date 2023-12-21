@@ -3,7 +3,12 @@ import { formatDate } from "../utils/dates";
 
 import "./styles/ProfileSidebar.css";
 
-function ProfileSidebar({ user, usersProfile, toggleEditProfileOpen }) {
+function ProfileSidebar({
+    user,
+    usersProfile,
+    toggleEditProfileOpen,
+    toggleDeleteProfileOpen,
+}) {
     if (usersProfile) {
         return (
             <div className="profileSidebar">
@@ -25,6 +30,12 @@ function ProfileSidebar({ user, usersProfile, toggleEditProfileOpen }) {
                     className="editProfileBtn"
                 >
                     Edit Profile
+                </button>
+                <button
+                    onClick={toggleDeleteProfileOpen}
+                    className="deleteProfileBtn"
+                >
+                    Delete Profile
                 </button>
             </div>
         );

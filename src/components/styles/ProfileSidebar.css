@@ -35,6 +35,17 @@
     background-color: black;
 }
 
-.editProfileBtn:hover {
+.deleteProfileBtn {
+    font-size: 0.8rem;
+    width: fit-content;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    color: white;
+    background-color: red;
+}
+
+.editProfileBtn:hover,
+.deleteProfileBtn:hover {
     scale: 1.05;
 }

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import ProfileSidebar from "../components/ProfileSidebar";
 import PostCard from "../components/PostCard";
@@ -12,9 +12,12 @@ function Profile() {
     const [username, setUsername] = useState("");
     const [error, setError] = useState(null);
     const [editProfileOpen, setEditProfileOpen] = useState(false);
+    const [deleteProfileOpen, setDeleteProfileOpen] = useState(false);
     const [deletePostOpen, setDeletePostOpen] = useState(false);
 
     const { userId } = useParams();
+    const navigate = useNavigate();
+    const [loggedIn, setLoggedIn] = useOutletContext();
 
     // Fetch the post and display contents
     useEffect(() => {
@@ -86,8 +89,36 @@ function Profile() {
         }
     }
 
+    async function handleDeleteProfileSubmit(e) {
+        e.preventDefault();
+
+        // Need to add a try/catch to handle errors and display in form
+        const response = await fetch(
+            `https://blog-api-test.fly.dev/api/users/${user._id}`,
+            {
+                method: "delete",
+                headers: {
+                    "Content-Type": "application/json",
+                    authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+            }
+        );
+
+        console.log(response);
+
+        const result = await response.json();
+        console.log(result);
+
+        if (response.ok) {
+            localStorage.clear();
+            setLoggedIn(false);
+            navigate("/");
+        }
+    }
+
     function closeModal() {
         setEditProfileOpen(false);
+        setDeleteProfileOpen(false);
         setDeletePostOpen(false);
     }
 
@@ -95,6 +126,12 @@ function Profile() {
         editProfileOpen === false
             ? setEditProfileOpen(true)
             : setEditProfileOpen(false);
+    }
+
+    function toggleDeleteProfileOpen() {
+        deleteProfileOpen === false
+            ? setDeleteProfileOpen(true)
+            : setDeleteProfileOpen(false);
     }
 
     if (usersProfile) {
@@ -116,9 +153,11 @@ function Profile() {
                                 {user.posts.length > 0 ? (
                                     <div className="postsContainer">
                                         {user.posts.map((post) => (
-                                            <div className="postCardOuterContainer">
+                                            <div
+                                                key={post._id}
+                                                className="postCardOuterContainer"
+                                            >
                                                 <PostCard
-                                                    key={post._id}
                                                     post={post}
                                                     usersProfile={usersProfile}
                                                     deletePostOpen={
@@ -141,6 +180,9 @@ function Profile() {
                                 user={user}
                                 usersProfile={usersProfile}
                                 toggleEditProfileOpen={toggleEditProfileOpen}
+                                toggleDeleteProfileOpen={
+                                    toggleDeleteProfileOpen
+                                }
                             />
                         </div>
                     )}
@@ -194,8 +236,32 @@ function Profile() {
                     </div>
                 </div>
                 <div
+                    className={`deleteProfileModal ${
+                        deleteProfileOpen ? "display" : ""
+                    }`}
+                >
+                    <button onClick={closeModal} className="closeModalBtn">
+                        &#10005;
+                    </button>
+                    <div className="profileModalContent">
+                        <h2 className="profileModalHeader">Delete Profile</h2>
+                        <p>
+                            Deletion is not reversible, and the profile will be
+                            completely deleted.
+                        </p>
+                        <button
+                            onClick={handleDeleteProfileSubmit}
+                            className="deleteProfileConfirm"
+                        >
+                            Delete
+                        </button>
+                    </div>
+                </div>
+                <div
                     className={`modalBackground ${
-                        editProfileOpen || deletePostOpen ? "display" : ""
+                        editProfileOpen || deleteProfileOpen || deletePostOpen
+                            ? "display"
+                            : ""
                     }`}
                     onClick={closeModal}
                 ></div>
