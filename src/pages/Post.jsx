@@ -14,6 +14,8 @@ function Post() {
     const { postId } = useParams();
     const navigate = useNavigate();
 
+    const user = localStorage.getItem("userId");
+
     // Fetch the post and display contents
     useEffect(() => {
         async function getPost() {
@@ -150,7 +152,7 @@ function Post() {
                     </div>
                     <div className="hl"></div>
                     <div className="commentsContainer">
-                        <h3>Comments:</h3>
+                        <h3>Comments: ({numComments})</h3>
                         {comments && (
                             <div className="comments">
                                 {comments.length > 0 ? (
@@ -159,7 +161,13 @@ function Post() {
                                             key={comment._id}
                                             className="commentOuterContainer"
                                         >
-                                            <Comment comment={comment} />
+                                            <Comment
+                                                postID={post._id}
+                                                comment={comment}
+                                                numComments={numComments}
+                                                setNumComments={setNumComments}
+                                                user={user}
+                                            />
                                             <div className="hl"></div>
                                         </div>
                                     ))
