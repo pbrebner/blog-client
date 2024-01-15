@@ -36,7 +36,7 @@ function Signup() {
         console.log(result);
 
         if (response.ok) {
-            navigate("/accounts/login");
+            navigate("/account/login");
         }
     }
 
