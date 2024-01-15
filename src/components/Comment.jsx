@@ -3,15 +3,45 @@ import { Link } from "react-router-dom";
 import { formatDate } from "../utils/dates";
 import "./styles/Comment.css";
 
-function Comment({ postID, comment, numComments, setNumComments, user }) {
+function Comment({ postId, comment, numComments, setNumComments, user }) {
+    const [commentLikes, setCommentLikes] = useState(comment.likes);
     const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
+
+    async function handleCommentLike(e) {
+        const bodyData = JSON.stringify({
+            likes: commentLikes + 1,
+        });
+
+        // Need to add a try/catch to handle errors and display in form
+        const response = await fetch(
+            `https://blog-api-test.fly.dev/api/posts/${postId}/comments/${comment._id}`,
+            {
+                method: "put",
+                body: bodyData,
+                headers: {
+                    "Content-Type": "application/json",
+                    authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+            }
+        );
+
+        console.log(response);
+
+        const result = await response.json();
+        console.log(result);
+
+        if (response.ok) {
+            let val = commentLikes + 1;
+            setCommentLikes(val);
+        }
+    }
 
     async function handleCommentDelete(e) {
         e.preventDefault();
 
         // Need to add a try/catch to handle errors and display in form
         const response = await fetch(
-            `https://blog-api-test.fly.dev/api/posts/${postID}/comments/${comment._id}`,
+            `https://blog-api-test.fly.dev/api/posts/${postId}/comments/${comment._id}`,
             {
                 method: "delete",
                 headers: {
@@ -45,6 +75,9 @@ function Comment({ postID, comment, numComments, setNumComments, user }) {
                     {comment.user.name}
                 </Link>
                 <p>{formatDate(comment.timeStamp)}</p>
+                <button className="commentLikeBtn" onClick={handleCommentLike}>
+                    Like ({commentLikes})
+                </button>
             </div>
             <div className="commentContent">{comment.content}</div>
             {user == comment.user._id && (
