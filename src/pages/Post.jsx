@@ -7,6 +7,7 @@ import "./styles/Post.css";
 
 function Post() {
     const [post, setPost] = useState(null);
+    const [postLikes, setPostLikes] = useState(null);
     const [comments, setComments] = useState(null);
     const [numComments, setNumComments] = useState(0);
     const [error, setError] = useState(null);
@@ -49,6 +50,7 @@ function Post() {
                 const data = await response.json();
                 console.log(data);
                 setPost(data);
+                setPostLikes(data.likes);
                 setError(null);
             } catch (err) {
                 setError(err.message);
@@ -56,7 +58,7 @@ function Post() {
             }
         }
         getPost();
-    }, []);
+    }, [postLikes]);
 
     // Fetch the comments and display contents
     useEffect(() => {
@@ -93,6 +95,35 @@ function Post() {
         }
         getComments();
     }, [numComments]);
+
+    async function handlePostLike(e) {
+        const bodyData = JSON.stringify({
+            likes: postLikes + 1,
+        });
+
+        // Need to add a try/catch to handle errors and display in form
+        const response = await fetch(
+            `https://blog-api-test.fly.dev/api/posts/${post._id}`,
+            {
+                method: "put",
+                body: bodyData,
+                headers: {
+                    "Content-Type": "application/json",
+                    authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+            }
+        );
+
+        console.log(response);
+
+        const result = await response.json();
+        console.log(result);
+
+        if (response.ok) {
+            let val = postLikes + 1;
+            setPostLikes(val);
+        }
+    }
 
     async function handleCommentSubmit(e) {
         e.preventDefault();
@@ -147,6 +178,12 @@ function Post() {
                             </Link>
                             <p className="date">{formatDate(post.timeStamp)}</p>
                         </div>
+                        <button
+                            className="postLikeBtn"
+                            onClick={handlePostLike}
+                        >
+                            Like ({post.likes})
+                        </button>
                         <div className="hl"></div>
                         <p className="content">{post.content}</p>
                     </div>

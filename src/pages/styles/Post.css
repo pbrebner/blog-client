@@ -36,12 +36,18 @@
 }
 
 .postDetails {
-    align-self: start;
+    align-self: flex-start;
 }
 
 .postDetails .author {
     text-decoration: none;
     color: black;
+}
+
+.postLikeBtn {
+    align-self: flex-start;
+    padding: 2px 6px;
+    cursor: pointer;
 }
 
 .postContainer .content {
