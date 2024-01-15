@@ -10,6 +10,7 @@ function Profile() {
     const [usersProfile, setUsersProfile] = useState(null);
     const [name, setName] = useState("");
     const [username, setUsername] = useState("");
+    const [userDescription, setUserDescription] = useState("");
     const [error, setError] = useState(null);
     const [editProfileOpen, setEditProfileOpen] = useState(false);
     const [deleteProfileOpen, setDeleteProfileOpen] = useState(false);
@@ -48,6 +49,7 @@ function Profile() {
                 setUsersProfile(data.usersProfile);
                 setName(data.user.name);
                 setUsername(data.user.username);
+                setUserDescription(data.user.userDescription);
                 setError(null);
             } catch (err) {
                 setError(err.message);
@@ -64,6 +66,7 @@ function Profile() {
         const formData = JSON.stringify({
             name: e.target.name.value,
             username: e.target.username.value,
+            userDescription: e.target.userDescription.value,
         });
 
         // Need to add a try/catch to handle errors and display in form
@@ -224,6 +227,19 @@ function Profile() {
                                         setUsername(e.target.value)
                                     }
                                     required
+                                />
+                            </div>
+                            <div className="formElement">
+                                <label htmlFor="userDescription">Bio: </label>
+                                <textarea
+                                    name="userDescription"
+                                    id="userDescription"
+                                    rows={15}
+                                    maxLength={300}
+                                    value={userDescription}
+                                    onChange={(e) =>
+                                        setUserDescription(e.target.value)
+                                    }
                                 />
                             </div>
                             <div className="formElement">
