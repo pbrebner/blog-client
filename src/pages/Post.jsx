@@ -199,7 +199,7 @@ function Post() {
                                             className="commentOuterContainer"
                                         >
                                             <Comment
-                                                postID={post._id}
+                                                postId={post._id}
                                                 comment={comment}
                                                 numComments={numComments}
                                                 setNumComments={setNumComments}
