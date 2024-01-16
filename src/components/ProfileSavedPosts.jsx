@@ -33,8 +33,6 @@ function ProfileSavedPosts({
         }
     }
 
-    function handleEditPostSubmit(postId) {}
-
     return (
         <>
             <div className="savedPosts">

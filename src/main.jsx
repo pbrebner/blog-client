@@ -11,6 +11,7 @@ import Signup from "./pages/Signup.jsx";
 import Login from "./pages/Login.jsx";
 import Profile from "./pages/Profile.jsx";
 import CreatePost from "./pages/CreatePost.jsx";
+import EditPost from "./pages/EditPost.jsx";
 import Post from "./pages/Post.jsx";
 
 const router = createBrowserRouter([
@@ -32,7 +33,11 @@ const router = createBrowserRouter([
                 path: "posts",
                 children: [
                     { path: "createpost", element: <CreatePost /> },
-                    { path: ":postId", element: <Post /> },
+                    {
+                        path: ":postId",
+                        element: <Post />,
+                    },
+                    { path: ":postId/edit", element: <EditPost /> },
                 ],
             },
         ],
