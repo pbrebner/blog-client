@@ -342,14 +342,14 @@ function Profile() {
                         <div className="profileMain">
                             <h2 className="profileHeader">{user.name}</h2>
                             <div className="hl"></div>
-                            {user.posts.length > 0 ? (
+                            {publishedPosts.length > 0 ? (
                                 <div className="postsContainer">
-                                    {user.posts.map((post) => (
+                                    {publishedPosts.map((post) => (
                                         <PostCard key={post._id} post={post} />
                                     ))}
                                 </div>
                             ) : (
-                                <div>You haven't made any posts yet.</div>
+                                <div>This user hasn't made any posts yet.</div>
                             )}
                         </div>
                         <div className="vl"></div>
