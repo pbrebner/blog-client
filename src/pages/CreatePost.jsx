@@ -1,18 +1,22 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import "./styles/FormPages.css";
 
-// TODO: Add action to form (url of API)
 function CreatePost() {
+    const [title, setTitle] = useState("");
+    const [content, setContent] = useState("");
+
     const navigate = useNavigate();
 
-    async function handleSubmit(e) {
+    async function handlePublish(e) {
         e.preventDefault();
 
         const formData = JSON.stringify({
-            title: e.target.title.value,
-            content: e.target.content.value,
+            title: title,
+            content: content,
+            published: true,
         });
 
         // Need to add a try/catch to handle errors and display in form
@@ -28,15 +32,40 @@ function CreatePost() {
             }
         );
 
-        console.log(response);
-
         const result = await response.json();
-        console.log("Results:");
         console.log(result);
 
         if (response.ok) {
-            e.target.title.value = "";
-            e.target.content.value = "";
+            navigate("/");
+        }
+    }
+
+    async function handleSave(e) {
+        e.preventDefault();
+
+        const formData = JSON.stringify({
+            title: title,
+            content: content,
+            published: false,
+        });
+
+        // Need to add a try/catch to handle errors and display in form
+        const response = await fetch(
+            "https://blog-api-test.fly.dev/api/posts",
+            {
+                method: "post",
+                body: formData,
+                headers: {
+                    "Content-Type": "application/json",
+                    authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+            }
+        );
+
+        const result = await response.json();
+        console.log(result);
+
+        if (response.ok) {
             navigate("/");
         }
     }
@@ -45,10 +74,17 @@ function CreatePost() {
         <div className="main formPage">
             <h2>Create Post Page</h2>
 
-            <form onSubmit={handleSubmit}>
+            <form>
                 <div className="formElement">
                     <label htmlFor="title">Title: </label>
-                    <input type="text" name="title" id="title" required />
+                    <input
+                        type="text"
+                        name="title"
+                        id="title"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        required
+                    />
                 </div>
                 <div className="formElement">
                     <label htmlFor="content">Content: </label>
@@ -57,12 +93,19 @@ function CreatePost() {
                         id="content"
                         cols="30"
                         rows="30"
+                        value={content}
+                        onChange={(e) => setContent(e.target.value)}
                         required
                     ></textarea>
                 </div>
                 <div className="formElement">
-                    <button type="submit" className="submitBtn">
+                    <button className="submitBtn" onClick={handlePublish}>
                         Publish
+                    </button>
+                </div>
+                <div className="formElement">
+                    <button className="submitBtn" onClick={handleSave}>
+                        Save
                     </button>
                 </div>
             </form>
