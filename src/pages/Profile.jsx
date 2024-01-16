@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, useOutletContext } from "react-router-dom";
 
+import ProfileSavedPosts from "../components/ProfileSavedPosts";
+import ProfilePubPosts from "../components/ProfilePubPosts";
 import ProfileSidebar from "../components/ProfileSidebar";
 import PostCard from "../components/PostCard";
 import "./styles/Profile.css";
@@ -11,10 +13,18 @@ function Profile() {
     const [name, setName] = useState("");
     const [username, setUsername] = useState("");
     const [userDescription, setUserDescription] = useState("");
-    const [error, setError] = useState(null);
+
+    const [publishedPosts, setPublishedPosts] = useState([]);
+    const [savedPosts, setSavedPosts] = useState([]);
+    const [numPosts, setNumPosts] = useState(0);
+
+    const [showSavedPosts, setShowSavedPosts] = useState(false);
+
     const [editProfileOpen, setEditProfileOpen] = useState(false);
     const [deleteProfileOpen, setDeleteProfileOpen] = useState(false);
     const [deletePostOpen, setDeletePostOpen] = useState(false);
+
+    const [error, setError] = useState(null);
 
     const { userId } = useParams();
     const navigate = useNavigate();
@@ -50,6 +60,22 @@ function Profile() {
                 setName(data.user.name);
                 setUsername(data.user.username);
                 setUserDescription(data.user.userDescription);
+
+                let publishedPostsTemp = [];
+                let savedPostsTemp = [];
+
+                data.user.posts.map((post) => {
+                    if (post.published == true) {
+                        publishedPostsTemp.push(post);
+                    } else {
+                        savedPostsTemp.push(post);
+                    }
+                });
+
+                setSavedPosts(savedPostsTemp);
+                setPublishedPosts(publishedPostsTemp);
+                setNumPosts(data.user.posts.length);
+
                 setError(null);
             } catch (err) {
                 setError(err.message);
@@ -58,7 +84,7 @@ function Profile() {
             }
         }
         getUser();
-    }, [editProfileOpen, deletePostOpen]);
+    }, [editProfileOpen, numPosts]);
 
     async function handleEditProfileSubmit(e) {
         e.preventDefault();
@@ -119,6 +145,12 @@ function Profile() {
         }
     }
 
+    function togglePostDisplay() {
+        showSavedPosts === false
+            ? setShowSavedPosts(true)
+            : setShowSavedPosts(false);
+    }
+
     function closeModal() {
         setEditProfileOpen(false);
         setDeleteProfileOpen(false);
@@ -151,27 +183,41 @@ function Profile() {
                         <div className="profileContainer">
                             <div className="profileMain">
                                 <h2 className="profileHeader">{user.name}</h2>
+                                <div>
+                                    <button onClick={togglePostDisplay}>
+                                        Pulished
+                                    </button>
+                                    <button onClick={togglePostDisplay}>
+                                        Saved
+                                    </button>
+                                </div>
                                 <div className="hl"></div>
                                 {user.posts.length > 0 ? (
                                     <div className="postsContainer">
-                                        {user.posts.map((post) => (
-                                            <div
-                                                key={post._id}
-                                                className="postCardOuterContainer"
-                                            >
-                                                <PostCard
-                                                    post={post}
-                                                    usersProfile={usersProfile}
-                                                    deletePostOpen={
-                                                        deletePostOpen
-                                                    }
-                                                    setDeletePostOpen={
-                                                        setDeletePostOpen
-                                                    }
-                                                />
-                                                <div className="hl"></div>
-                                            </div>
-                                        ))}
+                                        {showSavedPosts && (
+                                            <ProfileSavedPosts
+                                                savedPosts={savedPosts}
+                                                usersProfile={usersProfile}
+                                                deletePostOpen={deletePostOpen}
+                                                setDeletePostOpen={
+                                                    setDeletePostOpen
+                                                }
+                                                numPosts={numPosts}
+                                                setNumPosts={setNumPosts}
+                                            />
+                                        )}
+                                        {!showSavedPosts && (
+                                            <ProfilePubPosts
+                                                publishedPosts={publishedPosts}
+                                                usersProfile={usersProfile}
+                                                deletePostOpen={deletePostOpen}
+                                                setDeletePostOpen={
+                                                    setDeletePostOpen
+                                                }
+                                                numPosts={numPosts}
+                                                setNumPosts={setNumPosts}
+                                            />
+                                        )}
                                     </div>
                                 ) : (
                                     <div>You haven't made any posts yet.</div>
