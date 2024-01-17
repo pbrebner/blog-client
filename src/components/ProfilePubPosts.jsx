@@ -73,17 +73,20 @@ function ProfilePubPosts({
     return (
         <>
             <div className="publishedPosts">
-                <h4>Published Posts</h4>
                 {publishedPosts.map((post) => (
                     <div key={post._id} className="postCardOuterContainer">
                         <PostCard post={post} />
                         {usersProfile && (
-                            <button
-                                onClick={() => handleDeletePostSubmit(post._id)}
-                                className="deletePostBtn"
-                            >
-                                Delete {post._id}
-                            </button>
+                            <div className="postBtns">
+                                <button
+                                    onClick={() =>
+                                        handleDeletePostSubmit(post._id)
+                                    }
+                                    className="deletePostBtn"
+                                >
+                                    Delete
+                                </button>
+                            </div>
                         )}
                         <div className="hl"></div>
                     </div>

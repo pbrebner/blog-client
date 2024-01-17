@@ -17,11 +17,30 @@
     padding: 40px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 20px;
 }
 
 .profileHeader {
     font-size: 3rem;
+}
+
+.postDisplayBtns {
+    display: flex;
+    gap: 30px;
+}
+
+.postDisplayBtn {
+    padding: 2px 6px;
+    font-size: 1.2rem;
+
+    border: none;
+    background-color: white;
+
+    cursor: pointer;
+}
+
+.postDisplayBtn.selected {
+    border-bottom: 2px solid black;
 }
 
 .hl {
@@ -31,6 +50,40 @@
 
 .vl {
     background-color: rgb(235, 235, 235);
+}
+
+/* Styling for Posts Containers */
+.postCardOuterContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.postBtns {
+    align-self: flex-end;
+
+    display: flex;
+    gap: 20px;
+}
+
+.deletePostBtn {
+    padding: 2px 6px;
+    font-size: 0.9rem;
+
+    border: 1px solid black;
+    background-color: aliceblue;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.editPostLink {
+    padding: 2px 6px;
+    font-size: 0.9rem;
+    text-decoration: none;
+
+    color: black;
+    background-color: aliceblue;
+    border: 1px solid black;
+    border-radius: 5px;
 }
 
 /* Styling for edit profile modal */

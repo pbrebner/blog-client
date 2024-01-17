@@ -36,19 +36,18 @@ function ProfileSavedPosts({
     return (
         <>
             <div className="savedPosts">
-                <h4>Saved Posts</h4>
                 {savedPosts.map((post) => (
                     <div key={post._id} className="postCardOuterContainer">
                         <PostCard post={post} />
                         {usersProfile && (
-                            <>
+                            <div className="postBtns">
                                 <button
                                     onClick={() =>
                                         handleDeletePostSubmit(post._id)
                                     }
                                     className="deletePostBtn"
                                 >
-                                    Delete {post._id}
+                                    Delete
                                 </button>
                                 <Link
                                     to={`/posts/${post._id}/edit`}
@@ -56,7 +55,7 @@ function ProfileSavedPosts({
                                 >
                                     Edit
                                 </Link>
-                            </>
+                            </div>
                         )}
                         <div className="hl"></div>
                     </div>

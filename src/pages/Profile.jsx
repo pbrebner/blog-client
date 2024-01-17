@@ -183,11 +183,21 @@ function Profile() {
                         <div className="profileContainer">
                             <div className="profileMain">
                                 <h2 className="profileHeader">{user.name}</h2>
-                                <div>
-                                    <button onClick={togglePostDisplay}>
+                                <div className="postDisplayBtns">
+                                    <button
+                                        onClick={togglePostDisplay}
+                                        className={`postDisplayBtn ${
+                                            showSavedPosts ? "" : "selected"
+                                        }`}
+                                    >
                                         Pulished
                                     </button>
-                                    <button onClick={togglePostDisplay}>
+                                    <button
+                                        onClick={togglePostDisplay}
+                                        className={`postDisplayBtn ${
+                                            showSavedPosts ? "selected" : ""
+                                        }`}
+                                    >
                                         Saved
                                     </button>
                                 </div>
