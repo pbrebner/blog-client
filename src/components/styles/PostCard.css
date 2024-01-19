@@ -9,7 +9,21 @@
 
 .postCardHeader {
     display: flex;
-    gap: 30px;
+    align-items: center;
+    gap: 15px;
+}
+
+.postCardHeader .circularImage {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid grey;
+}
+
+.avatar {
+    width: 100%;
 }
 
 .postCardContent {

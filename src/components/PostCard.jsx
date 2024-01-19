@@ -8,6 +8,15 @@ function PostCard({ post }) {
         <>
             <div className="postCard">
                 <div className="postCardHeader">
+                    {post.user.avatar && (
+                        <div className="circularImage">
+                            <img
+                                src={post.user.avatar}
+                                alt="avatar"
+                                className="avatar"
+                            />
+                        </div>
+                    )}
                     {post.user.name && (
                         <Link
                             to={`/account/${post.user._id}`}
