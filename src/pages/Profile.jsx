@@ -57,6 +57,7 @@ function Profile() {
 
                 setUser(data.user);
                 setUsersProfile(data.usersProfile);
+
                 setName(data.user.name);
                 setUsername(data.user.username);
                 setUserDescription(data.user.userDescription);
@@ -89,11 +90,56 @@ function Profile() {
     async function handleEditProfileSubmit(e) {
         e.preventDefault();
 
-        const formData = JSON.stringify({
-            name: e.target.name.value,
-            username: e.target.username.value,
-            userDescription: e.target.userDescription.value,
-        });
+        let formData = {};
+
+        if (e.target.avatar.files[0]) {
+            const file = e.target.avatar.files[0];
+
+            // Get secure url from our server
+            const accessUrlRequest = await fetch(
+                "https://blog-api-test.fly.dev/api/s3Url",
+                {
+                    method: "get",
+                    headers: {
+                        "Content-Type": "application/json",
+                        authorization: `Bearer ${localStorage.getItem(
+                            "token"
+                        )}`,
+                    },
+                }
+            );
+
+            const accessUrl = await accessUrlRequest.json();
+            console.log(accessUrl.url);
+
+            // post the image directly to the s3 bucket
+            await fetch(accessUrl.url, {
+                method: "put",
+                body: file,
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+
+            const imageUrl = accessUrl.url.split("?")[0];
+            console.log(imageUrl);
+
+            // Set form data for request to server
+            formData = JSON.stringify({
+                avatar: imageUrl,
+                name: e.target.name.value,
+                username: e.target.username.value,
+                userDescription: e.target.userDescription.value,
+            });
+        } else {
+            formData = JSON.stringify({
+                name: e.target.name.value,
+                username: e.target.username.value,
+                userDescription: e.target.userDescription.value,
+            });
+        }
+
+        console.log(formData);
 
         // Need to add a try/catch to handle errors and display in form
         const response = await fetch(
@@ -115,6 +161,7 @@ function Profile() {
 
         if (response.ok) {
             setEditProfileOpen(false);
+            e.target.avatar.value = "";
         }
     }
 
@@ -261,6 +308,15 @@ function Profile() {
                             onSubmit={handleEditProfileSubmit}
                             className="profileModalForm"
                         >
+                            <div className="formElement">
+                                <label htmlFor="avatar">Profile Image: </label>
+                                <input
+                                    type="file"
+                                    name="avatar"
+                                    id="avatar"
+                                    accept="image/*"
+                                />
+                            </div>
                             <div className="formElement">
                                 <label htmlFor="name">Name: </label>
                                 <input

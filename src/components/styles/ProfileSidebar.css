@@ -6,19 +6,17 @@
     gap: 20px;
 }
 
-.profileSidebar .picture {
-    padding: 5px;
-    background-color: whitesmoke;
+.circularImage {
+    width: 200px;
+    height: 200px;
+
+    border-radius: 50%;
+    overflow: hidden;
     border: 1px solid grey;
-    width: 120px;
-    height: 120px;
+}
 
-    border-radius: 20px;
-
-    display: flex;
-    align-items: center;
-
-    text-align: center;
+.avatar {
+    width: 100%;
 }
 
 .profileSidebar .name {
