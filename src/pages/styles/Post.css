@@ -80,6 +80,19 @@
     word-wrap: break-word;
 }
 
+.postImageContainer {
+    max-height: 360px;
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.postImage {
+    width: 100%;
+}
+
 .commentsContainer {
     max-width: 300px;
     min-width: 200px;

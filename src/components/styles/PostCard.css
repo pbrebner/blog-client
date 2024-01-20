@@ -26,10 +26,18 @@
     width: 100%;
 }
 
-.postCardContent {
+.postCardMain {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.postCardLink {
     text-decoration: none;
     color: black;
+}
 
+.postCardContent {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -49,6 +57,20 @@
 
 .postCardTitle {
     font-size: 1.4rem;
+}
+
+.postCardImageContainer {
+    height: 90px;
+    width: 120px;
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.postCardImage {
+    width: 100%;
 }
 
 .userLink {

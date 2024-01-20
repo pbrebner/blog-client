@@ -27,10 +27,28 @@ function PostCard({ post }) {
                     )}
                     <p>{formatDate(post.timeStamp)}</p>
                 </div>
-                <Link to={`/posts/${post._id}`} className="postCardContent">
-                    <h4 className="postCardTitle">{post.title}</h4>
-                    <p>{post.content}</p>
-                </Link>
+                <div className="postCardMain">
+                    <Link to={`/posts/${post._id}`} className="postCardLink">
+                        <div className="postCardContent">
+                            <h4 className="postCardTitle">{post.title}</h4>
+                            <p>{post.content}</p>
+                        </div>
+                    </Link>
+                    {post.image && (
+                        <Link
+                            to={`/posts/${post._id}`}
+                            className="postCardLink"
+                        >
+                            <div className="postCardImageContainer">
+                                <img
+                                    src={post.image}
+                                    alt="Post Image"
+                                    className="postCardImage"
+                                />
+                            </div>
+                        </Link>
+                    )}
+                </div>
             </div>
         </>
     );

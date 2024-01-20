@@ -203,6 +203,15 @@ function Post() {
                             </button>
                         )}
                         <div className="hl"></div>
+                        {post.image && (
+                            <div className="postImageContainer">
+                                <img
+                                    src={post.image}
+                                    alt="Post Image"
+                                    className="postImage"
+                                />
+                            </div>
+                        )}
                         <p className="content">{post.content}</p>
                     </div>
                     <div className="hl"></div>
