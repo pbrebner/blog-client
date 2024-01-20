@@ -6,6 +6,8 @@ import "./styles/FormPages.css";
 function EditPost() {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
+    const [currentImage, setCurrentImage] = useState("");
+    const [image, setImage] = useState("");
 
     const [error, setError] = useState(null);
 
@@ -40,6 +42,8 @@ function EditPost() {
 
                 setTitle(data.title);
                 setContent(data.content);
+                setCurrentImage(data.image);
+
                 setError(null);
             } catch (err) {
                 setError(err.message);
@@ -50,14 +54,62 @@ function EditPost() {
         getPost();
     }, []);
 
+    async function getFormData() {
+        if (image) {
+            const file = image;
+
+            // Get secure url from our server
+            const accessUrlRequest = await fetch(
+                "https://blog-api-test.fly.dev/api/s3Url",
+                {
+                    method: "get",
+                    headers: {
+                        "Content-Type": "application/json",
+                        authorization: `Bearer ${localStorage.getItem(
+                            "token"
+                        )}`,
+                    },
+                }
+            );
+
+            const accessUrl = await accessUrlRequest.json();
+            console.log(accessUrl.url);
+
+            // post the image directly to the s3 bucket
+            await fetch(accessUrl.url, {
+                method: "put",
+                body: file,
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+
+            const imageUrl = accessUrl.url.split("?")[0];
+            console.log(imageUrl);
+
+            // Set form data for request to server
+            let formData = {
+                title: title,
+                content: content,
+                image: imageUrl,
+            };
+            return formData;
+        } else {
+            let formData = {
+                title: title,
+                content: content,
+            };
+            return formData;
+        }
+    }
+
     async function handlePublish(e) {
         e.preventDefault();
 
-        const formData = JSON.stringify({
-            title: title,
-            content: content,
-            published: true,
-        });
+        let formData = await getFormData();
+        formData.published = true;
+
+        formData = JSON.stringify(formData);
 
         // Need to add a try/catch to handle errors and display in form
         const response = await fetch(
@@ -83,11 +135,10 @@ function EditPost() {
     async function handleSave(e) {
         e.preventDefault();
 
-        const formData = JSON.stringify({
-            title: title,
-            content: content,
-            published: false,
-        });
+        let formData = await getFormData();
+        formData.published = false;
+
+        formData = JSON.stringify(formData);
 
         // Need to add a try/catch to handle errors and display in form
         const response = await fetch(
@@ -115,6 +166,17 @@ function EditPost() {
             <h2>Edit Post Page</h2>
 
             <form>
+                <div className="formElement">
+                    <label htmlFor="image">Post Image: </label>
+                    <input
+                        type="file"
+                        name="image"
+                        id="image"
+                        accept="image/*"
+                        file={image}
+                        onChange={(e) => setImage(e.target.files[0])}
+                    />
+                </div>
                 <div className="formElement">
                     <label htmlFor="title">Title: </label>
                     <input
