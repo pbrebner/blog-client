@@ -1,5 +1,5 @@
 .banner {
-    padding: 50px 70px;
+    padding: 30px 40px;
     background-color: rgb(247, 248, 247);
 
     box-shadow: inset 0px -1px 3px 1px rgb(163, 163, 163);
@@ -17,9 +17,23 @@
 }
 
 .bannerTitle {
-    font-size: 3.2rem;
+    font-size: 2rem;
 }
 
 .bannerPara {
-    font-size: 1.2rem;
+    font-size: 1rem;
+}
+
+@media (min-width: 600px) {
+    .banner {
+        padding: 50px 70px;
+    }
+
+    .bannerTitle {
+        font-size: 3.2rem;
+    }
+
+    .bannerPara {
+        font-size: 1.2rem;
+    }
 }

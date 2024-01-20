@@ -17,12 +17,12 @@ function Footer() {
                 </div>
                 <div className="footerRightCol">
                     <div>
-                        <h4>About</h4>
+                        <h3>About</h3>
                         <a href="">About Us</a>
-                        <a href="">Our Vision</a>
+                        <a href="">Vision</a>
                     </div>
                     <div>
-                        <h4>Contact Us</h4>
+                        <h3>Contact</h3>
                         <a href="">Advertise</a>
                         <a href="">Email</a>
                     </div>

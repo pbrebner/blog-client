@@ -1,7 +1,7 @@
 .footer {
     color: white;
     background-color: rgb(34, 34, 34);
-    padding: 30px;
+    padding: 15px;
 
     display: flex;
     flex-direction: column;
@@ -12,12 +12,13 @@
     max-width: 1200px;
 
     display: grid;
-    gap: 30px;
-    grid-template-columns: 2fr 1fr;
+    gap: 15px;
+    grid-template-columns: 2fr 1.3fr;
     grid-template-rows: 2fr 1fr;
 }
 
 .footerLeftCol {
+    font-size: 0.9rem;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -28,8 +29,9 @@
 }
 
 .footerRightCol {
+    font-size: 0.9em;
     display: flex;
-    gap: 30px;
+    gap: 10px;
 }
 
 .footerRightCol div {
@@ -44,7 +46,31 @@
 }
 
 .acknowledgements {
+    font-size: 0.8rem;
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+@media (min-width: 600px) {
+    .footer {
+        padding: 30px;
+    }
+
+    .footerContainer {
+        gap: 30px;
+    }
+
+    .footerLeftCol {
+        font-size: 1.1rem;
+    }
+
+    .footerRightCol {
+        font-size: 1.1em;
+        gap: 30px;
+    }
+
+    .acknowledgements {
+        font-size: 1.1rem;
+    }
 }

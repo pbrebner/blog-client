@@ -24,6 +24,7 @@ function Home() {
                 }
 
                 const data = await response.json();
+                console.log(data);
                 setPosts(data);
                 setError(null);
             } catch (err) {
@@ -47,8 +48,11 @@ function Home() {
                 {posts && (
                     <div className="postsContainer">
                         {posts.map((post) => (
-                            <div className="postCardOuterContainer">
-                                <PostCard key={post._id} post={post} />
+                            <div
+                                key={post._id}
+                                className="postCardOuterContainer"
+                            >
+                                <PostCard post={post} />
                                 <div className="hl"></div>
                             </div>
                         ))}
