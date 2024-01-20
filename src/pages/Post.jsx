@@ -190,12 +190,18 @@ function Post() {
                             </div>
                         </div>
                         <div className="hl"></div>
-                        <button
-                            className="postLikeBtn"
-                            onClick={handlePostLike}
-                        >
-                            Like ({post.likes})
-                        </button>
+                        {post.user._id == user ? (
+                            <div className="postLikes">
+                                Likes ({post.likes})
+                            </div>
+                        ) : (
+                            <button
+                                className="postLikeBtn"
+                                onClick={handlePostLike}
+                            >
+                                Like ({post.likes})
+                            </button>
+                        )}
                         <div className="hl"></div>
                         <p className="content">{post.content}</p>
                     </div>

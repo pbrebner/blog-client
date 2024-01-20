@@ -90,9 +90,16 @@ function Comment({ postId, comment, numComments, setNumComments, user }) {
             </div>
             <div className="commentContent">{comment.content}</div>
             <div className="commentBtns">
-                <button className="commentLikeBtn" onClick={handleCommentLike}>
-                    Like ({commentLikes})
-                </button>
+                {comment.user._id == user ? (
+                    <div className="commentLikes">Likes ({commentLikes})</div>
+                ) : (
+                    <button
+                        className="commentLikeBtn"
+                        onClick={handleCommentLike}
+                    >
+                        Like ({commentLikes})
+                    </button>
+                )}
                 {user == comment.user._id && (
                     <div>
                         <button
