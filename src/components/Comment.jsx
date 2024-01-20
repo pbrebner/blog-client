@@ -71,45 +71,59 @@ function Comment({ postId, comment, numComments, setNumComments, user }) {
     return (
         <div className="comment">
             <div className="commentHeader">
-                <Link to={`/account/${comment.user._id}`} className="userLink">
-                    {comment.user.name}
-                </Link>
-                <p>{formatDate(comment.timeStamp)}</p>
+                <div className="circularImage">
+                    <img
+                        src={comment.user.avatar}
+                        alt="avatar"
+                        className="avatar"
+                    />
+                </div>
+                <div>
+                    <Link
+                        to={`/account/${comment.user._id}`}
+                        className="userLink"
+                    >
+                        {comment.user.name}
+                    </Link>
+                    <p>{formatDate(comment.timeStamp)}</p>
+                </div>
+            </div>
+            <div className="commentContent">{comment.content}</div>
+            <div className="commentBtns">
                 <button className="commentLikeBtn" onClick={handleCommentLike}>
                     Like ({commentLikes})
                 </button>
-            </div>
-            <div className="commentContent">{comment.content}</div>
-            {user == comment.user._id && (
-                <div>
-                    <button
-                        className={`commentDeleteBtn commentBtn ${
-                            confirmDeleteOpen ? "" : "display"
-                        }`}
-                        onClick={toggleCommentDelete}
-                    >
-                        Delete
-                    </button>
-                    <div
-                        className={`commentDeleteConfirm ${
-                            confirmDeleteOpen ? "display" : ""
-                        }`}
-                    >
+                {user == comment.user._id && (
+                    <div>
                         <button
-                            className="commentDeleteConfirmBtn commentBtn"
-                            onClick={handleCommentDelete}
-                        >
-                            Confirm
-                        </button>
-                        <button
-                            className="commentDeleteCancelBtn commentBtn"
+                            className={`commentDeleteBtn commentBtn ${
+                                confirmDeleteOpen ? "" : "display"
+                            }`}
                             onClick={toggleCommentDelete}
                         >
-                            Cancel
+                            Delete
                         </button>
+                        <div
+                            className={`commentDeleteConfirm ${
+                                confirmDeleteOpen ? "display" : ""
+                            }`}
+                        >
+                            <button
+                                className="commentDeleteConfirmBtn commentBtn"
+                                onClick={handleCommentDelete}
+                            >
+                                Confirm
+                            </button>
+                            <button
+                                className="commentDeleteCancelBtn commentBtn"
+                                onClick={toggleCommentDelete}
+                            >
+                                Cancel
+                            </button>
+                        </div>
                     </div>
-                </div>
-            )}
+                )}
+            </div>
         </div>
     );
 }

@@ -170,14 +170,26 @@ function Post() {
                     <div className="postContainer">
                         <p className="title">{post.title}</p>
                         <div className="postDetails">
-                            <Link
-                                to={`/account/${post.user._id}`}
-                                className="author"
-                            >
-                                {post.user.name}
-                            </Link>
-                            <p className="date">{formatDate(post.timeStamp)}</p>
+                            <div className="circularImage">
+                                <img
+                                    src={post.user.avatar}
+                                    alt="avatar"
+                                    className="avatar"
+                                />
+                            </div>
+                            <div>
+                                <Link
+                                    to={`/account/${post.user._id}`}
+                                    className="author"
+                                >
+                                    {post.user.name}
+                                </Link>
+                                <p className="date">
+                                    {formatDate(post.timeStamp)}
+                                </p>
+                            </div>
                         </div>
+                        <div className="hl"></div>
                         <button
                             className="postLikeBtn"
                             onClick={handlePostLike}
