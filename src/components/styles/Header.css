@@ -1,5 +1,5 @@
 .header {
-    padding: 30px 40px;
+    padding: 15px 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -8,7 +8,18 @@
     z-index: 2;
 }
 
+.headerMain {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.headerIcon {
+    width: 50px;
+}
+
 .headerTitle {
+    display: none;
     text-decoration: none;
     color: black;
     font-size: 2.4rem;
@@ -17,7 +28,7 @@
 
 .nav {
     display: flex;
-    gap: 30px;
+    gap: 15px;
 }
 
 .navLink {
@@ -54,6 +65,20 @@
     background-color: rgb(32, 32, 32);
     border: none;
     border-radius: 15px;
+}
+
+@media (min-width: 600px) {
+    .header {
+        padding: 30px 40px;
+    }
+
+    .headerTitle {
+        display: block;
+    }
+
+    .nav {
+        gap: 30px;
+    }
 }
 
 /* Styling for menu Tab */

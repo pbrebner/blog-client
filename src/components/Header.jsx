@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+
+import icon from "../assets/icons/icon.svg";
 import "./styles/Header.css";
 
 function Header({ loggedIn, setLoggedIn }) {
@@ -26,9 +28,14 @@ function Header({ loggedIn, setLoggedIn }) {
         return (
             <>
                 <header className="header">
-                    <Link to="/" className="headerTitle">
-                        Little Things Everyday
-                    </Link>
+                    <div className="headerMain">
+                        <Link to="/">
+                            <img src={icon} alt="Icon" className="headerIcon" />
+                        </Link>
+                        <Link to="/" className="headerTitle">
+                            Creative Umbrella
+                        </Link>
+                    </div>
                     <div className="nav">
                         <Link to="/posts/createpost" className="navLink write">
                             Write
