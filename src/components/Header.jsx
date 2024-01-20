@@ -28,21 +28,33 @@ function Header({ loggedIn, setLoggedIn }) {
         return (
             <>
                 <header className="header">
-                    <div className="headerMain">
-                        <Link to="/">
-                            <img src={icon} alt="Icon" className="headerIcon" />
-                        </Link>
-                        <Link to="/" className="headerTitle">
-                            Creative Umbrella
-                        </Link>
-                    </div>
-                    <div className="nav">
-                        <Link to="/posts/createpost" className="navLink write">
-                            Write
-                        </Link>
-                        <button onClick={toggleMenuOpen} className="menuBtn">
-                            Menu
-                        </button>
+                    <div className="headerInnerContainer">
+                        <div className="headerMain">
+                            <Link to="/">
+                                <img
+                                    src={icon}
+                                    alt="Icon"
+                                    className="headerIcon"
+                                />
+                            </Link>
+                            <Link to="/" className="headerTitle">
+                                Creative Umbrella
+                            </Link>
+                        </div>
+                        <div className="nav">
+                            <Link
+                                to="/posts/createpost"
+                                className="navLink write"
+                            >
+                                Write
+                            </Link>
+                            <button
+                                onClick={toggleMenuOpen}
+                                className="menuBtn"
+                            >
+                                Menu
+                            </button>
+                        </div>
                     </div>
                 </header>
                 <div className={`menuTab ${menuOpen ? "display" : ""}`}>
@@ -66,16 +78,23 @@ function Header({ loggedIn, setLoggedIn }) {
     } else {
         return (
             <header className="header">
-                <Link to="/" className="headerTitle">
-                    Little Things Everyday
-                </Link>
-                <div className="nav">
-                    <Link to="/account/login" className="navLink signin">
-                        Sign in
-                    </Link>
-                    <Link to="/account/signup" className="navLink signup">
-                        Sign up
-                    </Link>
+                <div className="headerInnerContainer">
+                    <div className="headerMain">
+                        <Link to="/">
+                            <img src={icon} alt="Icon" className="headerIcon" />
+                        </Link>
+                        <Link to="/" className="headerTitle">
+                            Creative Umbrella
+                        </Link>
+                    </div>
+                    <div className="nav">
+                        <Link to="/account/login" className="navLink signin">
+                            Sign in
+                        </Link>
+                        <Link to="/account/signup" className="navLink signup">
+                            Sign up
+                        </Link>
+                    </div>
                 </div>
             </header>
         );

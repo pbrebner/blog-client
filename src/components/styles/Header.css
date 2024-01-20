@@ -2,10 +2,19 @@
     padding: 15px 20px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 
     box-shadow: 0px 1px 3px 1px rgb(163, 163, 163);
     z-index: 2;
+}
+
+.headerInnerContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    max-width: 1000px;
+    width: 100%;
 }
 
 .headerMain {
@@ -67,7 +76,7 @@
     border-radius: 15px;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 680px) {
     .header {
         padding: 30px 40px;
     }
