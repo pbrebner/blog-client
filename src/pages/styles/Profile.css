@@ -10,10 +10,13 @@
 
     flex: 1;
     display: grid;
-    grid-template-columns: 2fr 1px 1fr;
+    grid-template-areas:
+        "sidebar"
+        "main";
 }
 
 .profileMain {
+    grid-area: main;
     padding: 40px;
     display: flex;
     flex-direction: column;
@@ -21,6 +24,7 @@
 }
 
 .profileHeader {
+    display: none;
     font-size: 3rem;
 }
 
@@ -31,7 +35,7 @@
 
 .postDisplayBtn {
     padding: 2px 6px;
-    font-size: 1.2rem;
+    font-size: 1rem;
 
     border: none;
     background-color: white;
@@ -50,6 +54,24 @@
 
 .vl {
     background-color: rgb(235, 235, 235);
+    width: 1px;
+    grid-area: vl;
+}
+
+@media (min-width: 600px) {
+    .postDisplayBtn {
+        font-size: 1.2rem;
+    }
+}
+
+@media (min-width: 800px) {
+    .profileContainer {
+        grid-template-areas: "main vl sidebar";
+    }
+
+    .profileHeader {
+        display: block;
+    }
 }
 
 /* Styling for Posts Containers */
@@ -197,7 +219,7 @@
 
     position: absolute;
     height: 100vh;
-    width: 100vw;
+    width: 100%;
 
     z-index: 5;
 

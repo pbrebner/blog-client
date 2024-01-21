@@ -245,7 +245,7 @@ function Profile() {
                                             showSavedPosts ? "selected" : ""
                                         }`}
                                     >
-                                        Saved
+                                        Drafts
                                     </button>
                                 </div>
                                 <div className="hl"></div>

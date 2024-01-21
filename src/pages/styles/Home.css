@@ -1,5 +1,5 @@
 .homeMain {
-    padding: 40px;
+    padding: 20px;
 
     display: flex;
     flex-direction: column;
@@ -25,4 +25,10 @@
     height: 1px;
     width: 100%;
     background-color: rgb(235, 235, 235);
+}
+
+@media (min-width: 600px) {
+    .homeMain {
+        padding: 40px;
+    }
 }

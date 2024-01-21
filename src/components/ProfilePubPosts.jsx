@@ -72,26 +72,30 @@ function ProfilePubPosts({
 
     return (
         <>
-            <div className="publishedPosts">
-                {publishedPosts.map((post) => (
-                    <div key={post._id} className="postCardOuterContainer">
-                        <PostCard post={post} />
-                        {usersProfile && (
-                            <div className="postBtns">
-                                <button
-                                    onClick={() =>
-                                        handleDeletePostSubmit(post._id)
-                                    }
-                                    className="deletePostBtn"
-                                >
-                                    Delete
-                                </button>
-                            </div>
-                        )}
-                        <div className="hl"></div>
-                    </div>
-                ))}
-            </div>
+            {publishedPosts.length > 0 ? (
+                <div className="publishedPosts">
+                    {publishedPosts.map((post) => (
+                        <div key={post._id} className="postCardOuterContainer">
+                            <PostCard post={post} />
+                            {usersProfile && (
+                                <div className="postBtns">
+                                    <button
+                                        onClick={() =>
+                                            handleDeletePostSubmit(post._id)
+                                        }
+                                        className="deletePostBtn"
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
+                            )}
+                            <div className="hl"></div>
+                        </div>
+                    ))}
+                </div>
+            ) : (
+                <p>You haven't published any posts yet.</p>
+            )}
         </>
     );
 }

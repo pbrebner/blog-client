@@ -35,32 +35,36 @@ function ProfileSavedPosts({
 
     return (
         <>
-            <div className="savedPosts">
-                {savedPosts.map((post) => (
-                    <div key={post._id} className="postCardOuterContainer">
-                        <PostCard post={post} />
-                        {usersProfile && (
-                            <div className="postBtns">
-                                <button
-                                    onClick={() =>
-                                        handleDeletePostSubmit(post._id)
-                                    }
-                                    className="deletePostBtn"
-                                >
-                                    Delete
-                                </button>
-                                <Link
-                                    to={`/posts/${post._id}/edit`}
-                                    className="editPostLink"
-                                >
-                                    Edit
-                                </Link>
-                            </div>
-                        )}
-                        <div className="hl"></div>
-                    </div>
-                ))}
-            </div>
+            {savedPosts.length > 0 ? (
+                <div className="savedPosts">
+                    {savedPosts.map((post) => (
+                        <div key={post._id} className="postCardOuterContainer">
+                            <PostCard post={post} />
+                            {usersProfile && (
+                                <div className="postBtns">
+                                    <button
+                                        onClick={() =>
+                                            handleDeletePostSubmit(post._id)
+                                        }
+                                        className="deletePostBtn"
+                                    >
+                                        Delete
+                                    </button>
+                                    <Link
+                                        to={`/posts/${post._id}/edit`}
+                                        className="editPostLink"
+                                    >
+                                        Edit
+                                    </Link>
+                                </div>
+                            )}
+                            <div className="hl"></div>
+                        </div>
+                    ))}
+                </div>
+            ) : (
+                <p>You don't have any drafts.</p>
+            )}
         </>
     );
 }

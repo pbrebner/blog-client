@@ -1,14 +1,16 @@
 .profileSidebar {
-    padding: 40px;
+    grid-area: sidebar;
+    padding: 20px;
 
     display: flex;
-    flex-direction: column;
+    align-items: center;
     gap: 20px;
 }
 
 .circularImage {
-    width: 200px;
-    height: 200px;
+    flex-shrink: 0;
+    width: 100px;
+    height: 100px;
 
     border-radius: 50%;
     overflow: hidden;
@@ -19,8 +21,19 @@
     width: 100%;
 }
 
+.profileDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .profileSidebar .name {
     font-size: 1.6rem;
+}
+
+.updateProfileBtns {
+    display: flex;
+    gap: 10px;
 }
 
 .editProfileBtn {
@@ -46,4 +59,18 @@
 .editProfileBtn:hover,
 .deleteProfileBtn:hover {
     scale: 1.05;
+}
+
+@media (min-width: 500px) {
+    .circularImage {
+        width: 160px;
+        height: 160px;
+    }
+}
+
+@media (min-width: 800px) {
+    .profileSidebar {
+        padding: 40px;
+        flex-direction: column;
+    }
 }
