@@ -70,7 +70,9 @@ function Header({ loggedIn, setLoggedIn }) {
                     </Link>
                 </div>
                 <div
-                    className={`modalBackground ${menuOpen ? "display" : ""}`}
+                    className={`headerModalBackground ${
+                        menuOpen ? "display" : ""
+                    }`}
                     onClick={closeMenu}
                 ></div>
             </>
