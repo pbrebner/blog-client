@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
+import Button from "../components/Button";
 import "./styles/FormPages.css";
 
 function EditPost() {
@@ -9,6 +10,7 @@ function EditPost() {
     const [currentImage, setCurrentImage] = useState("");
     const [image, setImage] = useState("");
 
+    const [showLoader, setShowLoader] = useState(false);
     const [error, setError] = useState(null);
 
     const { postId } = useParams();
@@ -105,6 +107,7 @@ function EditPost() {
 
     async function handlePublish(e) {
         e.preventDefault();
+        setShowLoader(true);
 
         let formData = await getFormData();
         formData.published = true;
@@ -128,12 +131,14 @@ function EditPost() {
         console.log(result);
 
         if (response.ok) {
+            setShowLoader(false);
             navigate("/");
         }
     }
 
     async function handleSave(e) {
         e.preventDefault();
+        setShowLoader(true);
 
         let formData = await getFormData();
         formData.published = false;
@@ -157,6 +162,7 @@ function EditPost() {
         console.log(result);
 
         if (response.ok) {
+            setShowLoader(false);
             navigate("/");
         }
     }
@@ -201,14 +207,20 @@ function EditPost() {
                     ></textarea>
                 </div>
                 <div className="formElement">
-                    <button className="submitBtn" onClick={handlePublish}>
-                        Publish
-                    </button>
+                    <Button
+                        text="Publish"
+                        onClick={handlePublish}
+                        loading={showLoader}
+                        disabled={showLoader}
+                    />
                 </div>
                 <div className="formElement">
-                    <button className="submitBtn" onClick={handleSave}>
-                        Save
-                    </button>
+                    <Button
+                        text="Save Draft"
+                        onClick={handleSave}
+                        loading={showLoader}
+                        disabled={showLoader}
+                    />
                 </div>
             </form>
         </div>
