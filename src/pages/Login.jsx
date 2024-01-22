@@ -1,21 +1,32 @@
-import { Link } from "react-router-dom";
-import { useNavigate, useOutletContext, useLocation } from "react-router-dom";
+import { useState } from "react";
+import {
+    Link,
+    useNavigate,
+    useOutletContext,
+    useLocation,
+} from "react-router-dom";
 
+import Button from "../components/Button";
 import "./styles/FormPages.css";
 
 // TODO: Add action to form (url of API)
 
 function Login() {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [showLoader, setShowLoader] = useState(false);
+
     const [loggedIn, setLoggedIn] = useOutletContext();
     const navigate = useNavigate();
     const location = useLocation();
 
     async function handleSubmit(e) {
         e.preventDefault();
+        setShowLoader(true);
 
         const formData = JSON.stringify({
-            username: e.target.username.value,
-            password: e.target.password.value,
+            username: username,
+            password: password,
         });
 
         // Need to add a try/catch to handle errors
@@ -39,6 +50,7 @@ function Login() {
             localStorage.setItem("name", data.body.name);
             localStorage.setItem("userId", data.body._id);
             setLoggedIn(true);
+            setShowLoader(false);
             navigate("/");
         }
     }
@@ -48,10 +60,17 @@ function Login() {
             <h2>Login Page</h2>
             {location.state && <div>{location.state.message}</div>}
 
-            <form onSubmit={handleSubmit}>
+            <form>
                 <div className="formElement">
                     <label htmlFor="username">Username: </label>
-                    <input type="text" name="username" id="username" required />
+                    <input
+                        type="text"
+                        name="username"
+                        id="username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        required
+                    />
                 </div>
                 <div className="formElement">
                     <label htmlFor="password">Password: </label>
@@ -59,13 +78,18 @@ function Login() {
                         type="password"
                         name="password"
                         id="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                         required
                     />
                 </div>
                 <div className="formElement">
-                    <button type="submit" className="submitBtn">
-                        Log in
-                    </button>
+                    <Button
+                        text="Log in"
+                        onClick={handleSubmit}
+                        loading={showLoader}
+                        disabled={showLoader}
+                    />
                 </div>
             </form>
             <p>
