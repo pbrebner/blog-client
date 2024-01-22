@@ -22,7 +22,6 @@ function Profile() {
 
     const [editProfileOpen, setEditProfileOpen] = useState(false);
     const [deleteProfileOpen, setDeleteProfileOpen] = useState(false);
-    const [deletePostOpen, setDeletePostOpen] = useState(false);
 
     const [error, setError] = useState(null);
 
@@ -201,7 +200,6 @@ function Profile() {
     function closeModal() {
         setEditProfileOpen(false);
         setDeleteProfileOpen(false);
-        setDeletePostOpen(false);
     }
 
     function toggleEditProfileOpen() {
@@ -255,10 +253,6 @@ function Profile() {
                                             <ProfileSavedPosts
                                                 savedPosts={savedPosts}
                                                 usersProfile={usersProfile}
-                                                deletePostOpen={deletePostOpen}
-                                                setDeletePostOpen={
-                                                    setDeletePostOpen
-                                                }
                                                 numPosts={numPosts}
                                                 setNumPosts={setNumPosts}
                                             />
@@ -267,10 +261,6 @@ function Profile() {
                                             <ProfilePubPosts
                                                 publishedPosts={publishedPosts}
                                                 usersProfile={usersProfile}
-                                                deletePostOpen={deletePostOpen}
-                                                setDeletePostOpen={
-                                                    setDeletePostOpen
-                                                }
                                                 numPosts={numPosts}
                                                 setNumPosts={setNumPosts}
                                             />
@@ -386,9 +376,7 @@ function Profile() {
                 </div>
                 <div
                     className={`modalBackground ${
-                        editProfileOpen || deleteProfileOpen || deletePostOpen
-                            ? "display"
-                            : ""
+                        editProfileOpen || deleteProfileOpen ? "display" : ""
                     }`}
                     onClick={closeModal}
                 ></div>

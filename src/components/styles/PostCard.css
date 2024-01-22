@@ -122,61 +122,46 @@
     }
 }
 
-/* Styling for delete post modal */
-.deletePostModal {
-    padding: 20px;
-    background-color: white;
-    box-shadow: 2px 2px 2px 2px grey;
+/* Styling for Post Buttons */
+
+.postBtns {
+    align-self: flex-end;
 
     display: flex;
-    flex-direction: column;
-    gap: 15px;
-
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -70%);
-
-    opacity: 0;
-    transition: opacity 0.2s ease-in-out;
-
-    z-index: 10;
-
-    pointer-events: none;
+    gap: 10px;
 }
 
-.deletePostModal.display {
-    opacity: 1;
-    pointer-events: all;
+.postBtn {
+    padding: 2px 6px;
 }
 
-.postModalContent {
-    padding: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
+.postDeleteConfirm,
+.postDeleteBtn {
+    display: none;
 }
 
-.postModalHeader {
-    font-size: 2rem;
-}
-
-.postModalContent p {
-    text-align: center;
-    font-size: 1.2rem;
-}
-
-.deletePostConfirm {
-    font-size: 1rem;
-    padding: 7px 15px;
-    background-color: red;
-    color: white;
-    border: none;
-    border-radius: 10px;
+.postDeleteBtn.display {
+    display: block;
+    padding: 2px 4px;
     cursor: pointer;
 }
 
-.deletePostConfirm:hover {
-    scale: 1.05;
+.postDeleteConfirm.display {
+    display: flex;
+    gap: 10px;
+}
+
+.postDeleteConfirmBtn {
+    color: red;
+}
+
+.editPostLink {
+    padding: 2px 6px;
+    font-size: 0.9rem;
+    text-decoration: none;
+
+    color: black;
+    background-color: rgb(241, 241, 241);
+    border: 1px solid rgb(97, 97, 97);
+    border-radius: 2px;
 }
