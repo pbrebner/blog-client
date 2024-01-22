@@ -2,14 +2,19 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 
 import Comment from "../components/Comment";
+import Button from "../components/Button";
 import { formatDate } from "../utils/dates";
 import "./styles/Post.css";
 
 function Post() {
     const [post, setPost] = useState(null);
     const [postLikes, setPostLikes] = useState(null);
+
     const [comments, setComments] = useState(null);
     const [numComments, setNumComments] = useState(0);
+
+    const [showLoader, setShowLoader] = useState(false);
+
     const [error, setError] = useState(null);
 
     const { postId } = useParams();
@@ -127,6 +132,7 @@ function Post() {
 
     async function handleCommentSubmit(e) {
         e.preventDefault();
+        setShowLoader(true);
 
         const formData = JSON.stringify({
             content: e.target.content.value,
@@ -154,6 +160,7 @@ function Post() {
             e.target.content.value = "";
             let val = numComments + 1;
             setNumComments(val);
+            setShowLoader(false);
         }
     }
 
@@ -257,9 +264,12 @@ function Post() {
                                 ></textarea>
                             </div>
                             <div className="formElement">
-                                <button type="submit" className="submitBtn">
-                                    Respond
-                                </button>
+                                <Button
+                                    text="Respond"
+                                    onClick=""
+                                    loading={showLoader}
+                                    disabled={showLoader}
+                                />
                             </div>
                         </form>
                     </div>

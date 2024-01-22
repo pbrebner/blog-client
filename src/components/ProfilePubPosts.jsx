@@ -1,4 +1,7 @@
+import { useState } from "react";
+
 import PostCard from "./PostCard";
+import Button from "../components/Button";
 
 function ProfilePubPosts({
     publishedPosts,
@@ -8,7 +11,12 @@ function ProfilePubPosts({
     numPosts,
     setNumPosts,
 }) {
+    const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
+    const [showLoader, setShowLoader] = useState(false);
+
     async function handleDeletePostSubmit(postId) {
+        setShowLoader(true);
+
         // Need to add a try/catch to handle errors and display in form
         const response = await fetch(
             `https://blog-api-test.fly.dev/api/posts/${postId}`,
@@ -30,7 +38,14 @@ function ProfilePubPosts({
             //setDeletePostOpen(false);
             let val = numPosts - 1;
             setNumPosts(val);
+            setShowLoader(false);
         }
+    }
+
+    function togglePostDelete() {
+        confirmDeleteOpen === true
+            ? setConfirmDeleteOpen(false)
+            : setConfirmDeleteOpen(true);
     }
 
     /*
@@ -80,13 +95,35 @@ function ProfilePubPosts({
                             {usersProfile && (
                                 <div className="postBtns">
                                     <button
-                                        onClick={() =>
-                                            handleDeletePostSubmit(post._id)
-                                        }
-                                        className="deletePostBtn"
+                                        onClick={togglePostDelete}
+                                        className={`postDeleteBtn postBtn ${
+                                            confirmDeleteOpen ? "" : "display"
+                                        }`}
                                     >
                                         Delete
                                     </button>
+                                    <div
+                                        className={`postDeleteConfirm ${
+                                            confirmDeleteOpen ? "display" : ""
+                                        }`}
+                                    >
+                                        <Button
+                                            styleRef="postDeleteConfirmBtn postBtn"
+                                            text="Confirm"
+                                            onClick={() =>
+                                                handleDeletePostSubmit(post._id)
+                                            }
+                                            loading={showLoader}
+                                            disabled={showLoader}
+                                        />
+                                        <button
+                                            className="postDeleteCancelBtn postBtn"
+                                            onClick={togglePostDelete}
+                                            disabled={showLoader}
+                                        >
+                                            Cancel
+                                        </button>
+                                    </div>
                                 </div>
                             )}
                             <div className="hl"></div>

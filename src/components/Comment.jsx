@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { formatDate } from "../utils/dates";
+
+import Button from "./Button";
 import "./styles/Comment.css";
 
 function Comment({ postId, comment, numComments, setNumComments, user }) {
     const [commentLikes, setCommentLikes] = useState(comment.likes);
     const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
+
+    const [showLoader, setShowLoader] = useState(false);
 
     async function handleCommentLike(e) {
         const bodyData = JSON.stringify({
@@ -25,8 +29,6 @@ function Comment({ postId, comment, numComments, setNumComments, user }) {
             }
         );
 
-        console.log(response);
-
         const result = await response.json();
         console.log(result);
 
@@ -38,6 +40,7 @@ function Comment({ postId, comment, numComments, setNumComments, user }) {
 
     async function handleCommentDelete(e) {
         e.preventDefault();
+        setShowLoader(true);
 
         // Need to add a try/catch to handle errors and display in form
         const response = await fetch(
@@ -51,14 +54,13 @@ function Comment({ postId, comment, numComments, setNumComments, user }) {
             }
         );
 
-        console.log(response);
-
         const result = await response.json();
         console.log(result);
 
         if (response.ok) {
             let val = numComments - 1;
             setNumComments(val);
+            setShowLoader(false);
         }
     }
 
@@ -115,15 +117,17 @@ function Comment({ postId, comment, numComments, setNumComments, user }) {
                                 confirmDeleteOpen ? "display" : ""
                             }`}
                         >
-                            <button
-                                className="commentDeleteConfirmBtn commentBtn"
+                            <Button
+                                styleRef="commentDeleteConfirmBtn commentBtn"
+                                text="Confirm"
                                 onClick={handleCommentDelete}
-                            >
-                                Confirm
-                            </button>
+                                loading={showLoader}
+                                disabled={showLoader}
+                            />
                             <button
                                 className="commentDeleteCancelBtn commentBtn"
                                 onClick={toggleCommentDelete}
+                                disabled={showLoader}
                             >
                                 Cancel
                             </button>
