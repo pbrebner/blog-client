@@ -184,24 +184,3 @@
 .deleteProfileConfirm:hover {
     scale: 1.05;
 }
-
-/* Styling for Modal Background */
-
-.modalBackground {
-    background-color: black;
-    opacity: 0;
-    transition: opacity 0.2s ease-in-out;
-
-    position: absolute;
-    height: 100vh;
-    width: 100%;
-
-    z-index: 5;
-
-    pointer-events: none;
-}
-
-.modalBackground.display {
-    opacity: 0.2;
-    pointer-events: all;
-}
