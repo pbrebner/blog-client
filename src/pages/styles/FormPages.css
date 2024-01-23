@@ -7,24 +7,59 @@
     gap: 25px;
 }
 
-form {
+.pageForm {
+    max-width: 500px;
+    width: 80vw;
+
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
 .formElement {
-    flex-shrink: 1;
     display: flex;
     flex-direction: column;
 }
 
 .formElement label {
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 
 .formElement input,
 .formElement textarea {
     padding: 3px;
-    font-size: 1rem;
+    font-size: 0.8rem;
+}
+
+.formElement textarea {
+    min-width: 100%;
+    max-width: 100%;
+}
+
+.pageForm .formElement textarea {
+    min-height: 400px;
+    max-height: 1200px;
+}
+
+.pageForm .formElement .submitBtn {
+    font-size: 0.9rem;
+    max-width: 150px;
+    width: 100%;
+    align-self: center;
+}
+
+@media (min-width: 600px) {
+    .formElement label {
+        font-size: 1.2rem;
+    }
+
+    .formElement input,
+    .formElement textarea {
+        font-size: 1rem;
+    }
+
+    .pageForm .formElement .submitBtn {
+        font-size: 1.1rem;
+        max-width: 200px;
+    }
 }

@@ -129,7 +129,7 @@ function CreatePost() {
         <div className="main formPage">
             <h2>Create Post Page</h2>
 
-            <form>
+            <form className="pageForm">
                 <div className="formElement">
                     <label htmlFor="image">Post Image: </label>
                     <input

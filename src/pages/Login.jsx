@@ -60,7 +60,7 @@ function Login() {
             <h2>Login Page</h2>
             {location.state && <div>{location.state.message}</div>}
 
-            <form>
+            <form className="pageForm">
                 <div className="formElement">
                     <label htmlFor="username">Username: </label>
                     <input

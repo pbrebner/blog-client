@@ -51,7 +51,7 @@ function Signup() {
         <div className="main formPage">
             <h2>Sign-up Page</h2>
 
-            <form>
+            <form className="pageForm">
                 <div className="formElement">
                     <label htmlFor="name">Name: </label>
                     <input
