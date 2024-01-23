@@ -14,11 +14,11 @@ function App() {
     }, []);
 
     return (
-        <>
+        <div className="app">
             <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
             <Outlet context={[loggedIn, setLoggedIn]} />
             <Footer />
-        </>
+        </div>
     );
 }
 
