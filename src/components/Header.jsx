@@ -55,26 +55,26 @@ function Header({ loggedIn, setLoggedIn }) {
                                 Menu
                             </button>
                         </div>
+                        <div className={`menuTab ${menuOpen ? "display" : ""}`}>
+                            <Link
+                                to={`/account/${localStorage.getItem(
+                                    "userId"
+                                )}`}
+                                onClick={closeMenu}
+                                className="menuLink"
+                            >
+                                Account
+                            </Link>
+                            <Link onClick={handleLogout} className="menuLink">
+                                Sign out
+                            </Link>
+                        </div>
                     </div>
-                </header>
-                <div className={`menuTab ${menuOpen ? "display" : ""}`}>
-                    <Link
-                        to={`/account/${localStorage.getItem("userId")}`}
+                    <div
+                        className={`overlay ${menuOpen ? "display" : ""}`}
                         onClick={closeMenu}
-                        className="menuLink"
-                    >
-                        Account
-                    </Link>
-                    <Link onClick={handleLogout} className="menuLink">
-                        Sign out
-                    </Link>
-                </div>
-                <div
-                    className={`headerModalBackground ${
-                        menuOpen ? "display" : ""
-                    }`}
-                    onClick={closeMenu}
-                ></div>
+                    ></div>
+                </header>
             </>
         );
     } else {
