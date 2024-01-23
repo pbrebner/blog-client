@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import Button from "../components/Button";
 import "./styles/PostCard.css";
@@ -8,6 +8,8 @@ import { formatDate } from "../utils/dates.js";
 function PostCard({ post, numPosts, setNumPosts, usersProfile, drafts }) {
     const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
     const [showLoader, setShowLoader] = useState(false);
+
+    const navigate = useNavigate();
 
     async function handleDeletePostSubmit(postId) {
         setShowLoader(true);
@@ -40,6 +42,10 @@ function PostCard({ post, numPosts, setNumPosts, usersProfile, drafts }) {
         confirmDeleteOpen === true
             ? setConfirmDeleteOpen(false)
             : setConfirmDeleteOpen(true);
+    }
+
+    function handlePostEditBtn(postId) {
+        navigate(`/posts/${postId}/edit`);
     }
 
     return (
@@ -118,13 +124,13 @@ function PostCard({ post, numPosts, setNumPosts, usersProfile, drafts }) {
                             </button>
                         </div>
                         {drafts && (
-                            <Link
-                                to={`/posts/${post._id}/edit`}
-                                className="editPostLink"
+                            <button
+                                className="postEditBtn postBtn"
+                                onClick={() => handlePostEditBtn(post._id)}
                                 disabled={showLoader}
                             >
                                 Edit
-                            </Link>
+                            </button>
                         )}
                     </div>
                 )}
