@@ -1,6 +1,9 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+import { Editor } from "@tinymce/tinymce-react";
+import { plugins } from "../constants/plugin";
+import { toolbars } from "../constants/toolbar";
 
 import Button from "../components/Button";
 import "./styles/FormPages.css";
@@ -8,6 +11,7 @@ import "./styles/FormPages.css";
 function CreatePost() {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
+    const [contentText, setContentText] = useState("");
     const [image, setImage] = useState("");
 
     const [showLoader, setShowLoader] = useState(false);
@@ -164,6 +168,35 @@ function CreatePost() {
                         onChange={(e) => setContent(e.target.value)}
                         required
                     ></textarea>
+                </div>
+                <div>{contentText}</div>
+                <div className="formElement">
+                    <label htmlFor="content">Content: </label>
+                    <Editor
+                        apiKey="API_KEY_HERE"
+                        onEditorChange={(newValue, editor) => {
+                            setContent(newValue);
+                            setContentText(
+                                editor.getContent({ format: "html" })
+                            );
+                        }}
+                        onInit={(evt, editor) =>
+                            setContentText(
+                                editor.getContent({ format: "text" })
+                            )
+                        }
+                        value={content}
+                        initialValue={"Tell your story..."}
+                        init={{
+                            height: 500,
+                            max_height: 1000,
+                            plugins: plugins,
+                            toolbar: toolbars,
+                            toolbar_mode: "wrap",
+                            content_style:
+                                "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+                        }}
+                    />
                 </div>
                 <div className="formElement">
                     <Button
