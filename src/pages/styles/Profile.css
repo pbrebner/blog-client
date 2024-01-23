@@ -89,15 +89,18 @@
     padding: 20px;
     background-color: white;
     box-shadow: 2px 2px 2px 2px grey;
+    border-radius: 10px;
 
     display: flex;
     flex-direction: column;
-    gap: 15px;
+
+    max-width: 500px;
+    width: 80vw;
 
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -70%);
+    transform: translate(-50%, -50%);
 
     opacity: 0;
     transition: opacity 0.2s ease-in-out;
@@ -112,11 +115,29 @@
     pointer-events: all;
 }
 
-.profileModalContent {
+.editProfileForm {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.editProfileForm .formElement textarea {
+    min-height: 100px;
+    max-height: 250px;
+}
+
+.editProfileForm .formElement .submitBtn {
+    font-size: 0.9rem;
+    max-width: 150px;
+    width: 100%;
+    align-self: center;
+}
+
+.editProfileModal .modalContent {
     padding: 20px;
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 20px;
 }
 
 .profileModalHeader {
@@ -138,20 +159,34 @@
     align-self: end;
 }
 
+.closeModalBtn:hover {
+    scale: 1.05;
+}
+
+@media (min-width: 600px) {
+    .editProfileForm .formElement .submitBtn {
+        font-size: 1rem;
+        max-width: 180px;
+    }
+}
+
 /* Styling for delete post modal */
 .deleteProfileModal {
     padding: 20px;
     background-color: white;
     box-shadow: 2px 2px 2px 2px grey;
+    border-radius: 10px;
+
+    max-width: 500px;
+    width: 80vw;
 
     display: flex;
     flex-direction: column;
-    gap: 15px;
 
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -70%);
+    transform: translate(-50%, -50%);
 
     opacity: 0;
     transition: opacity 0.2s ease-in-out;
@@ -166,18 +201,22 @@
     pointer-events: all;
 }
 
-.profileModalContent p {
+.deleteProfileModal .modalContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+
     text-align: center;
-    font-size: 1.2rem;
 }
 
 .deleteProfileConfirm {
     font-size: 1rem;
-    padding: 7px 15px;
+    padding: 4px 8px;
     background-color: red;
     color: white;
     border: none;
-    border-radius: 10px;
+    border-radius: 5px;
     cursor: pointer;
 }
 

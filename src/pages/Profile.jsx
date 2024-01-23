@@ -5,14 +5,17 @@ import ProfileSavedPosts from "../components/ProfileSavedPosts";
 import ProfilePubPosts from "../components/ProfilePubPosts";
 import ProfileSidebar from "../components/ProfileSidebar";
 import PostCard from "../components/PostCard";
+import Button from "../components/Button";
 import "./styles/Profile.css";
 
 function Profile() {
     const [user, setUser] = useState(null);
     const [usersProfile, setUsersProfile] = useState(null);
+
     const [name, setName] = useState("");
     const [username, setUsername] = useState("");
     const [userDescription, setUserDescription] = useState("");
+    const [avatar, setAvatar] = useState("");
 
     const [publishedPosts, setPublishedPosts] = useState([]);
     const [savedPosts, setSavedPosts] = useState([]);
@@ -22,6 +25,8 @@ function Profile() {
 
     const [editProfileOpen, setEditProfileOpen] = useState(false);
     const [deleteProfileOpen, setDeleteProfileOpen] = useState(false);
+
+    const [showLoader, setShowLoader] = useState(false);
 
     const [error, setError] = useState(null);
 
@@ -88,11 +93,12 @@ function Profile() {
 
     async function handleEditProfileSubmit(e) {
         e.preventDefault();
+        setShowLoader(true);
 
         let formData = {};
 
-        if (e.target.avatar.files[0]) {
-            const file = e.target.avatar.files[0];
+        if (avatar) {
+            const file = avatar;
 
             // Get secure url from our server
             const accessUrlRequest = await fetch(
@@ -126,15 +132,15 @@ function Profile() {
             // Set form data for request to server
             formData = JSON.stringify({
                 avatar: imageUrl,
-                name: e.target.name.value,
-                username: e.target.username.value,
-                userDescription: e.target.userDescription.value,
+                name: name,
+                username: username,
+                userDescription: userDescription,
             });
         } else {
             formData = JSON.stringify({
-                name: e.target.name.value,
-                username: e.target.username.value,
-                userDescription: e.target.userDescription.value,
+                name: name,
+                username: username,
+                userDescription: userDescription,
             });
         }
 
@@ -160,12 +166,14 @@ function Profile() {
 
         if (response.ok) {
             setEditProfileOpen(false);
-            e.target.avatar.value = "";
+            setAvatar("");
+            setShowLoader(false);
         }
     }
 
     async function handleDeleteProfileSubmit(e) {
         e.preventDefault();
+        setShowLoader(true);
 
         // Need to add a try/catch to handle errors and display in form
         const response = await fetch(
@@ -187,6 +195,7 @@ function Profile() {
         if (response.ok) {
             localStorage.clear();
             setLoggedIn(false);
+            setShowLoader(false);
             navigate("/");
         }
     }
@@ -290,14 +299,9 @@ function Profile() {
                     <button onClick={closeModal} className="closeModalBtn">
                         &#10005;
                     </button>
-                    <div className="profileModalContent">
-                        <div className="profileModalHeader">
-                            <p>Profile Information</p>
-                        </div>
-                        <form
-                            onSubmit={handleEditProfileSubmit}
-                            className="profileModalForm"
-                        >
+                    <div className="modalContent">
+                        <h2 className="modalHeader">Profile Information</h2>
+                        <form className="editProfileForm modalForm">
                             <div className="formElement">
                                 <label htmlFor="avatar">Profile Image: </label>
                                 <input
@@ -305,6 +309,10 @@ function Profile() {
                                     name="avatar"
                                     id="avatar"
                                     accept="image/*"
+                                    file={avatar}
+                                    onChange={(e) =>
+                                        setAvatar(e.target.files[0])
+                                    }
                                 />
                             </div>
                             <div className="formElement">
@@ -336,7 +344,7 @@ function Profile() {
                                 <textarea
                                     name="userDescription"
                                     id="userDescription"
-                                    rows={15}
+                                    rows={8}
                                     maxLength={300}
                                     value={userDescription}
                                     onChange={(e) =>
@@ -345,9 +353,12 @@ function Profile() {
                                 />
                             </div>
                             <div className="formElement">
-                                <button type="submit" className="submitBtn">
-                                    Update
-                                </button>
+                                <Button
+                                    text="Update"
+                                    onClick={handleEditProfileSubmit}
+                                    loading={showLoader}
+                                    disabled={showLoader}
+                                />
                             </div>
                         </form>
                     </div>
@@ -360,22 +371,23 @@ function Profile() {
                     <button onClick={closeModal} className="closeModalBtn">
                         &#10005;
                     </button>
-                    <div className="profileModalContent">
-                        <h2 className="profileModalHeader">Delete Profile</h2>
+                    <div className="modalContent">
+                        <h2 className="modalHeader">Delete Profile?</h2>
                         <p>
                             Deletion is not reversible, and the profile will be
                             completely deleted.
                         </p>
-                        <button
+                        <Button
+                            styleRef="deleteProfileConfirm"
+                            text="Delete"
                             onClick={handleDeleteProfileSubmit}
-                            className="deleteProfileConfirm"
-                        >
-                            Delete
-                        </button>
+                            loading={showLoader}
+                            disabled={showLoader}
+                        />
                     </div>
                 </div>
                 <div
-                    className={`modalBackground ${
+                    className={`overlay ${
                         editProfileOpen || deleteProfileOpen ? "display" : ""
                     }`}
                     onClick={closeModal}
