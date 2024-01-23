@@ -73,4 +73,7 @@
         padding: 40px;
         flex-direction: column;
     }
+    .circularImage {
+        align-self: flex-start;
+    }
 }
