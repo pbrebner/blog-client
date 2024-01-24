@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHandsClapping } from "@fortawesome/free-solid-svg-icons";
-
 import Comment from "../components/Comment";
 import Button from "../components/Button";
+import Clap from "../components/Clap";
 import { formatDate } from "../utils/dates";
 import "./styles/Post.css";
 
@@ -17,6 +15,7 @@ function Post() {
     const [numComments, setNumComments] = useState(0);
 
     const [showLoader, setShowLoader] = useState(false);
+    const [shake, setShake] = useState(false);
 
     const [error, setError] = useState(null);
 
@@ -106,7 +105,12 @@ function Post() {
 
     async function handlePostLike(e) {
         let likes = postLikes + 1;
+        setShake(true);
         setPostLikes(likes);
+
+        setTimeout(() => {
+            setShake(false);
+        }, "800");
 
         const bodyData = JSON.stringify({
             likes: likes,
@@ -131,8 +135,7 @@ function Post() {
         console.log(result);
 
         if (response.ok) {
-            let val = postLikes + 1;
-            setPostLikes(val);
+            console.log("Success");
         }
     }
 
@@ -205,16 +208,14 @@ function Post() {
                         <div className="hl"></div>
                         {post.user._id == user ? (
                             <div className="postLikes">
-                                <FontAwesomeIcon icon={faHandsClapping} /> (
-                                {post.likes})
+                                <Clap shake={shake} /> ({postLikes})
                             </div>
                         ) : (
                             <button
                                 className="postLikeBtn"
                                 onClick={handlePostLike}
                             >
-                                <FontAwesomeIcon icon={faHandsClapping} /> (
-                                {postLikes})
+                                <Clap shake={shake} /> ({postLikes})
                             </button>
                         )}
                         <div className="hl"></div>

@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { formatDate } from "../utils/dates";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHandsClapping } from "@fortawesome/free-solid-svg-icons";
 
 import Button from "./Button";
+import Clap from "./Clap";
+import { formatDate } from "../utils/dates";
 import "./styles/Comment.css";
 
 function Comment({ postId, comment, numComments, setNumComments, user }) {
@@ -13,10 +11,16 @@ function Comment({ postId, comment, numComments, setNumComments, user }) {
     const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
 
     const [showLoader, setShowLoader] = useState(false);
+    const [shake, setShake] = useState(false);
 
     async function handleCommentLike(e) {
         let likes = commentLikes + 1;
+        setShake(true);
         setCommentLikes(likes);
+
+        setTimeout(() => {
+            setShake(false);
+        }, "800");
 
         const bodyData = JSON.stringify({
             likes: likes,
@@ -39,8 +43,7 @@ function Comment({ postId, comment, numComments, setNumComments, user }) {
         console.log(result);
 
         if (response.ok) {
-            let val = commentLikes + 1;
-            setCommentLikes(val);
+            console.log("Success");
         }
     }
 
@@ -100,16 +103,14 @@ function Comment({ postId, comment, numComments, setNumComments, user }) {
             <div className="commentBtns">
                 {comment.user._id == user ? (
                     <div className="commentLikes">
-                        <FontAwesomeIcon icon={faHandsClapping} /> (
-                        {commentLikes})
+                        <Clap shake={shake} /> ({commentLikes})
                     </div>
                 ) : (
                     <button
                         className="commentLikeBtn"
                         onClick={handleCommentLike}
                     >
-                        <FontAwesomeIcon icon={faHandsClapping} /> (
-                        {commentLikes})
+                        <Clap shake={shake} /> ({commentLikes})
                     </button>
                 )}
                 {user == comment.user._id && (
