@@ -65,15 +65,22 @@
 }
 
 .postLikeBtn {
+    font-size: 1rem;
+    border: none;
+    background: none;
     align-self: flex-start;
     padding: 2px 6px;
     cursor: pointer;
 }
 
+.postLikeBtn:hover {
+    scale: 1.05;
+}
+
 .postContainer .content {
     width: 100%;
     min-height: 200px;
-    font-size: 1.1rem;
+    font-size: 1rem;
     align-self: start;
 
     word-wrap: break-word;
@@ -144,10 +151,10 @@
 
 @media (min-width: 650px) {
     .postContainer .title {
-        font-size: 3rem;
+        font-size: 2.4rem;
     }
 
     .postContainer .content {
-        font-size: 1.4rem;
+        font-size: 1.3rem;
     }
 }

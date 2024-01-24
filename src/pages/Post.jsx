@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHandsClapping } from "@fortawesome/free-solid-svg-icons";
+
 import Comment from "../components/Comment";
 import Button from "../components/Button";
 import { formatDate } from "../utils/dates";
@@ -102,8 +105,11 @@ function Post() {
     }, [numComments]);
 
     async function handlePostLike(e) {
+        let likes = postLikes + 1;
+        setPostLikes(likes);
+
         const bodyData = JSON.stringify({
-            likes: postLikes + 1,
+            likes: likes,
         });
 
         // Need to add a try/catch to handle errors and display in form
@@ -199,14 +205,16 @@ function Post() {
                         <div className="hl"></div>
                         {post.user._id == user ? (
                             <div className="postLikes">
-                                Likes ({post.likes})
+                                <FontAwesomeIcon icon={faHandsClapping} /> (
+                                {post.likes})
                             </div>
                         ) : (
                             <button
                                 className="postLikeBtn"
                                 onClick={handlePostLike}
                             >
-                                Like ({post.likes})
+                                <FontAwesomeIcon icon={faHandsClapping} /> (
+                                {postLikes})
                             </button>
                         )}
                         <div className="hl"></div>

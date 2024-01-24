@@ -2,6 +2,9 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { formatDate } from "../utils/dates";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHandsClapping } from "@fortawesome/free-solid-svg-icons";
+
 import Button from "./Button";
 import "./styles/Comment.css";
 
@@ -12,8 +15,11 @@ function Comment({ postId, comment, numComments, setNumComments, user }) {
     const [showLoader, setShowLoader] = useState(false);
 
     async function handleCommentLike(e) {
+        let likes = commentLikes + 1;
+        setCommentLikes(likes);
+
         const bodyData = JSON.stringify({
-            likes: commentLikes + 1,
+            likes: likes,
         });
 
         // Need to add a try/catch to handle errors and display in form
@@ -93,13 +99,17 @@ function Comment({ postId, comment, numComments, setNumComments, user }) {
             <div className="commentContent">{comment.content}</div>
             <div className="commentBtns">
                 {comment.user._id == user ? (
-                    <div className="commentLikes">Likes ({commentLikes})</div>
+                    <div className="commentLikes">
+                        <FontAwesomeIcon icon={faHandsClapping} /> (
+                        {commentLikes})
+                    </div>
                 ) : (
                     <button
                         className="commentLikeBtn"
                         onClick={handleCommentLike}
                     >
-                        Like ({commentLikes})
+                        <FontAwesomeIcon icon={faHandsClapping} /> (
+                        {commentLikes})
                     </button>
                 )}
                 {user == comment.user._id && (

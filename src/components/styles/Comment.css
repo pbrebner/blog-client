@@ -40,7 +40,14 @@
 }
 
 .commentLikeBtn {
+    border: none;
+    background: none;
     padding: 2px 6px;
+    cursor: pointer;
+}
+
+.commentLikeBtn:hover {
+    scale: 1.05;
 }
 
 /* Delete Buttons */
