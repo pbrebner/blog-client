@@ -13,6 +13,7 @@ function Post() {
 
     const [comments, setComments] = useState(null);
     const [numComments, setNumComments] = useState(0);
+    const [newComment, setNewComment] = useState("");
 
     const [showLoader, setShowLoader] = useState(false);
     const [shake, setShake] = useState(false);
@@ -144,7 +145,7 @@ function Post() {
         setShowLoader(true);
 
         const formData = JSON.stringify({
-            content: e.target.content.value,
+            content: newComment,
         });
 
         // Need to add a try/catch to handle errors and display in form
@@ -166,7 +167,7 @@ function Post() {
         console.log(result);
 
         if (response.ok) {
-            e.target.content.value = "";
+            setNewComment("");
             let val = numComments + 1;
             setNumComments(val);
             setShowLoader(false);
@@ -258,10 +259,7 @@ function Post() {
                                 )}
                             </div>
                         )}
-                        <form
-                            onSubmit={handleCommentSubmit}
-                            className="commentForm"
-                        >
+                        <form className="commentForm">
                             <div className="formElement">
                                 <textarea
                                     name="content"
@@ -269,13 +267,17 @@ function Post() {
                                     cols="10"
                                     rows="5"
                                     placeholder="What are your thoughts?"
+                                    value={newComment}
+                                    onChange={(e) =>
+                                        setNewComment(e.target.value)
+                                    }
                                     required
                                 ></textarea>
                             </div>
                             <div className="formElement">
                                 <Button
                                     text="Respond"
-                                    onClick=""
+                                    onClick={handleCommentSubmit}
                                     loading={showLoader}
                                     disabled={showLoader}
                                 />
