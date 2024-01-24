@@ -49,48 +49,48 @@ function Signup() {
 
     return (
         <div className="main formPage">
-            <h2>Sign-up Page</h2>
+            <h2>Sign-up</h2>
 
             <form className="pageForm">
                 <div className="formElement">
-                    <label htmlFor="name">Name: </label>
                     <input
                         type="text"
                         name="name"
                         id="name"
+                        placeholder="Name"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required
                     />
                 </div>
                 <div className="formElement">
-                    <label htmlFor="username">Username: </label>
                     <input
                         type="text"
                         name="username"
                         id="username"
+                        placeholder="Username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         required
                     />
                 </div>
                 <div className="formElement">
-                    <label htmlFor="password">Password: </label>
                     <input
                         type="password"
                         name="password"
                         id="password"
+                        placeholder="Password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
                 </div>
                 <div className="formElement">
-                    <label htmlFor="passwordConfirm">Confirm Password: </label>
                     <input
                         type="password"
                         name="passwordConfirm"
                         id="passwordConfirm"
+                        placeholder="Confirm Password"
                         value={passwordConfirm}
                         onChange={(e) => setPasswordConfirm(e.target.value)}
                         required

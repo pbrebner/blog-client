@@ -169,7 +169,7 @@ function EditPost() {
 
     return (
         <div className="main formPage">
-            <h2>Edit Post Page</h2>
+            <h2>Edit Post</h2>
 
             <form className="pageForm">
                 <div className="formElement">

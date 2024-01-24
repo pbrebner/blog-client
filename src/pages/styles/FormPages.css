@@ -27,8 +27,15 @@
 
 .formElement input,
 .formElement textarea {
-    padding: 3px;
+    padding: 10px;
     font-size: 0.8rem;
+}
+
+.formElement input[type="text"],
+.formElement input[type="password"],
+.formElement textarea {
+    border: 2px solid #eee;
+    border-radius: 10px;
 }
 
 .formElement textarea {
@@ -42,10 +49,26 @@
 }
 
 .pageForm .formElement .submitBtn {
+    background-color: white;
+    color: black;
     font-size: 0.9rem;
     max-width: 150px;
     width: 100%;
+
+    border-radius: 5px;
+    border: 2px solid #5e5e5e;
+
     align-self: center;
+    cursor: pointer;
+}
+
+.pageForm .formElement .submitBtn:hover {
+    background-color: #5e5e5e;
+    color: white;
+}
+
+.formLink {
+    color: black;
 }
 
 @media (min-width: 600px) {

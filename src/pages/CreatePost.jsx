@@ -127,7 +127,7 @@ function CreatePost() {
 
     return (
         <div className="main formPage">
-            <h2>Create Post Page</h2>
+            <h2>Create Post</h2>
 
             <form className="pageForm">
                 <div className="formElement">
@@ -148,6 +148,7 @@ function CreatePost() {
                         type="text"
                         name="title"
                         id="title"
+                        placeholder="Create a captivating title"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                         required
@@ -160,6 +161,7 @@ function CreatePost() {
                         id="content"
                         cols="30"
                         rows="30"
+                        placeholder="Tell your story..."
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
                         required
@@ -182,9 +184,6 @@ function CreatePost() {
                     />
                 </div>
             </form>
-            <p>
-                Back to <Link to="/">Home</Link>
-            </p>
         </div>
     );
 }

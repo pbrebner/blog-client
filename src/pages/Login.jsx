@@ -57,27 +57,27 @@ function Login() {
 
     return (
         <div className="main formPage">
-            <h2>Login Page</h2>
+            <h2>Login</h2>
             {location.state && <div>{location.state.message}</div>}
 
             <form className="pageForm">
                 <div className="formElement">
-                    <label htmlFor="username">Username: </label>
                     <input
                         type="text"
                         name="username"
                         id="username"
+                        placeholder="Username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         required
                     />
                 </div>
                 <div className="formElement">
-                    <label htmlFor="password">Password: </label>
                     <input
                         type="password"
                         name="password"
                         id="password"
+                        placeholder="Password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
@@ -93,9 +93,9 @@ function Login() {
                 </div>
             </form>
             <p>
-                Don't have and account yet?{" "}
+                Don't have an account yet?{" "}
                 <Link to="../signup" className="formLink">
-                    Sign up now
+                    Sign-up
                 </Link>
             </p>
         </div>
