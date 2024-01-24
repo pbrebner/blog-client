@@ -16,7 +16,7 @@ import Post from "./pages/Post.jsx";
 
 const router = createBrowserRouter([
     {
-        path: "/",
+        path: "/blog-client",
         element: <App />,
         errorElement: <ErrorPage />,
         children: [
