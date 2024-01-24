@@ -2,11 +2,11 @@
 
 [Link to API](https://github.com/pbrebner/blog-api)
 
-[Image](public/UI/UI1.png)
+![Image](public/UI/UI1.png)
 
-[Image](public/UI/UI2.png)
+![Image](public/UI/UI2.png)
 
-[Image](public/UI/UI3.png)
+![Image](public/UI/UI3.png)
 
 ## About
 
