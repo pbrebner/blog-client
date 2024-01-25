@@ -45,7 +45,7 @@ function PostCard({ post, numPosts, setNumPosts, usersProfile, drafts }) {
     }
 
     function handlePostEditBtn(postId) {
-        navigate(`/posts/${postId}/edit`);
+        navigate(`/blog-client/posts/${postId}/edit`);
     }
 
     return (
@@ -63,7 +63,7 @@ function PostCard({ post, numPosts, setNumPosts, usersProfile, drafts }) {
                     )}
                     {post.user.name && (
                         <Link
-                            to={`/account/${post.user._id}`}
+                            to={`/blog-client/account/${post.user._id}`}
                             className="userLink"
                         >
                             {post.user.name}
@@ -72,7 +72,10 @@ function PostCard({ post, numPosts, setNumPosts, usersProfile, drafts }) {
                     <p>{formatDate(post.timeStamp)}</p>
                 </div>
                 <div className="postCardMain">
-                    <Link to={`/posts/${post._id}`} className="postCardLink">
+                    <Link
+                        to={`/blog-client/posts/${post._id}`}
+                        className="postCardLink"
+                    >
                         <div className="postCardContent">
                             <h4 className="postCardTitle">{post.title}</h4>
                             <p>{post.content}</p>
@@ -80,7 +83,7 @@ function PostCard({ post, numPosts, setNumPosts, usersProfile, drafts }) {
                     </Link>
                     {post.image && (
                         <Link
-                            to={`/posts/${post._id}`}
+                            to={`/blog-client/posts/${post._id}`}
                             className="postCardLink"
                         >
                             <div className="postCardImageContainer">

@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import icon from "../assets/icons/icon.svg";
 import "./styles/Header.css";
@@ -13,7 +12,7 @@ function Header({ loggedIn, setLoggedIn }) {
         localStorage.clear();
         setLoggedIn(false);
         setMenuOpen(false);
-        navigate("/");
+        navigate("/blog-client");
     }
 
     function closeMenu() {
@@ -30,20 +29,20 @@ function Header({ loggedIn, setLoggedIn }) {
                 <header className="header">
                     <div className="headerInnerContainer">
                         <div className="headerMain">
-                            <Link to="/">
+                            <Link to="/blog-client">
                                 <img
                                     src={icon}
                                     alt="Icon"
                                     className="headerIcon"
                                 />
                             </Link>
-                            <Link to="/" className="headerTitle">
+                            <Link to="/blog-client" className="headerTitle">
                                 Creative Umbrella
                             </Link>
                         </div>
                         <div className="nav">
                             <Link
-                                to="/posts/createpost"
+                                to="/blog-client/posts/createpost"
                                 className="navLink write"
                             >
                                 Write
@@ -57,7 +56,7 @@ function Header({ loggedIn, setLoggedIn }) {
                         </div>
                         <div className={`menuTab ${menuOpen ? "display" : ""}`}>
                             <Link
-                                to={`/account/${localStorage.getItem(
+                                to={`/blog-client/account/${localStorage.getItem(
                                     "userId"
                                 )}`}
                                 onClick={closeMenu}
@@ -82,18 +81,24 @@ function Header({ loggedIn, setLoggedIn }) {
             <header className="header">
                 <div className="headerInnerContainer">
                     <div className="headerMain">
-                        <Link to="/">
+                        <Link to="/blog-client">
                             <img src={icon} alt="Icon" className="headerIcon" />
                         </Link>
-                        <Link to="/" className="headerTitle">
+                        <Link to="/blog-client" className="headerTitle">
                             Creative Umbrella
                         </Link>
                     </div>
                     <div className="nav">
-                        <Link to="/account/login" className="navLink signin">
+                        <Link
+                            to="/blog-client/account/login"
+                            className="navLink signin"
+                        >
                             Sign in
                         </Link>
-                        <Link to="/account/signup" className="navLink signup">
+                        <Link
+                            to="/blog-client/account/signup"
+                            className="navLink signup"
+                        >
                             Sign up
                         </Link>
                     </div>

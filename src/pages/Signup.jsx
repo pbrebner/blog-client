@@ -43,7 +43,7 @@ function Signup() {
 
         if (response.ok) {
             setShowLoader(false);
-            navigate("/account/login");
+            navigate("/blog-client/account/login");
         }
     }
 

@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import Button from "../components/Button";
 import "./styles/FormPages.css";
@@ -90,7 +89,7 @@ function CreatePost() {
 
         if (response.ok) {
             setShowLoader(false);
-            navigate("/");
+            navigate("/blog-client");
         }
     }
 
@@ -121,7 +120,7 @@ function CreatePost() {
 
         if (response.ok) {
             setShowLoader(false);
-            navigate("/");
+            navigate("/blog-client");
         }
     }
 

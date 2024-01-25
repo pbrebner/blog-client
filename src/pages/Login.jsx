@@ -51,7 +51,7 @@ function Login() {
             localStorage.setItem("userId", data.body._id);
             setLoggedIn(true);
             setShowLoader(false);
-            navigate("/");
+            navigate("/blog-client");
         }
     }
 

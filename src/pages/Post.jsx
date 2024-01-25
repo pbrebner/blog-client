@@ -42,9 +42,9 @@ function Post() {
                 );
 
                 if (response.status == "403") {
-                    navigate("/account/login", {
+                    navigate("/blog-client/account/login", {
                         state: {
-                            message: "Please signin to access blog posts",
+                            message: "Please sign-in to access blog posts",
                         },
                     });
                 }
@@ -196,7 +196,7 @@ function Post() {
                             </div>
                             <div>
                                 <Link
-                                    to={`/account/${post.user._id}`}
+                                    to={`/blog-client/account/${post.user._id}`}
                                     className="author"
                                 >
                                     {post.user.name}

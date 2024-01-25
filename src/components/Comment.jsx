@@ -91,7 +91,7 @@ function Comment({ postId, comment, numComments, setNumComments, user }) {
                 </div>
                 <div>
                     <Link
-                        to={`/account/${comment.user._id}`}
+                        to={`/blog-client/account/${comment.user._id}`}
                         className="userLink"
                     >
                         {comment.user.name}

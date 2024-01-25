@@ -132,7 +132,7 @@ function EditPost() {
 
         if (response.ok) {
             setShowLoader(false);
-            navigate("/");
+            navigate("/blog-client");
         }
     }
 
@@ -163,7 +163,7 @@ function EditPost() {
 
         if (response.ok) {
             setShowLoader(false);
-            navigate("/");
+            navigate("/blog-client");
         }
     }
 

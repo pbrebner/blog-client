@@ -50,6 +50,14 @@ function Profile() {
                     }
                 );
 
+                if (response.status == "403") {
+                    navigate("/blog-client/account/login", {
+                        state: {
+                            message: "Please sign-in to view this page",
+                        },
+                    });
+                }
+
                 if (!response.ok) {
                     throw new Error(
                         `This is an HTTP error: The status is ${response.status}`
@@ -196,7 +204,7 @@ function Profile() {
             localStorage.clear();
             setLoggedIn(false);
             setShowLoader(false);
-            navigate("/");
+            navigate("/blog-client");
         }
     }
 
