@@ -1,7 +1,5 @@
 # Blog Client
 
-[Link to API](https://github.com/pbrebner/blog-api)
-
 ![Image](public/UI/UI1.png)
 
 ![Image](public/UI/UI2.png)
@@ -13,6 +11,10 @@
 This project was made as part of The ODIN Project's NodeJS curriculum. This repository comprises the frontend portion of this app. The goal of this project was to create a restful API backend which could be used to fetch data for this blog client.
 
 Users are able to sign-up, manage their profiles, view and post content, and interact with others content through comments and likes.
+
+[Link to API](https://github.com/pbrebner/blog-api)
+
+[Check it Out Live](https://pbrebner.github.io/blog-client/)
 
 ## Features
 
