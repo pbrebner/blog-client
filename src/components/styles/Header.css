@@ -64,6 +64,14 @@
 .nav .write {
     border: none;
     color: rgb(66, 66, 66);
+
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.writeIcon {
+    height: 25px;
 }
 
 .navLink:hover,
@@ -78,6 +86,7 @@
     background-color: rgb(32, 32, 32);
     border: none;
     border-radius: 15px;
+    cursor: pointer;
 }
 
 @media (min-width: 680px) {

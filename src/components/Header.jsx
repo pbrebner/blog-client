@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import icon from "../assets/icons/icon.svg";
+import write from "../assets/icons/write.svg";
 import "./styles/Header.css";
 
 function Header({ loggedIn, setLoggedIn }) {
@@ -45,6 +46,11 @@ function Header({ loggedIn, setLoggedIn }) {
                                 to="/blog-client/posts/createpost"
                                 className="navLink write"
                             >
+                                <img
+                                    src={write}
+                                    alt="Write"
+                                    className="writeIcon"
+                                />
                                 Write
                             </Link>
                             <button
