@@ -28,7 +28,8 @@ function Profile() {
 
     const [showLoader, setShowLoader] = useState(false);
 
-    const [error, setError] = useState(null);
+    const [formError, setFormError] = useState("");
+    const [error, setError] = useState("");
 
     const { userId } = useParams();
     const navigate = useNavigate();
@@ -56,9 +57,7 @@ function Profile() {
                             message: "Please sign-in to view this page",
                         },
                     });
-                }
-
-                if (!response.ok) {
+                } else if (!response.ok) {
                     throw new Error(
                         `This is an HTTP error: The status is ${response.status}`
                     );
@@ -89,7 +88,7 @@ function Profile() {
                 setPublishedPosts(publishedPostsTemp);
                 setNumPosts(data.user.posts.length);
 
-                setError(null);
+                setError("");
             } catch (err) {
                 setError(err.message);
                 setUser(null);
@@ -102,6 +101,9 @@ function Profile() {
     async function handleEditProfileSubmit(e) {
         e.preventDefault();
         setShowLoader(true);
+
+        setFormError("");
+        setError("");
 
         let formData = {};
 
@@ -154,57 +156,83 @@ function Profile() {
 
         console.log(formData);
 
-        // Need to add a try/catch to handle errors and display in form
-        const response = await fetch(
-            `https://blog-api-test.fly.dev/api/users/${user._id}`,
-            {
-                method: "put",
-                body: formData,
-                headers: {
-                    "Content-Type": "application/json",
-                    authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-            }
-        );
+        // Send request to update the user
+        try {
+            const response = await fetch(
+                `https://blog-api-test.fly.dev/api/users/${user._id}`,
+                {
+                    method: "put",
+                    body: formData,
+                    headers: {
+                        "Content-Type": "application/json",
+                        authorization: `Bearer ${localStorage.getItem(
+                            "token"
+                        )}`,
+                    },
+                }
+            );
 
-        console.log(response);
+            console.log(response);
+            const result = await response.json();
+            console.log(result);
 
-        const result = await response.json();
-        console.log(result);
-
-        if (response.ok) {
-            setEditProfileOpen(false);
-            setAvatar("");
             setShowLoader(false);
+
+            // Catch any errors
+            if (response.status == 400) {
+                setFormError(result.errors);
+            } else if (!response.ok) {
+                throw new Error(
+                    `This is an HTTP error: The status is ${response.status}`
+                );
+            } else {
+                // User update successful
+                setEditProfileOpen(false);
+                setAvatar("");
+            }
+        } catch (err) {
+            setEditProfileOpen(false);
+            setError(err.message);
         }
     }
 
     async function handleDeleteProfileSubmit(e) {
         e.preventDefault();
         setShowLoader(true);
+        setError("");
 
-        // Need to add a try/catch to handle errors and display in form
-        const response = await fetch(
-            `https://blog-api-test.fly.dev/api/users/${user._id}`,
-            {
-                method: "delete",
-                headers: {
-                    "Content-Type": "application/json",
-                    authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-            }
-        );
+        try {
+            const response = await fetch(
+                `https://blog-api-test.fly.dev/api/users/${user._id}`,
+                {
+                    method: "delete",
+                    headers: {
+                        "Content-Type": "application/json",
+                        authorization: `Bearer ${localStorage.getItem(
+                            "token"
+                        )}`,
+                    },
+                }
+            );
 
-        console.log(response);
+            console.log(response);
+            const result = await response.json();
+            console.log(result);
 
-        const result = await response.json();
-        console.log(result);
-
-        if (response.ok) {
-            localStorage.clear();
-            setLoggedIn(false);
             setShowLoader(false);
-            navigate("/blog-client");
+
+            if (!response.ok) {
+                throw new Error(
+                    `This is an HTTP error: The status is ${response.status}`
+                );
+            } else {
+                localStorage.clear();
+                setLoggedIn(false);
+                navigate("/blog-client");
+            }
+        } catch (err) {
+            setDeleteProfileOpen(false);
+            setError(err.message);
         }
     }
 
@@ -217,6 +245,8 @@ function Profile() {
     function closeModal() {
         setEditProfileOpen(false);
         setDeleteProfileOpen(false);
+
+        setFormError("");
     }
 
     function toggleEditProfileOpen() {
@@ -237,8 +267,8 @@ function Profile() {
                 <div className="main profilePage">
                     {error && (
                         <div className="errorContainer">
-                            There was problem fetching the data from the server.
-                            Please try again later
+                            There was problem handling your request. Please try
+                            again later.
                         </div>
                     )}
                     {user && (
@@ -368,6 +398,20 @@ function Profile() {
                                     disabled={showLoader}
                                 />
                             </div>
+                            {formError && (
+                                <div className="formErrorContainer">
+                                    <ul className="formErrorList">
+                                        {formError.map((error, index) => (
+                                            <li
+                                                key={index}
+                                                className="formError"
+                                            >
+                                                {error.msg}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
                         </form>
                     </div>
                 </div>
@@ -407,8 +451,8 @@ function Profile() {
             <div className="main profilePage">
                 {error && (
                     <div className="errorContainer">
-                        There was problem fetching the data from the server.
-                        Please try again later
+                        There was problem handling your request. Please try
+                        again later.
                     </div>
                 )}
                 {user && (

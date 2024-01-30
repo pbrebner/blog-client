@@ -18,7 +18,8 @@ function Post() {
     const [showLoader, setShowLoader] = useState(false);
     const [shake, setShake] = useState(false);
 
-    const [error, setError] = useState(null);
+    const [formError, setFormError] = useState("");
+    const [error, setError] = useState("");
 
     const { postId } = useParams();
     const navigate = useNavigate();
@@ -47,9 +48,7 @@ function Post() {
                             message: "Please sign-in to access blog posts",
                         },
                     });
-                }
-
-                if (!response.ok) {
+                } else if (!response.ok) {
                     throw new Error(
                         `This is an HTTP error: The status is ${response.status}`
                     );
@@ -57,9 +56,10 @@ function Post() {
 
                 const data = await response.json();
                 console.log(data);
+
                 setPost(data);
                 setPostLikes(data.likes);
-                setError(null);
+                setError("");
             } catch (err) {
                 setError(err.message);
                 setPost(null);
@@ -95,7 +95,7 @@ function Post() {
 
                 setComments(data);
                 setNumComments(data.length);
-                setError(null);
+                setError("");
             } catch (err) {
                 setError(err.message);
                 setComments(null);
@@ -117,26 +117,35 @@ function Post() {
             likes: likes,
         });
 
-        // Need to add a try/catch to handle errors and display in form
-        const response = await fetch(
-            `https://blog-api-test.fly.dev/api/posts/${post._id}`,
-            {
-                method: "put",
-                body: bodyData,
-                headers: {
-                    "Content-Type": "application/json",
-                    authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
+        // Make request to update post likes
+        try {
+            const response = await fetch(
+                `https://blog-api-test.fly.dev/api/posts/${post._id}`,
+                {
+                    method: "put",
+                    body: bodyData,
+                    headers: {
+                        "Content-Type": "application/json",
+                        authorization: `Bearer ${localStorage.getItem(
+                            "token"
+                        )}`,
+                    },
+                }
+            );
+
+            console.log(response);
+            const result = await response.json();
+            console.log(result);
+
+            // Handle any errors
+            if (!response.ok) {
+                throw new Error(
+                    `This is an HTTP error: The status is ${response.status}`
+                );
             }
-        );
-
-        console.log(response);
-
-        const result = await response.json();
-        console.log(result);
-
-        if (response.ok) {
-            console.log("Success");
+            setError("");
+        } catch (err) {
+            setError(err.message);
         }
     }
 
@@ -144,33 +153,49 @@ function Post() {
         e.preventDefault();
         setShowLoader(true);
 
+        setFormError("");
+        setError("");
+
         const formData = JSON.stringify({
             content: newComment,
         });
 
-        // Need to add a try/catch to handle errors and display in form
-        const response = await fetch(
-            `https://blog-api-test.fly.dev/api/posts/${post._id}/comments`,
-            {
-                method: "post",
-                body: formData,
-                headers: {
-                    "Content-Type": "application/json",
-                    authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-            }
-        );
+        // Make request to create new comment
+        try {
+            const response = await fetch(
+                `https://blog-api-test.fly.dev/api/posts/${post._id}/comments`,
+                {
+                    method: "post",
+                    body: formData,
+                    headers: {
+                        "Content-Type": "application/json",
+                        authorization: `Bearer ${localStorage.getItem(
+                            "token"
+                        )}`,
+                    },
+                }
+            );
 
-        console.log(response);
+            console.log(response);
+            const result = await response.json();
+            console.log(result);
 
-        const result = await response.json();
-        console.log(result);
-
-        if (response.ok) {
-            setNewComment("");
-            let val = numComments + 1;
-            setNumComments(val);
             setShowLoader(false);
+
+            // Handle any errors
+            if (response.status == 400) {
+                setFormError(result.errors);
+            } else if (!response.ok) {
+                throw new Error(
+                    `This is an HTTP error: The status is ${response.status}`
+                );
+            } else {
+                setNewComment("");
+                let val = numComments + 1;
+                setNumComments(val);
+            }
+        } catch (err) {
+            setError(err.message);
         }
     }
 
@@ -178,8 +203,8 @@ function Post() {
         <div className="main postPage">
             {error && (
                 <div className="errorContainer">
-                    There was problem fetching the data from the server. Please
-                    try again later
+                    There was problem handling your request. Please try again
+                    later.
                 </div>
             )}
             {post && (
@@ -283,6 +308,17 @@ function Post() {
                                 />
                             </div>
                         </form>
+                        {formError && (
+                            <div className="formErrorContainer">
+                                <ul className="formErrorList">
+                                    {formError.map((error, index) => (
+                                        <li key={index} className="formError">
+                                            {error.msg}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
                     </div>
                 </div>
             )}

@@ -71,6 +71,11 @@
     color: black;
 }
 
+.formErrorList {
+    font-size: 0.9rem;
+    color: red;
+}
+
 @media (min-width: 600px) {
     .formElement label {
         font-size: 1.2rem;
