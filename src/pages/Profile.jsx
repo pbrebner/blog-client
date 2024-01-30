@@ -6,6 +6,7 @@ import ProfilePubPosts from "../components/ProfilePubPosts";
 import ProfileSidebar from "../components/ProfileSidebar";
 import PostCard from "../components/PostCard";
 import Button from "../components/Button";
+import PageLoader from "../components/PageLoader";
 import "./styles/Profile.css";
 
 function Profile() {
@@ -27,6 +28,7 @@ function Profile() {
     const [deleteProfileOpen, setDeleteProfileOpen] = useState(false);
 
     const [showLoader, setShowLoader] = useState(false);
+    const [pageLoading, setPageLoading] = useState(true);
 
     const [formError, setFormError] = useState("");
     const [error, setError] = useState("");
@@ -87,10 +89,11 @@ function Profile() {
                 setSavedPosts(savedPostsTemp);
                 setPublishedPosts(publishedPostsTemp);
                 setNumPosts(data.user.posts.length);
-
+                setPageLoading(false);
                 setError("");
             } catch (err) {
                 setError(err.message);
+                setPageLoading(false);
                 setUser(null);
                 setUsersProfile(null);
             }
@@ -265,6 +268,7 @@ function Profile() {
         return (
             <>
                 <div className="main profilePage">
+                    {pageLoading && <PageLoader />}
                     {error && (
                         <div className="errorContainer">
                             There was problem handling your request. Please try
@@ -449,6 +453,7 @@ function Profile() {
     } else {
         return (
             <div className="main profilePage">
+                {pageLoading && <PageLoader />}
                 {error && (
                     <div className="errorContainer">
                         There was problem handling your request. Please try

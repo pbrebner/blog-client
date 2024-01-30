@@ -4,6 +4,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import Comment from "../components/Comment";
 import Button from "../components/Button";
 import Clap from "../components/Clap";
+import PageLoader from "../components/PageLoader";
 import { formatDate } from "../utils/dates";
 import "./styles/Post.css";
 
@@ -16,6 +17,7 @@ function Post() {
     const [newComment, setNewComment] = useState("");
 
     const [showLoader, setShowLoader] = useState(false);
+    const [pageLoading, setPageLoading] = useState(true);
     const [shake, setShake] = useState(false);
 
     const [formError, setFormError] = useState("");
@@ -59,9 +61,11 @@ function Post() {
 
                 setPost(data);
                 setPostLikes(data.likes);
+                setPageLoading(false);
                 setError("");
             } catch (err) {
                 setError(err.message);
+                setPageLoading(false);
                 setPost(null);
             }
         }
@@ -201,6 +205,7 @@ function Post() {
 
     return (
         <div className="main postPage">
+            {pageLoading && <PageLoader />}
             {error && (
                 <div className="errorContainer">
                     There was problem handling your request. Please try again
