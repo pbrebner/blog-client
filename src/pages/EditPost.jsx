@@ -11,7 +11,9 @@ function EditPost() {
     const [image, setImage] = useState("");
 
     const [showLoader, setShowLoader] = useState(false);
-    const [error, setError] = useState(null);
+
+    const [formError, setFormError] = useState("");
+    const [error, setError] = useState("");
 
     const { postId } = useParams();
 
@@ -45,8 +47,7 @@ function EditPost() {
                 setTitle(data.title);
                 setContent(data.content);
                 setCurrentImage(data.image);
-
-                setError(null);
+                setError("");
             } catch (err) {
                 setError(err.message);
                 setTitle("");
@@ -109,30 +110,47 @@ function EditPost() {
         e.preventDefault();
         setShowLoader(true);
 
+        setFormError("");
+        setError("");
+
         let formData = await getFormData();
         formData.published = true;
 
         formData = JSON.stringify(formData);
 
-        // Need to add a try/catch to handle errors and display in form
-        const response = await fetch(
-            `https://blog-api-test.fly.dev/api/posts/${postId}`,
-            {
-                method: "put",
-                body: formData,
-                headers: {
-                    "Content-Type": "application/json",
-                    authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-            }
-        );
+        // Make request to Publish post
+        try {
+            const response = await fetch(
+                "https://blog-api-test.fly.dev/api/posts",
+                {
+                    method: "post",
+                    body: formData,
+                    headers: {
+                        "Content-Type": "application/json",
+                        authorization: `Bearer ${localStorage.getItem(
+                            "token"
+                        )}`,
+                    },
+                }
+            );
 
-        const result = await response.json();
-        console.log(result);
+            const result = await response.json();
+            console.log(result);
 
-        if (response.ok) {
             setShowLoader(false);
-            navigate("/blog-client");
+
+            // Handle any errors
+            if (response.status == 400) {
+                setFormError(result.errors);
+            } else if (!response.ok) {
+                throw new Error(
+                    `This is an HTTP error: The status is ${response.status}`
+                );
+            } else {
+                navigate("/blog-client");
+            }
+        } catch (err) {
+            setError(err.message);
         }
     }
 
@@ -140,37 +158,59 @@ function EditPost() {
         e.preventDefault();
         setShowLoader(true);
 
+        setFormError("");
+        setError("");
+
         let formData = await getFormData();
         formData.published = false;
 
         formData = JSON.stringify(formData);
 
-        // Need to add a try/catch to handle errors and display in form
-        const response = await fetch(
-            `https://blog-api-test.fly.dev/api/posts/${postId}`,
-            {
-                method: "put",
-                body: formData,
-                headers: {
-                    "Content-Type": "application/json",
-                    authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-            }
-        );
+        // Make request to save post
+        try {
+            const response = await fetch(
+                "https://blog-api-test.fly.dev/api/posts",
+                {
+                    method: "post",
+                    body: formData,
+                    headers: {
+                        "Content-Type": "application/json",
+                        authorization: `Bearer ${localStorage.getItem(
+                            "token"
+                        )}`,
+                    },
+                }
+            );
 
-        const result = await response.json();
-        console.log(result);
+            const result = await response.json();
+            console.log(result);
 
-        if (response.ok) {
             setShowLoader(false);
-            navigate("/blog-client");
+
+            // Handle any errors
+            if (response.status == 400) {
+                setFormError(result.errors);
+            } else if (!response.ok) {
+                throw new Error(
+                    `This is an HTTP error: The status is ${response.status}`
+                );
+            } else {
+                navigate("/blog-client");
+            }
+        } catch (err) {
+            setError(err.message);
         }
     }
 
     return (
         <div className="main formPage">
+            {error && (
+                <div className="errorContainer">
+                    There was problem handling your request. Please try again
+                    later.
+                </div>
+            )}
             <h2>Edit Post</h2>
-
             <form className="pageForm">
                 <div className="formElement">
                     <label htmlFor="image">Post Image: </label>
@@ -222,6 +262,17 @@ function EditPost() {
                         disabled={showLoader}
                     />
                 </div>
+                {formError && (
+                    <div className="formErrorContainer">
+                        <ul className="formErrorList">
+                            {formError.map((error, index) => (
+                                <li key={index} className="formError">
+                                    {error.msg}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
             </form>
         </div>
     );
