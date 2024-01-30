@@ -56,7 +56,7 @@ function Home() {
             {error && (
                 <div className="errorContainer">
                     There was problem fetching the data from the server. Please
-                    try again later
+                    try again later.
                 </div>
             )}
             <div className="homeMain">
