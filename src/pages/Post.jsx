@@ -309,7 +309,7 @@ function Post() {
                             </div>
                         </form>
                         {formError && (
-                            <div className="formErrorContainer">
+                            <div className="formErrorContainer commentError">
                                 <ul className="formErrorList">
                                     {formError.map((error, index) => (
                                         <li key={index} className="formError">

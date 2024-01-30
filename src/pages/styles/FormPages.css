@@ -71,6 +71,15 @@
     color: black;
 }
 
+.formErrorContainer {
+    align-self: center;
+}
+
+.formErrorContainer.commentError {
+    align-self: flex-start;
+    padding-left: 20px;
+}
+
 .formErrorList {
     font-size: 0.9rem;
     color: red;
