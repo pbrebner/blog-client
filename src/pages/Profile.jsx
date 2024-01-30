@@ -99,7 +99,7 @@ function Profile() {
             }
         }
         getUser();
-    }, [editProfileOpen, numPosts]);
+    }, [editProfileOpen, numPosts, userId]);
 
     async function handleEditProfileSubmit(e) {
         e.preventDefault();
