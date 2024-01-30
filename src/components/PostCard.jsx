@@ -9,36 +9,50 @@ function PostCard({ post, numPosts, setNumPosts, usersProfile, drafts }) {
     const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
     const [showLoader, setShowLoader] = useState(false);
 
+    const [error, setError] = useState("");
+
     const navigate = useNavigate();
 
     async function handleDeletePostSubmit(postId) {
         setShowLoader(true);
+        setError("");
 
         // Need to add a try/catch to handle errors and display in form
-        const response = await fetch(
-            `https://blog-api-test.fly.dev/api/posts/${postId}`,
-            {
-                method: "delete",
-                headers: {
-                    "Content-Type": "application/json",
-                    authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-            }
-        );
+        try {
+            const response = await fetch(
+                `https://blog-api-test.fly.dev/api/posts/${postId}`,
+                {
+                    method: "delete",
+                    headers: {
+                        "Content-Type": "application/json",
+                        authorization: `Bearer ${localStorage.getItem(
+                            "token"
+                        )}`,
+                    },
+                }
+            );
 
-        console.log(response);
+            console.log(response);
+            const result = await response.json();
+            console.log(result);
 
-        const result = await response.json();
-        console.log(result);
-
-        if (response.ok) {
-            let val = numPosts - 1;
-            setNumPosts(val);
             setShowLoader(false);
+
+            if (!response.ok) {
+                throw new Error(
+                    `This is an HTTP error: The status is ${response.status}`
+                );
+            } else {
+                let val = numPosts - 1;
+                setNumPosts(val);
+            }
+        } catch (err) {
+            setError(err.message);
         }
     }
 
     function togglePostDelete() {
+        setError("");
         confirmDeleteOpen === true
             ? setConfirmDeleteOpen(false)
             : setConfirmDeleteOpen(true);
@@ -135,6 +149,12 @@ function PostCard({ post, numPosts, setNumPosts, usersProfile, drafts }) {
                                 Edit
                             </button>
                         )}
+                    </div>
+                )}
+                {error && (
+                    <div className="postCardError">
+                        There was a problem handling your request. Please try
+                        again later.
                     </div>
                 )}
             </div>

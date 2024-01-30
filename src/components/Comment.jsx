@@ -13,6 +13,8 @@ function Comment({ postId, comment, numComments, setNumComments, user }) {
     const [showLoader, setShowLoader] = useState(false);
     const [shake, setShake] = useState(false);
 
+    const [error, setError] = useState("");
+
     async function handleCommentLike(e) {
         let likes = commentLikes + 1;
         setShake(true);
@@ -22,28 +24,38 @@ function Comment({ postId, comment, numComments, setNumComments, user }) {
             setShake(false);
         }, "800");
 
+        setError("");
+
         const bodyData = JSON.stringify({
             likes: likes,
         });
 
-        // Need to add a try/catch to handle errors and display in form
-        const response = await fetch(
-            `https://blog-api-test.fly.dev/api/posts/${postId}/comments/${comment._id}`,
-            {
-                method: "put",
-                body: bodyData,
-                headers: {
-                    "Content-Type": "application/json",
-                    authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
+        // Make request to update comment likes
+        try {
+            const response = await fetch(
+                `https://blog-api-test.fly.dev/api/posts/${postId}/comments/${comment._id}`,
+                {
+                    method: "put",
+                    body: bodyData,
+                    headers: {
+                        "Content-Type": "application/json",
+                        authorization: `Bearer ${localStorage.getItem(
+                            "token"
+                        )}`,
+                    },
+                }
+            );
+
+            const result = await response.json();
+            console.log(result);
+
+            if (!response.ok) {
+                throw new Error(
+                    `This is an HTTP error: The status is ${response.status}`
+                );
             }
-        );
-
-        const result = await response.json();
-        console.log(result);
-
-        if (response.ok) {
-            console.log("Success");
+        } catch (err) {
+            setError(err.message);
         }
     }
 
@@ -51,29 +63,43 @@ function Comment({ postId, comment, numComments, setNumComments, user }) {
         e.preventDefault();
         setShowLoader(true);
 
-        // Need to add a try/catch to handle errors and display in form
-        const response = await fetch(
-            `https://blog-api-test.fly.dev/api/posts/${postId}/comments/${comment._id}`,
-            {
-                method: "delete",
-                headers: {
-                    "Content-Type": "application/json",
-                    authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-            }
-        );
+        setError("");
 
-        const result = await response.json();
-        console.log(result);
+        // Make request to delete comment
+        try {
+            const response = await fetch(
+                `https://blog-api-test.fly.dev/api/posts/${postId}/comments/${comment._id}`,
+                {
+                    method: "delete",
+                    headers: {
+                        "Content-Type": "application/json",
+                        authorization: `Bearer ${localStorage.getItem(
+                            "token"
+                        )}`,
+                    },
+                }
+            );
 
-        if (response.ok) {
-            let val = numComments - 1;
-            setNumComments(val);
+            const result = await response.json();
+            console.log(result);
+
             setShowLoader(false);
+
+            if (!response.ok) {
+                throw new Error(
+                    `This is an HTTP error: The status is ${response.status}`
+                );
+            } else {
+                let val = numComments - 1;
+                setNumComments(val);
+            }
+        } catch (err) {
+            setError(err.message);
         }
     }
 
     function toggleCommentDelete() {
+        setError("");
         confirmDeleteOpen === true
             ? setConfirmDeleteOpen(false)
             : setConfirmDeleteOpen(true);
@@ -146,6 +172,12 @@ function Comment({ postId, comment, numComments, setNumComments, user }) {
                     </div>
                 )}
             </div>
+            {error && (
+                <div className="commentError">
+                    There was a problem handling your request. Please try again
+                    later.
+                </div>
+            )}
         </div>
     );
 }

@@ -73,3 +73,10 @@
 .commentDeleteConfirmBtn {
     color: red;
 }
+
+/* Comment Error */
+
+.commentError {
+    color: red;
+    font-size: 0.9rem;
+}
