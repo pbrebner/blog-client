@@ -22,7 +22,7 @@ function Login() {
     const navigate = useNavigate();
     const location = useLocation();
 
-    async function handleSubmit(e) {
+    async function handleLogin(e) {
         e.preventDefault();
         setShowLoader(true);
 
@@ -49,6 +49,53 @@ function Login() {
             const result = await response.json();
             console.log(result);
 
+            setShowLoader(false);
+
+            if (response.status == 400) {
+                setFormError(result.errors);
+            } else if (!response.ok) {
+                throw new Error(
+                    `This is an HTTP error: The status is ${response.status}`
+                );
+            } else if (result.token) {
+                // Save token to local storage and setLoggedInd
+                localStorage.setItem("token", result.token);
+                localStorage.setItem("userAuth", true);
+                localStorage.setItem("name", result.body.name);
+                localStorage.setItem("userId", result.body._id);
+
+                setLoggedIn(true);
+                navigate("/blog-client");
+            }
+        } catch (err) {
+            setError(err.message);
+        }
+    }
+
+    async function handleGuestLogin(e) {
+        e.preventDefault();
+        setShowLoader(true);
+
+        setFormError("");
+        setError("");
+
+        const formData = JSON.stringify({
+            username: "jimsmith@example.com",
+            password: "userPassword",
+        });
+
+        // Need to add a try/catch to handle errors
+        try {
+            const response = await fetch(
+                "https://blog-api-test.fly.dev/api/login",
+                {
+                    method: "post",
+                    body: formData,
+                    headers: { "content-Type": "application/json" },
+                }
+            );
+
+            const result = await response.json();
             setShowLoader(false);
 
             if (response.status == 400) {
@@ -107,8 +154,16 @@ function Login() {
                 </div>
                 <div className="formElement">
                     <Button
-                        text="Log in"
-                        onClick={handleSubmit}
+                        text="Log In"
+                        onClick={handleLogin}
+                        loading={showLoader}
+                        disabled={showLoader}
+                    />
+                </div>
+                <div className="formElement">
+                    <Button
+                        text="Guest Log In"
+                        onClick={handleGuestLogin}
                         loading={showLoader}
                         disabled={showLoader}
                     />
