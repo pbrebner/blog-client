@@ -71,7 +71,7 @@ function Header({ loggedIn, setLoggedIn }) {
                                 Account
                             </Link>
                             <Link onClick={handleLogout} className="menuLink">
-                                Sign out
+                                Log out
                             </Link>
                         </div>
                     </div>
@@ -99,7 +99,7 @@ function Header({ loggedIn, setLoggedIn }) {
                             to="/blog-client/account/login"
                             className="navLink signin"
                         >
-                            Sign in
+                            Log in
                         </Link>
                         <Link
                             to="/blog-client/account/signup"
