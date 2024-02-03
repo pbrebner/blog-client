@@ -33,6 +33,8 @@ function Profile() {
     const [formError, setFormError] = useState("");
     const [error, setError] = useState("");
 
+    const [guestProfile, setGuestProfile] = useState(false);
+
     const { userId } = useParams();
     const navigate = useNavigate();
     const [loggedIn, setLoggedIn] = useOutletContext();
@@ -74,6 +76,10 @@ function Profile() {
                 setName(data.user.name);
                 setUsername(data.user.username);
                 setUserDescription(data.user.userDescription);
+
+                if (data.user.username == "jimsmith@example.com") {
+                    setGuestProfile(true);
+                }
 
                 let publishedPostsTemp = [];
                 let savedPostsTemp = [];
@@ -201,41 +207,49 @@ function Profile() {
 
     async function handleDeleteProfileSubmit(e) {
         e.preventDefault();
-        setShowLoader(true);
         setError("");
 
-        try {
-            const response = await fetch(
-                `https://blog-api-test.fly.dev/api/users/${user._id}`,
-                {
-                    method: "delete",
-                    headers: {
-                        "Content-Type": "application/json",
-                        authorization: `Bearer ${localStorage.getItem(
-                            "token"
-                        )}`,
-                    },
-                }
-            );
+        if (!guestProfile) {
+            setShowLoader(true);
 
-            console.log(response);
-            const result = await response.json();
-            console.log(result);
-
-            setShowLoader(false);
-
-            if (!response.ok) {
-                throw new Error(
-                    `This is an HTTP error: The status is ${response.status}`
+            try {
+                const response = await fetch(
+                    `https://blog-api-test.fly.dev/api/users/${user._id}`,
+                    {
+                        method: "delete",
+                        headers: {
+                            "Content-Type": "application/json",
+                            authorization: `Bearer ${localStorage.getItem(
+                                "token"
+                            )}`,
+                        },
+                    }
                 );
-            } else {
-                localStorage.clear();
-                setLoggedIn(false);
-                navigate("/blog-client");
+
+                console.log(response);
+                const result = await response.json();
+                console.log(result);
+
+                setShowLoader(false);
+
+                if (!response.ok) {
+                    throw new Error(
+                        `This is an HTTP error: The status is ${response.status}`
+                    );
+                } else {
+                    localStorage.clear();
+                    setLoggedIn(false);
+                    navigate("/blog-client");
+                }
+            } catch (err) {
+                setDeleteProfileOpen(false);
+                setError(err.message);
             }
-        } catch (err) {
+        } else {
             setDeleteProfileOpen(false);
-            setError(err.message);
+            alert(
+                "Normally this would of deleted the profile and redirected you to the home page. Unfortunately, guest profiles can't be deleted."
+            );
         }
     }
 
@@ -365,7 +379,6 @@ function Profile() {
                                     id="name"
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
-                                    required
                                 />
                             </div>
                             <div className="formElement">
@@ -374,11 +387,11 @@ function Profile() {
                                     type="text"
                                     name="username"
                                     id="username"
+                                    disabled={guestProfile}
                                     value={username}
                                     onChange={(e) =>
                                         setUsername(e.target.value)
                                     }
-                                    required
                                 />
                             </div>
                             <div className="formElement">
