@@ -33,7 +33,3 @@ Users are able to sign-up, manage their profiles, view and post content, and int
 -   HTML/CSS
 -   JWTs
 -   AWS S3
-
-## TODO
-
--   Add loading animations to main
