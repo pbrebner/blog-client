@@ -44,6 +44,13 @@ function Post() {
                     }
                 );
 
+                const data = await response.json();
+                console.log(data);
+
+                setTimeout(() => {
+                    setPageLoading(false);
+                }, "1500");
+
                 if (response.status == "403") {
                     navigate("/blog-client/account/login", {
                         state: {
@@ -56,16 +63,15 @@ function Post() {
                     );
                 }
 
-                const data = await response.json();
-                console.log(data);
-
                 setPost(data);
                 setPostLikes(data.likes);
-                setPageLoading(false);
                 setError("");
             } catch (err) {
+                setTimeout(() => {
+                    setPageLoading(false);
+                }, "1500");
+
                 setError(err.message);
-                setPageLoading(false);
                 setPost(null);
             }
         }

@@ -1,10 +1,15 @@
 .pageLoadingContainer {
     padding: 20px;
+
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    background-color: white;
+
     display: flex;
     align-items: center;
     justify-content: center;
-
-    min-height: 70vh;
 }
 
 .pageLoader {
@@ -12,7 +17,8 @@
     flex-direction: column;
     align-items: center;
     gap: 15px;
-    animation: fade 1.5s linear infinite alternate;
+
+    animation: fade 1s ease-in-out infinite alternate;
 }
 
 .pageLoaderImage {
