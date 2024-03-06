@@ -106,13 +106,13 @@
 /* Styling for menu Tab */
 .menuTab {
     background-color: white;
-    padding: 20px;
+    padding: 5px;
     width: 200px;
+    border-radius: 5px;
     box-shadow: 2px 2px 2px 2px grey;
 
     display: flex;
     flex-direction: column;
-    gap: 20px;
 
     position: absolute;
     right: -5px;
@@ -132,9 +132,15 @@
 }
 
 .menuLink {
+    padding: 10px;
     text-decoration: none;
     color: black;
     font-size: 1.2rem;
+    border-radius: 5px;
+}
+
+.menuLink:hover {
+    background-color: rgb(194, 194, 194);
 }
 
 /* Styling for Overlay*/
