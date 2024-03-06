@@ -14,8 +14,6 @@ function Home() {
 
     // Fetch all posts and display on "home page"
     useEffect(() => {
-        setPageLoading(true);
-
         async function getPosts() {
             try {
                 const response = await fetch(
@@ -23,11 +21,11 @@ function Home() {
                 );
 
                 const data = await response.json();
-                console.log(data);
+                //console.log(data);
 
                 setTimeout(() => {
                     setPageLoading(false);
-                }, "2000");
+                }, "3000");
 
                 if (!response.ok) {
                     throw new Error(
@@ -40,7 +38,7 @@ function Home() {
             } catch (err) {
                 setTimeout(() => {
                     setPageLoading(false);
-                }, "2000");
+                }, "3000");
 
                 setError(err.message);
                 setPosts(null);
