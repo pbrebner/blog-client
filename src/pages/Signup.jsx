@@ -41,9 +41,8 @@ function Signup() {
                 }
             );
 
-            console.log(response);
             const result = await response.json();
-            console.log(result.errors);
+            //console.log(result);
 
             setShowLoader(false);
 
@@ -58,6 +57,7 @@ function Signup() {
             }
         } catch (err) {
             setError(err.message);
+            setShowLoader(false);
         }
     }
 

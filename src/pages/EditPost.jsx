@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import Button from "../components/Button";
+import PageLoader from "../components/PageLoader";
 import "./styles/FormPages.css";
 
 function EditPost() {
@@ -11,6 +12,7 @@ function EditPost() {
     const [image, setImage] = useState("");
 
     const [showLoader, setShowLoader] = useState(false);
+    const [pageLoading, setPageLoading] = useState(true);
 
     const [formError, setFormError] = useState("");
     const [error, setError] = useState("");
@@ -35,20 +37,34 @@ function EditPost() {
                     }
                 );
 
-                if (!response.ok) {
+                const data = await response.json();
+                //console.log(data);
+
+                setTimeout(() => {
+                    setPageLoading(false);
+                }, "1500");
+
+                if (response.status == 401) {
+                    navigate("/blog-client/account/login", {
+                        state: {
+                            message: "Please sign-in to access this content.",
+                        },
+                    });
+                } else if (!response.ok) {
                     throw new Error(
                         `This is an HTTP error: The status is ${response.status}`
                     );
+                } else {
+                    setTitle(data.title);
+                    setContent(data.content);
+                    setCurrentImage(data.image);
+                    setError("");
                 }
-
-                const data = await response.json();
-                console.log(data);
-
-                setTitle(data.title);
-                setContent(data.content);
-                setCurrentImage(data.image);
-                setError("");
             } catch (err) {
+                setTimeout(() => {
+                    setPageLoading(false);
+                }, "1500");
+
                 setError(err.message);
                 setTitle("");
                 setContent("");
@@ -76,7 +92,6 @@ function EditPost() {
             );
 
             const accessUrl = await accessUrlRequest.json();
-            console.log(accessUrl.url);
 
             // post the image directly to the s3 bucket
             await fetch(accessUrl.url, {
@@ -88,7 +103,6 @@ function EditPost() {
             });
 
             const imageUrl = accessUrl.url.split("?")[0];
-            console.log(imageUrl);
 
             // Set form data for request to server
             let formData = {
@@ -135,12 +149,18 @@ function EditPost() {
             );
 
             const result = await response.json();
-            console.log(result);
+            //console.log(result);
 
             setShowLoader(false);
 
             // Handle any errors
-            if (response.status == 400) {
+            if (response.status == 401) {
+                navigate("/blog-client/account/login", {
+                    state: {
+                        message: "Please sign-in to perform this action.",
+                    },
+                });
+            } else if (response.status == 400) {
                 setFormError(result.errors);
             } else if (!response.ok) {
                 throw new Error(
@@ -151,6 +171,7 @@ function EditPost() {
             }
         } catch (err) {
             setError(err.message);
+            setShowLoader(false);
         }
     }
 
@@ -183,12 +204,18 @@ function EditPost() {
             );
 
             const result = await response.json();
-            console.log(result);
+            //console.log(result);
 
             setShowLoader(false);
 
             // Handle any errors
-            if (response.status == 400) {
+            if (response.status == 401) {
+                navigate("/blog-client/account/login", {
+                    state: {
+                        message: "Please sign-in to perform this action.",
+                    },
+                });
+            } else if (response.status == 400) {
                 setFormError(result.errors);
             } else if (!response.ok) {
                 throw new Error(
@@ -199,11 +226,13 @@ function EditPost() {
             }
         } catch (err) {
             setError(err.message);
+            setShowLoader(false);
         }
     }
 
     return (
         <div className="main formPage">
+            {pageLoading && <PageLoader />}
             {error && (
                 <div className="errorContainer">
                     There was problem handling your request. Please try again

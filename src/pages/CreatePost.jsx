@@ -35,7 +35,6 @@ function CreatePost() {
             );
 
             const accessUrl = await accessUrlRequest.json();
-            console.log(accessUrl.url);
 
             // post the image directly to the s3 bucket
             await fetch(accessUrl.url, {
@@ -47,7 +46,6 @@ function CreatePost() {
             });
 
             const imageUrl = accessUrl.url.split("?")[0];
-            console.log(imageUrl);
 
             // Set form data for request to server
             let formData = {
@@ -94,12 +92,18 @@ function CreatePost() {
             );
 
             const result = await response.json();
-            console.log(result);
+            //console.log(result);
 
             setShowLoader(false);
 
             // Handle any errors
-            if (response.status == 400) {
+            if (response.status == 401) {
+                navigate("/blog-client/account/login", {
+                    state: {
+                        message: "Please sign-in to perform this action.",
+                    },
+                });
+            } else if (response.status == 400) {
                 setFormError(result.errors);
             } else if (!response.ok) {
                 throw new Error(
@@ -110,6 +114,7 @@ function CreatePost() {
             }
         } catch (err) {
             setError(err.message);
+            setShowLoader(false);
         }
     }
 
@@ -142,12 +147,18 @@ function CreatePost() {
             );
 
             const result = await response.json();
-            console.log(result);
+            //console.log(result);
 
             setShowLoader(false);
 
             // Handle any errors
-            if (response.status == 400) {
+            if (response.status == 401) {
+                navigate("/blog-client/account/login", {
+                    state: {
+                        message: "Please sign-in to perform this action.",
+                    },
+                });
+            } else if (response.status == 400) {
                 setFormError(result.errors);
             } else if (!response.ok) {
                 throw new Error(
@@ -158,6 +169,7 @@ function CreatePost() {
             }
         } catch (err) {
             setError(err.message);
+            setShowLoader(false);
         }
     }
 

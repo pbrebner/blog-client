@@ -17,7 +17,6 @@ function PostCard({ post, numPosts, setNumPosts, usersProfile, drafts }) {
         setShowLoader(true);
         setError("");
 
-        // Need to add a try/catch to handle errors and display in form
         try {
             const response = await fetch(
                 `https://blog-api-test.fly.dev/api/posts/${postId}`,
@@ -32,13 +31,18 @@ function PostCard({ post, numPosts, setNumPosts, usersProfile, drafts }) {
                 }
             );
 
-            console.log(response);
             const result = await response.json();
-            console.log(result);
+            //console.log(result);
 
             setShowLoader(false);
 
-            if (!response.ok) {
+            if (response.status == 401) {
+                navigate("/blog-client/account/login", {
+                    state: {
+                        message: "Please sign-in to perform this action.",
+                    },
+                });
+            } else if (!response.ok) {
                 throw new Error(
                     `This is an HTTP error: The status is ${response.status}`
                 );

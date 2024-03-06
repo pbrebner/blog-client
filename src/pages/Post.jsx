@@ -45,27 +45,27 @@ function Post() {
                 );
 
                 const data = await response.json();
-                console.log(data);
+                //console.log(data);
 
                 setTimeout(() => {
                     setPageLoading(false);
                 }, "1500");
 
-                if (response.status == "403") {
+                if (response.status == 401) {
                     navigate("/blog-client/account/login", {
                         state: {
-                            message: "Please sign-in to access blog posts",
+                            message: "Please sign-in to access this content.",
                         },
                     });
                 } else if (!response.ok) {
                     throw new Error(
                         `This is an HTTP error: The status is ${response.status}`
                     );
+                } else {
+                    setPost(data);
+                    setPostLikes(data.likes);
+                    setError("");
                 }
-
-                setPost(data);
-                setPostLikes(data.likes);
-                setError("");
             } catch (err) {
                 setTimeout(() => {
                     setPageLoading(false);
@@ -94,18 +94,24 @@ function Post() {
                     }
                 );
 
-                if (!response.ok) {
+                const data = await response.json();
+                //console.log(data);
+
+                if (response.status == 401) {
+                    navigate("/blog-client/account/login", {
+                        state: {
+                            message: "Please sign-in to access this content.",
+                        },
+                    });
+                } else if (!response.ok) {
                     throw new Error(
                         `This is an HTTP error: The status is ${response.status}`
                     );
+                } else {
+                    setComments(data);
+                    setNumComments(data.length);
+                    setError("");
                 }
-
-                const data = await response.json();
-                console.log(data);
-
-                setComments(data);
-                setNumComments(data.length);
-                setError("");
             } catch (err) {
                 setError(err.message);
                 setComments(null);
@@ -143,17 +149,23 @@ function Post() {
                 }
             );
 
-            console.log(response);
             const result = await response.json();
-            console.log(result);
+            //console.log(result);
 
             // Handle any errors
-            if (!response.ok) {
+            if (response.status == 401) {
+                navigate("/blog-client/account/login", {
+                    state: {
+                        message: "Please sign-in to perform this action.",
+                    },
+                });
+            } else if (!response.ok) {
                 throw new Error(
                     `This is an HTTP error: The status is ${response.status}`
                 );
+            } else {
+                setError("");
             }
-            setError("");
         } catch (err) {
             setError(err.message);
         }
@@ -186,14 +198,19 @@ function Post() {
                 }
             );
 
-            console.log(response);
             const result = await response.json();
-            console.log(result);
+            //console.log(result);
 
             setShowLoader(false);
 
             // Handle any errors
-            if (response.status == 400) {
+            if (response.status == 401) {
+                navigate("/blog-client/account/login", {
+                    state: {
+                        message: "Please sign-in to perform this action.",
+                    },
+                });
+            } else if (response.status == 400) {
                 setFormError(result.errors);
             } else if (!response.ok) {
                 throw new Error(
@@ -206,6 +223,7 @@ function Post() {
             }
         } catch (err) {
             setError(err.message);
+            setShowLoader(false);
         }
     }
 

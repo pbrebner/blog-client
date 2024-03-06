@@ -55,51 +55,58 @@ function Profile() {
                     }
                 );
 
-                if (response.status == "403") {
+                const data = await response.json();
+                //console.log(data);
+
+                setTimeout(() => {
+                    setPageLoading(false);
+                }, "1500");
+
+                if (response.status == 401) {
                     navigate("/blog-client/account/login", {
                         state: {
-                            message: "Please sign-in to view this page",
+                            message: "Please sign-in to view this content.",
                         },
                     });
                 } else if (!response.ok) {
                     throw new Error(
                         `This is an HTTP error: The status is ${response.status}`
                     );
-                }
+                } else {
+                    setUser(data.user);
+                    setUsersProfile(data.usersProfile);
 
-                const data = await response.json();
-                console.log(data);
+                    setName(data.user.name);
+                    setUsername(data.user.username);
+                    setUserDescription(data.user.userDescription);
 
-                setUser(data.user);
-                setUsersProfile(data.usersProfile);
-
-                setName(data.user.name);
-                setUsername(data.user.username);
-                setUserDescription(data.user.userDescription);
-
-                if (data.user.username == "jimsmith@example.com") {
-                    setGuestProfile(true);
-                }
-
-                let publishedPostsTemp = [];
-                let savedPostsTemp = [];
-
-                data.user.posts.map((post) => {
-                    if (post.published == true) {
-                        publishedPostsTemp.push(post);
-                    } else {
-                        savedPostsTemp.push(post);
+                    if (data.user.username == "jimsmith@example.com") {
+                        setGuestProfile(true);
                     }
-                });
 
-                setSavedPosts(savedPostsTemp);
-                setPublishedPosts(publishedPostsTemp);
-                setNumPosts(data.user.posts.length);
-                setPageLoading(false);
-                setError("");
+                    let publishedPostsTemp = [];
+                    let savedPostsTemp = [];
+
+                    data.user.posts.map((post) => {
+                        if (post.published == true) {
+                            publishedPostsTemp.push(post);
+                        } else {
+                            savedPostsTemp.push(post);
+                        }
+                    });
+
+                    setSavedPosts(savedPostsTemp);
+                    setPublishedPosts(publishedPostsTemp);
+                    setNumPosts(data.user.posts.length);
+
+                    setError("");
+                }
             } catch (err) {
+                setTimeout(() => {
+                    setPageLoading(false);
+                }, "1500");
+
                 setError(err.message);
-                setPageLoading(false);
                 setUser(null);
                 setUsersProfile(null);
             }
@@ -134,7 +141,6 @@ function Profile() {
             );
 
             const accessUrl = await accessUrlRequest.json();
-            console.log(accessUrl.url);
 
             // post the image directly to the s3 bucket
             await fetch(accessUrl.url, {
@@ -146,7 +152,6 @@ function Profile() {
             });
 
             const imageUrl = accessUrl.url.split("?")[0];
-            console.log(imageUrl);
 
             // Set form data for request to server
             formData = JSON.stringify({
@@ -162,8 +167,6 @@ function Profile() {
                 userDescription: userDescription,
             });
         }
-
-        console.log(formData);
 
         // Send request to update the user
         try {
@@ -181,14 +184,19 @@ function Profile() {
                 }
             );
 
-            console.log(response);
             const result = await response.json();
-            console.log(result);
+            //console.log(result);
 
             setShowLoader(false);
 
             // Catch any errors
-            if (response.status == 400) {
+            if (response.status == 401) {
+                navigate("/blog-client/account/login", {
+                    state: {
+                        message: "Please sign-in to perform this action.",
+                    },
+                });
+            } else if (response.status == 400) {
                 setFormError(result.errors);
             } else if (!response.ok) {
                 throw new Error(
@@ -202,6 +210,7 @@ function Profile() {
         } catch (err) {
             setEditProfileOpen(false);
             setError(err.message);
+            setShowLoader(false);
         }
     }
 
@@ -226,13 +235,18 @@ function Profile() {
                     }
                 );
 
-                console.log(response);
                 const result = await response.json();
-                console.log(result);
+                //console.log(result);
 
                 setShowLoader(false);
 
-                if (!response.ok) {
+                if (response.status == 401) {
+                    navigate("/blog-client/account/login", {
+                        state: {
+                            message: "Please sign-in to perform this action.",
+                        },
+                    });
+                } else if (!response.ok) {
                     throw new Error(
                         `This is an HTTP error: The status is ${response.status}`
                     );
@@ -244,6 +258,7 @@ function Profile() {
             } catch (err) {
                 setDeleteProfileOpen(false);
                 setError(err.message);
+                setShowLoader(false);
             }
         } else {
             setDeleteProfileOpen(false);

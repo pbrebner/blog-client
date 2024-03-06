@@ -34,7 +34,6 @@ function Login() {
             password: password,
         });
 
-        // Need to add a try/catch to handle errors
         try {
             const response = await fetch(
                 "https://blog-api-test.fly.dev/api/login",
@@ -45,9 +44,8 @@ function Login() {
                 }
             );
 
-            console.log(response);
             const result = await response.json();
-            console.log(result);
+            //console.log(result);
 
             setShowLoader(false);
 
@@ -69,6 +67,7 @@ function Login() {
             }
         } catch (err) {
             setError(err.message);
+            setShowLoader(false);
         }
     }
 
@@ -84,7 +83,6 @@ function Login() {
             password: "userPassword",
         });
 
-        // Need to add a try/catch to handle errors
         try {
             const response = await fetch(
                 "https://blog-api-test.fly.dev/api/login",
@@ -116,6 +114,7 @@ function Login() {
             }
         } catch (err) {
             setError(err.message);
+            setShowLoader(false);
         }
     }
 

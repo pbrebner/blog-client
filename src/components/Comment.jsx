@@ -47,9 +47,15 @@ function Comment({ postId, comment, numComments, setNumComments, user }) {
             );
 
             const result = await response.json();
-            console.log(result);
+            //console.log(result);
 
-            if (!response.ok) {
+            if (response.status == 401) {
+                navigate("/blog-client/account/login", {
+                    state: {
+                        message: "Please sign-in to perform this action.",
+                    },
+                });
+            } else if (!response.ok) {
                 throw new Error(
                     `This is an HTTP error: The status is ${response.status}`
                 );
@@ -81,11 +87,17 @@ function Comment({ postId, comment, numComments, setNumComments, user }) {
             );
 
             const result = await response.json();
-            console.log(result);
+            //console.log(result);
 
             setShowLoader(false);
 
-            if (!response.ok) {
+            if (response.status == 401) {
+                navigate("/blog-client/account/login", {
+                    state: {
+                        message: "Please sign-in to perform this action.",
+                    },
+                });
+            } else if (!response.ok) {
                 throw new Error(
                     `This is an HTTP error: The status is ${response.status}`
                 );
@@ -95,6 +107,7 @@ function Comment({ postId, comment, numComments, setNumComments, user }) {
             }
         } catch (err) {
             setError(err.message);
+            setShowLoader(false);
         }
     }
 
