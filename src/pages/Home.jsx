@@ -10,7 +10,7 @@ function Home() {
     const [posts, setPosts] = useState(null);
     const [error, setError] = useState(null);
 
-    const [pageLoading, setPageLoading] = useState(false);
+    const [pageLoading, setPageLoading] = useState(true);
 
     // Fetch all posts and display on "home page"
     useEffect(() => {
@@ -22,33 +22,32 @@ function Home() {
                     "https://blog-api-test.fly.dev/api/posts"
                 );
 
+                const data = await response.json();
+                console.log(data);
+
+                setTimeout(() => {
+                    setPageLoading(false);
+                }, "2000");
+
                 if (!response.ok) {
                     throw new Error(
                         `This is an HTTP error: The status is ${response.status}`
                     );
+                } else {
+                    setPosts(data);
+                    setError(null);
                 }
-
-                const data = await response.json();
-                console.log(data);
-
-                setPageLoading(false);
-                setPosts(data);
-                setError(null);
             } catch (err) {
+                setTimeout(() => {
+                    setPageLoading(false);
+                }, "2000");
+
                 setError(err.message);
                 setPosts(null);
-                setPageLoading(false);
             }
         }
         getPosts();
     }, []);
-
-    const pageLoadingElements = [];
-    for (let i = 0; i < 6; i++) {
-        pageLoadingElements.push(
-            <PostCardLoader key={i} pageLoading={pageLoading} />
-        );
-    }
 
     return (
         <div className="main homePage">
@@ -61,7 +60,7 @@ function Home() {
             )}
             <div className="homeMain">
                 <div className="postsOuterContainer">
-                    {pageLoadingElements}
+                    {pageLoading && <PostCardLoader />}
                     {posts && (
                         <div className="postsContainer">
                             {posts.map((post) => (
