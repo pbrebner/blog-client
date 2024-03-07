@@ -64,6 +64,7 @@ function Profile() {
 
                 if (response.status == 401) {
                     setLoggedIn(false);
+                    localStorage.clear();
                     navigate("/blog-client/account/login", {
                         state: {
                             message: "Please sign-in to view this content.",
@@ -193,6 +194,7 @@ function Profile() {
             // Catch any errors
             if (response.status == 401) {
                 setLoggedIn(false);
+                localStorage.clear();
                 navigate("/blog-client/account/login", {
                     state: {
                         message: "Please sign-in to perform this action.",
@@ -244,6 +246,7 @@ function Profile() {
 
                 if (response.status == 401) {
                     setLoggedIn(false);
+                    localStorage.clear();
                     navigate("/blog-client/account/login", {
                         state: {
                             message: "Please sign-in to perform this action.",

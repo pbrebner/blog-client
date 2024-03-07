@@ -52,6 +52,7 @@ function Comment({ postId, comment, numComments, setNumComments, user }) {
 
             if (response.status == 401) {
                 setLoggedIn(false);
+                localStorage.clear();
                 navigate("/blog-client/account/login", {
                     state: {
                         message: "Please sign-in to perform this action.",
@@ -95,6 +96,7 @@ function Comment({ postId, comment, numComments, setNumComments, user }) {
 
             if (response.status == 401) {
                 setLoggedIn(false);
+                localStorage.clear();
                 navigate("/blog-client/account/login", {
                     state: {
                         message: "Please sign-in to perform this action.",

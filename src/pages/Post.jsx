@@ -59,6 +59,7 @@ function Post() {
 
                 if (response.status == 401) {
                     setLoggedIn(false);
+                    localStorage.clear();
                     navigate("/blog-client/account/login", {
                         state: {
                             message: "Please sign-in to access this content.",
@@ -106,6 +107,7 @@ function Post() {
 
                 if (response.status == 401) {
                     setLoggedIn(false);
+                    localStorage.clear();
                     navigate("/blog-client/account/login", {
                         state: {
                             message: "Please sign-in to access this content.",
@@ -163,6 +165,7 @@ function Post() {
             // Handle any errors
             if (response.status == 401) {
                 setLoggedIn(false);
+                localStorage.clear();
                 navigate("/blog-client/account/login", {
                     state: {
                         message: "Please sign-in to perform this action.",
@@ -215,6 +218,7 @@ function Post() {
             // Handle any errors
             if (response.status == 401) {
                 setLoggedIn(false);
+                localStorage.clear();
                 navigate("/blog-client/account/login", {
                     state: {
                         message: "Please sign-in to perform this action.",
