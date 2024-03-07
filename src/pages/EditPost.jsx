@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useOutletContext } from "react-router-dom";
 
 import Button from "../components/Button";
 import PageLoader from "../components/PageLoader";
@@ -17,8 +17,8 @@ function EditPost() {
     const [formError, setFormError] = useState("");
     const [error, setError] = useState("");
 
+    const [loggedIn, setLoggedIn] = useOutletContext();
     const { postId } = useParams();
-
     const navigate = useNavigate();
 
     // Fetch the post and display contents
@@ -45,6 +45,7 @@ function EditPost() {
                 }, "1500");
 
                 if (response.status == 401) {
+                    setLoggedIn(false);
                     navigate("/blog-client/account/login", {
                         state: {
                             message: "Please sign-in to access this content.",
@@ -155,6 +156,7 @@ function EditPost() {
 
             // Handle any errors
             if (response.status == 401) {
+                setLoggedIn(false);
                 navigate("/blog-client/account/login", {
                     state: {
                         message: "Please sign-in to perform this action.",
@@ -210,6 +212,7 @@ function EditPost() {
 
             // Handle any errors
             if (response.status == 401) {
+                setLoggedIn(false);
                 navigate("/blog-client/account/login", {
                     state: {
                         message: "Please sign-in to perform this action.",

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useOutletContext } from "react-router-dom";
 
 import Button from "../components/Button";
 import "./styles/PostCard.css";
@@ -10,7 +10,7 @@ function PostCard({ post, numPosts, setNumPosts, usersProfile, drafts }) {
     const [showLoader, setShowLoader] = useState(false);
 
     const [error, setError] = useState("");
-
+    const [loggedIn, setLoggedIn] = useOutletContext();
     const navigate = useNavigate();
 
     async function handleDeletePostSubmit(postId) {
@@ -37,6 +37,7 @@ function PostCard({ post, numPosts, setNumPosts, usersProfile, drafts }) {
             setShowLoader(false);
 
             if (response.status == 401) {
+                setLoggedIn(false);
                 navigate("/blog-client/account/login", {
                     state: {
                         message: "Please sign-in to perform this action.",

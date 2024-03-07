@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 
 import Button from "./Button";
 import Clap from "./Clap";
@@ -14,6 +14,7 @@ function Comment({ postId, comment, numComments, setNumComments, user }) {
     const [shake, setShake] = useState(false);
 
     const [error, setError] = useState("");
+    const [loggedIn, setLoggedIn] = useOutletContext();
 
     async function handleCommentLike(e) {
         let likes = commentLikes + 1;
@@ -50,6 +51,7 @@ function Comment({ postId, comment, numComments, setNumComments, user }) {
             //console.log(result);
 
             if (response.status == 401) {
+                setLoggedIn(false);
                 navigate("/blog-client/account/login", {
                     state: {
                         message: "Please sign-in to perform this action.",
@@ -92,6 +94,7 @@ function Comment({ postId, comment, numComments, setNumComments, user }) {
             setShowLoader(false);
 
             if (response.status == 401) {
+                setLoggedIn(false);
                 navigate("/blog-client/account/login", {
                     state: {
                         message: "Please sign-in to perform this action.",

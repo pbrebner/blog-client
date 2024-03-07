@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useOutletContext } from "react-router-dom";
 
 import Button from "../components/Button";
 import "./styles/FormPages.css";
@@ -14,6 +14,7 @@ function CreatePost() {
     const [formError, setFormError] = useState("");
     const [error, setError] = useState("");
 
+    const [loggedIn, setLoggedIn] = useOutletContext();
     const navigate = useNavigate();
 
     async function getFormData() {
@@ -98,6 +99,7 @@ function CreatePost() {
 
             // Handle any errors
             if (response.status == 401) {
+                setLoggedIn(false);
                 navigate("/blog-client/account/login", {
                     state: {
                         message: "Please sign-in to perform this action.",
@@ -153,6 +155,7 @@ function CreatePost() {
 
             // Handle any errors
             if (response.status == 401) {
+                setLoggedIn(false);
                 navigate("/blog-client/account/login", {
                     state: {
                         message: "Please sign-in to perform this action.",

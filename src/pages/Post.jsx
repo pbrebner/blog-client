@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import {
+    useParams,
+    useNavigate,
+    Link,
+    useOutletContext,
+} from "react-router-dom";
 
 import Comment from "../components/Comment";
 import Button from "../components/Button";
@@ -23,6 +28,7 @@ function Post() {
     const [formError, setFormError] = useState("");
     const [error, setError] = useState("");
 
+    const [loggedIn, setLoggedIn] = useOutletContext();
     const { postId } = useParams();
     const navigate = useNavigate();
 
@@ -52,6 +58,7 @@ function Post() {
                 }, "1500");
 
                 if (response.status == 401) {
+                    setLoggedIn(false);
                     navigate("/blog-client/account/login", {
                         state: {
                             message: "Please sign-in to access this content.",
@@ -98,6 +105,7 @@ function Post() {
                 //console.log(data);
 
                 if (response.status == 401) {
+                    setLoggedIn(false);
                     navigate("/blog-client/account/login", {
                         state: {
                             message: "Please sign-in to access this content.",
@@ -154,6 +162,7 @@ function Post() {
 
             // Handle any errors
             if (response.status == 401) {
+                setLoggedIn(false);
                 navigate("/blog-client/account/login", {
                     state: {
                         message: "Please sign-in to perform this action.",
@@ -205,6 +214,7 @@ function Post() {
 
             // Handle any errors
             if (response.status == 401) {
+                setLoggedIn(false);
                 navigate("/blog-client/account/login", {
                     state: {
                         message: "Please sign-in to perform this action.",
@@ -302,6 +312,7 @@ function Post() {
                                                 numComments={numComments}
                                                 setNumComments={setNumComments}
                                                 user={user}
+                                                setLoggedIn={setLoggedIn}
                                             />
                                             <div className="hl"></div>
                                         </div>

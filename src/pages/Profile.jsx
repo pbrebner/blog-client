@@ -63,6 +63,7 @@ function Profile() {
                 }, "1500");
 
                 if (response.status == 401) {
+                    setLoggedIn(false);
                     navigate("/blog-client/account/login", {
                         state: {
                             message: "Please sign-in to view this content.",
@@ -191,6 +192,7 @@ function Profile() {
 
             // Catch any errors
             if (response.status == 401) {
+                setLoggedIn(false);
                 navigate("/blog-client/account/login", {
                     state: {
                         message: "Please sign-in to perform this action.",
@@ -241,6 +243,7 @@ function Profile() {
                 setShowLoader(false);
 
                 if (response.status == 401) {
+                    setLoggedIn(false);
                     navigate("/blog-client/account/login", {
                         state: {
                             message: "Please sign-in to perform this action.",
