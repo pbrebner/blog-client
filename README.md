@@ -20,8 +20,8 @@ Users are able to sign-up, manage their profiles, view and post content, and int
 
 -   Persistent Authentication using JWTs
 -   Intuitive User Interface
--   Integration with Backend/API
--   Save images to AWS S3 Bucket and retrieve with URI stored in API
+-   Integration with Backend/API and MongoDB Database
+-   Save images to AWS S3 Bucket and retrieve with URI stored in MongoDB database
 -   Ability to Create, edit and delete blog posts
 -   Interact with others content through comments or likes
 -   Update users profile
