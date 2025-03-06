@@ -85,6 +85,18 @@
     color: red;
 }
 
+.inputGuide {
+    height: 0px;
+    font-size: 0.8rem;
+    overflow: hidden;
+    color: white;
+    transition: height 0.2s ease-in-out;
+}
+
+.inputGuide.display {
+    height: 20px;
+}
+
 @media (min-width: 600px) {
     .formElement label {
         font-size: 1.2rem;
@@ -98,5 +110,9 @@
     .pageForm .formElement .submitBtn {
         font-size: 1.1rem;
         max-width: 200px;
+    }
+
+    .inputGuide {
+        font-size: 1rem;
     }
 }

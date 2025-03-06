@@ -61,6 +61,16 @@ function Signup() {
         }
     }
 
+    // Displays text on focus
+    function handleFocus(e) {
+        e.target.nextElementSibling.classList.add("display");
+    }
+
+    // Hides text on blur (un-focus)
+    function handleBlur(e) {
+        e.target.nextElementSibling.classList.remove("display");
+    }
+
     return (
         <div className="main formPage">
             <h2>Sign-up</h2>
@@ -73,8 +83,13 @@ function Signup() {
                         placeholder="Name"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        required
+                        onFocus={handleFocus}
+                        onBlur={handleBlur}
+                        autoComplete="off"
                     />
+                    <p className="inputGuide">
+                        This is how others will see you.
+                    </p>
                 </div>
                 <div className="formElement">
                     <input
@@ -84,8 +99,11 @@ function Signup() {
                         placeholder="Username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
-                        required
+                        onFocus={handleFocus}
+                        onBlur={handleBlur}
+                        autoComplete="off"
                     />
+                    <p className="inputGuide">Must be email format.</p>
                 </div>
                 <div className="formElement">
                     <input
@@ -95,8 +113,12 @@ function Signup() {
                         placeholder="Password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        required
+                        onFocus={handleFocus}
+                        onBlur={handleBlur}
                     />
+                    <p className="inputGuide">
+                        Password must be minimum 6 characters.
+                    </p>
                 </div>
                 <div className="formElement">
                     <input
@@ -106,7 +128,6 @@ function Signup() {
                         placeholder="Confirm Password"
                         value={passwordConfirm}
                         onChange={(e) => setPasswordConfirm(e.target.value)}
-                        required
                     />
                 </div>
                 <div className="formElement">

@@ -97,7 +97,7 @@ function Login() {
                         placeholder="Username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
-                        required
+                        autoComplete="off"
                     />
                 </div>
                 <div className="formElement">
@@ -108,7 +108,6 @@ function Login() {
                         placeholder="Password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        required
                     />
                 </div>
                 <div className="formElement">
