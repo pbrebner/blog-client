@@ -15,125 +15,75 @@ function CreatePost() {
     const [loggedIn, setLoggedIn, setError] = useOutletContext();
 
     const navigate = useNavigate();
-
-    async function getFormData() {
-        if (image) {
-            const file = image;
-
-            // Get secure url from our server
-            const accessUrlRequest = await fetch(
-                "https://blog-api-test.fly.dev/api/s3Url",
-                {
-                    method: "get",
-                    headers: {
-                        "Content-Type": "application/json",
-                        authorization: `Bearer ${localStorage.getItem(
-                            "token"
-                        )}`,
-                    },
-                }
-            );
-
-            const accessUrl = await accessUrlRequest.json();
-
-            // post the image directly to the s3 bucket
-            await fetch(accessUrl.url, {
-                method: "put",
-                body: file,
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            });
-
-            const imageUrl = accessUrl.url.split("?")[0];
-
-            // Set form data for request to server
-            let formData = {
-                title: title,
-                content: content,
-                image: imageUrl,
-            };
-            return formData;
-        } else {
-            let formData = {
-                title: title,
-                content: content,
-            };
-            return formData;
-        }
-    }
+    const userId = localStorage.getItem("userId");
 
     async function handlePublish(e) {
         e.preventDefault();
-        setShowLoader(true);
 
-        setFormError("");
-        setError("");
+        let formData = {
+            title: title,
+            content: content,
+            published: true,
+        };
 
-        let formData = await getFormData();
-        formData.published = true;
-
-        formData = JSON.stringify(formData);
-
-        // Make request to Publish post
-        try {
-            const response = await fetch(
-                "https://blog-api-test.fly.dev/api/posts",
-                {
-                    method: "post",
-                    body: formData,
-                    headers: {
-                        "Content-Type": "application/json",
-                        authorization: `Bearer ${localStorage.getItem(
-                            "token"
-                        )}`,
-                    },
-                }
-            );
-
-            const result = await response.json();
-            //console.log(result);
-
-            setShowLoader(false);
-
-            // Handle any errors
-            if (response.status == 401) {
-                setLoggedIn(false);
-                localStorage.clear();
-                navigate("/blog-client/account/login", {
-                    state: {
-                        message: "Please sign-in to perform this action.",
-                    },
-                });
-            } else if (response.status == 400) {
-                setFormError(result.errors);
-            } else if (!response.ok) {
-                throw new Error(
-                    `This is an HTTP error: The status is ${response.status}`
-                );
-            } else {
-                navigate("/blog-client");
-            }
-        } catch (err) {
-            setError(err.message);
-            setShowLoader(false);
-        }
+        handlePost(formData);
     }
 
     async function handleSave(e) {
         e.preventDefault();
+
+        let formData = {
+            title: title,
+            content: content,
+            published: false,
+        };
+
+        handlePost(formData);
+    }
+
+    async function addImage(formData) {
+        // Get secure url from our server
+        const accessUrlRequest = await fetch(
+            "https://blog-api-test.fly.dev/api/s3Url",
+            {
+                method: "get",
+                headers: {
+                    "Content-Type": "application/json",
+                    authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+            }
+        );
+
+        const accessUrl = await accessUrlRequest.json();
+
+        // post the image directly to the s3 bucket
+        await fetch(accessUrl.url, {
+            method: "put",
+            body: image,
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
+
+        const imageUrl = accessUrl.url.split("?")[0];
+        formData.image = imageUrl;
+
+        return formData;
+    }
+
+    async function handlePost(formData) {
         setShowLoader(true);
 
         setFormError("");
         setError("");
 
-        let formData = await getFormData();
-        formData.published = false;
-
-        formData = JSON.stringify(formData);
-
         // Make request to save post
         try {
+            if (image) {
+                formData = await addImage(formData);
+            }
+            formData = JSON.stringify(formData);
+
             const response = await fetch(
                 "https://blog-api-test.fly.dev/api/posts",
                 {
@@ -169,7 +119,7 @@ function CreatePost() {
                     `This is an HTTP error: The status is ${response.status}`
                 );
             } else {
-                navigate("/blog-client");
+                navigate(`/blog-client/account/${userId}`);
             }
         } catch (err) {
             setError(err.message);
