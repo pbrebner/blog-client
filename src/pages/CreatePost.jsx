@@ -12,9 +12,8 @@ function CreatePost() {
     const [showLoader, setShowLoader] = useState(false);
 
     const [formError, setFormError] = useState("");
-    const [error, setError] = useState("");
+    const [loggedIn, setLoggedIn, setError] = useOutletContext();
 
-    const [loggedIn, setLoggedIn] = useOutletContext();
     const navigate = useNavigate();
 
     async function getFormData() {
@@ -180,12 +179,6 @@ function CreatePost() {
 
     return (
         <div className="main formPage">
-            {error && (
-                <div className="errorContainer">
-                    There was problem handling your request. Please try again
-                    later.
-                </div>
-            )}
             <h2>Create Post</h2>
             <form className="pageForm">
                 <div className="formElement">

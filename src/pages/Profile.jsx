@@ -31,13 +31,12 @@ function Profile() {
     const [pageLoading, setPageLoading] = useState(true);
 
     const [formError, setFormError] = useState("");
-    const [error, setError] = useState("");
+    const [loggedIn, setLoggedIn, setError] = useOutletContext();
 
     const [guestProfile, setGuestProfile] = useState(false);
 
     const { userId } = useParams();
     const navigate = useNavigate();
-    const [loggedIn, setLoggedIn] = useOutletContext();
 
     // Fetch the post and display contents
     useEffect(() => {
@@ -77,6 +76,8 @@ function Profile() {
                 } else {
                     setUser(data.user);
                     setUsersProfile(data.usersProfile);
+
+                    // TODO: USERS PROFILE VS NOT
 
                     setName(data.user.name);
                     setUsername(data.user.username);
@@ -304,12 +305,6 @@ function Profile() {
             <>
                 <div className="main profilePage">
                     {pageLoading && <PageLoader />}
-                    {error && (
-                        <div className="errorContainer">
-                            There was problem handling your request. Please try
-                            again later.
-                        </div>
-                    )}
                     {user && (
                         <div className="profileContainer">
                             <div className="profileMain">
@@ -488,12 +483,6 @@ function Profile() {
         return (
             <div className="main profilePage">
                 {pageLoading && <PageLoader />}
-                {error && (
-                    <div className="errorContainer">
-                        There was problem handling your request. Please try
-                        again later.
-                    </div>
-                )}
                 {user && (
                     <div className="profileContainer">
                         <div className="profileMain">

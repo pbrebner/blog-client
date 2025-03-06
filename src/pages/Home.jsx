@@ -7,10 +7,10 @@ import PostCardLoader from "../components/PostCardLoader.jsx";
 import "./styles/Home.css";
 
 function Home() {
-    const [posts, setPosts] = useState(null);
-    const [error, setError] = useState(null);
+    const [posts, setPosts] = useState("");
 
     const [pageLoading, setPageLoading] = useState(true);
+    const [loggedIn, setLoggedIn, setError] = useOutletContext();
 
     // Fetch all posts and display on "home page"
     useEffect(() => {
@@ -33,7 +33,7 @@ function Home() {
                     );
                 } else {
                     setPosts(data.posts);
-                    setError(null);
+                    setError("");
                 }
             } catch (err) {
                 setTimeout(() => {
@@ -41,7 +41,7 @@ function Home() {
                 }, "3000");
 
                 setError(err.message);
-                setPosts(null);
+                setPosts("");
             }
         }
         getPosts();
@@ -50,12 +50,6 @@ function Home() {
     return (
         <div className="main homePage">
             <Banner />
-            {error && (
-                <div className="errorContainer">
-                    There was problem fetching the data from the server. Please
-                    try again later.
-                </div>
-            )}
             <div className="homeMain">
                 <div className="postsOuterContainer">
                     {pageLoading && <PostCardLoader />}

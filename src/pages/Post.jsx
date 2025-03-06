@@ -26,9 +26,8 @@ function Post() {
     const [shake, setShake] = useState(false);
 
     const [formError, setFormError] = useState("");
-    const [error, setError] = useState("");
+    const [loggedIn, setLoggedIn, setError] = useOutletContext();
 
-    const [loggedIn, setLoggedIn] = useOutletContext();
     const { postId } = useParams();
     const navigate = useNavigate();
 
@@ -131,6 +130,9 @@ function Post() {
     }, [numComments]);
 
     async function handlePostLike(e) {
+        e.preventDefault();
+        setError("");
+
         let likes = postLikes + 1;
         setShake(true);
         setPostLikes(likes);
@@ -244,12 +246,6 @@ function Post() {
     return (
         <div className="main postPage">
             {pageLoading && <PageLoader />}
-            {error && (
-                <div className="errorContainer">
-                    There was problem handling your request. Please try again
-                    later.
-                </div>
-            )}
             {post && (
                 <div className="postMain">
                     <div className="postContainer">

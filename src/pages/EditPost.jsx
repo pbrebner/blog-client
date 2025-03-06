@@ -15,9 +15,8 @@ function EditPost() {
     const [pageLoading, setPageLoading] = useState(true);
 
     const [formError, setFormError] = useState("");
-    const [error, setError] = useState("");
+    const [loggedIn, setLoggedIn, setError] = useOutletContext();
 
-    const [loggedIn, setLoggedIn] = useOutletContext();
     const { postId } = useParams();
     const navigate = useNavigate();
 
@@ -239,12 +238,6 @@ function EditPost() {
     return (
         <div className="main formPage">
             {pageLoading && <PageLoader />}
-            {error && (
-                <div className="errorContainer">
-                    There was problem handling your request. Please try again
-                    later.
-                </div>
-            )}
             <h2>Edit Post</h2>
             <form className="pageForm">
                 <div className="formElement">

@@ -13,7 +13,7 @@ function Signup() {
     const [showLoader, setShowLoader] = useState(false);
 
     const [formError, setFormError] = useState("");
-    const [error, setError] = useState("");
+    const [loggedIn, setLoggedIn, setError] = useOutletContext();
 
     const navigate = useNavigate();
 
@@ -63,12 +63,6 @@ function Signup() {
 
     return (
         <div className="main formPage">
-            {error && (
-                <div className="errorContainer">
-                    There was problem handling your request. Please try again
-                    later.
-                </div>
-            )}
             <h2>Sign-up</h2>
             <form className="pageForm">
                 <div className="formElement">

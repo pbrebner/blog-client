@@ -16,9 +16,8 @@ function Login() {
     const [showLoader, setShowLoader] = useState(false);
 
     const [formError, setFormError] = useState("");
-    const [error, setError] = useState("");
 
-    const [loggedIn, setLoggedIn] = useOutletContext();
+    const [loggedIn, setLoggedIn, setError] = useOutletContext();
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -87,12 +86,6 @@ function Login() {
 
     return (
         <div className="main formPage">
-            {error && (
-                <div className="errorContainer">
-                    There was problem handling your request. Please try again
-                    later.
-                </div>
-            )}
             <h2>Login</h2>
             {location.state && <div>{location.state.message}</div>}
             <form className="pageForm">
