@@ -70,8 +70,8 @@ function Post() {
                         `This is an HTTP error: The status is ${response.status}`
                     );
                 } else {
-                    setPost(data);
-                    setPostLikes(data.likes);
+                    setPost(data.post);
+                    setPostLikes(data.post.likes);
                     setError("");
                 }
             } catch (err) {
@@ -118,8 +118,8 @@ function Post() {
                         `This is an HTTP error: The status is ${response.status}`
                     );
                 } else {
-                    setComments(data);
-                    setNumComments(data.length);
+                    setComments(data.comments);
+                    setNumComments(data.comments.length);
                     setError("");
                 }
             } catch (err) {

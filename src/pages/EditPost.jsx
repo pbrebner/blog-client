@@ -57,9 +57,9 @@ function EditPost() {
                         `This is an HTTP error: The status is ${response.status}`
                     );
                 } else {
-                    setTitle(data.title);
-                    setContent(data.content);
-                    setCurrentImage(data.image);
+                    setTitle(data.post.title);
+                    setContent(data.post.content);
+                    setCurrentImage(data.post.image);
                     setError("");
                 }
             } catch (err) {

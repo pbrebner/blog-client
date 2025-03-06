@@ -32,7 +32,7 @@ function Home() {
                         `This is an HTTP error: The status is ${response.status}`
                     );
                 } else {
-                    setPosts(data);
+                    setPosts(data.posts);
                     setError(null);
                 }
             } catch (err) {

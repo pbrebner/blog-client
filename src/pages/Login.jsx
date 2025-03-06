@@ -22,66 +22,33 @@ function Login() {
     const navigate = useNavigate();
     const location = useLocation();
 
-    async function handleLogin(e) {
+    function handleLogin(e) {
         e.preventDefault();
-        setShowLoader(true);
-
-        setFormError("");
-        setError("");
 
         const formData = JSON.stringify({
             username: username,
             password: password,
         });
 
-        try {
-            const response = await fetch(
-                "https://blog-api-test.fly.dev/api/login",
-                {
-                    method: "post",
-                    body: formData,
-                    headers: { "content-Type": "application/json" },
-                }
-            );
-
-            const result = await response.json();
-            //console.log(result);
-
-            setShowLoader(false);
-
-            if (response.status == 400) {
-                setFormError(result.errors);
-            } else if (!response.ok) {
-                throw new Error(
-                    `This is an HTTP error: The status is ${response.status}`
-                );
-            } else if (result.token) {
-                // Save token to local storage and setLoggedInd
-                localStorage.setItem("token", result.token);
-                localStorage.setItem("userAuth", true);
-                localStorage.setItem("name", result.body.name);
-                localStorage.setItem("userId", result.body._id);
-
-                setLoggedIn(true);
-                navigate("/blog-client");
-            }
-        } catch (err) {
-            setError(err.message);
-            setShowLoader(false);
-        }
+        login(formData);
     }
 
-    async function handleGuestLogin(e) {
+    function handleGuestLogin(e) {
         e.preventDefault();
-        setShowLoader(true);
-
-        setFormError("");
-        setError("");
 
         const formData = JSON.stringify({
             username: "jimsmith@example.com",
             password: "userPassword",
         });
+
+        login(formData);
+    }
+
+    async function login(formData) {
+        setShowLoader(true);
+
+        setFormError("");
+        setError("");
 
         try {
             const response = await fetch(
