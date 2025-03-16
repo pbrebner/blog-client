@@ -1,3 +1,5 @@
+import "./styles/AppError.css";
+
 function AppError({ error }) {
     return (
         <div className="appError">

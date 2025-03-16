@@ -1,0 +1,8 @@
+.appError {
+    text-align: center;
+    padding: 10px;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    color: rgb(231, 68, 68);
+}
