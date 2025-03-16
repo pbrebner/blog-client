@@ -13,8 +13,7 @@ function Comment({ postId, comment, numComments, setNumComments, user }) {
     const [showLoader, setShowLoader] = useState(false);
     const [shake, setShake] = useState(false);
 
-    const [error, setError] = useState("");
-    const [loggedIn, setLoggedIn] = useOutletContext();
+    const [loggedIn, setLoggedIn, setError] = useOutletContext();
 
     async function handleCommentLike(e) {
         let likes = commentLikes + 1;
@@ -190,12 +189,6 @@ function Comment({ postId, comment, numComments, setNumComments, user }) {
                     </div>
                 )}
             </div>
-            {error && (
-                <div className="commentError">
-                    There was a problem handling your request. Please try again
-                    later.
-                </div>
-            )}
         </div>
     );
 }

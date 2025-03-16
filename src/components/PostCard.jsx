@@ -9,8 +9,7 @@ function PostCard({ post, numPosts, setNumPosts, usersProfile, drafts }) {
     const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
     const [showLoader, setShowLoader] = useState(false);
 
-    const [error, setError] = useState("");
-    const [loggedIn, setLoggedIn] = useOutletContext();
+    const [loggedIn, setLoggedIn, setError] = useOutletContext();
     const navigate = useNavigate();
 
     async function handleDeletePostSubmit(postId) {
@@ -155,12 +154,6 @@ function PostCard({ post, numPosts, setNumPosts, usersProfile, drafts }) {
                                 Edit
                             </button>
                         )}
-                    </div>
-                )}
-                {error && (
-                    <div className="postCardError">
-                        There was a problem handling your request. Please try
-                        again later.
                     </div>
                 )}
             </div>
