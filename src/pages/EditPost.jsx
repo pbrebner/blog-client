@@ -143,7 +143,7 @@ function EditPost() {
             formData = JSON.stringify(formData);
 
             const response = await fetch(
-                "https://blog-api-test.fly.dev/api/posts",
+                `https://blog-api-test.fly.dev/api/posts/${postId}`,
                 {
                     method: "put",
                     body: formData,
