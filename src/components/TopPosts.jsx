@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 
 import { formatDate } from "../utils/dates.js";
+import "./styles/TopPosts.css";
 
 function TopPosts({ topPosts }) {
     return (
         <div className="topPostsContainer">
-            {topPosts.map((post) => {
+            {topPosts.map((post) => (
                 <div key={post._id} className="topPostCardContainer">
                     <div className="topPostCard">
                         <div className="topPostCardHeader">
@@ -56,8 +57,8 @@ function TopPosts({ topPosts }) {
                             )}
                         </div>
                     </div>
-                </div>;
-            })}
+                </div>
+            ))}
         </div>
     );
 }

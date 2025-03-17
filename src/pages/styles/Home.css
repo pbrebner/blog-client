@@ -1,9 +1,16 @@
-.homeMain {
-    padding: 20px;
+.homeMain,
+.homeSupp {
+    padding: 15px;
 
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.topPostsOuterContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .postsOuterContainer {
@@ -35,6 +42,10 @@
 }
 
 @media (min-width: 600px) {
+    .topPostsOuterContainer {
+        padding: 40px;
+    }
+
     .homeMain {
         padding: 40px;
     }

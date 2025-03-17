@@ -1,19 +1,25 @@
-.postCard {
+.topPostsContainer {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.topPostCard {
     padding: 15px;
-    min-height: 100px;
+    min-height: 200px;
+    max-width: 425px;
 
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.postCardHeader {
+.topPostCardHeader {
     display: flex;
     align-items: center;
     gap: 15px;
 }
 
-.postCardHeader .circularImage {
+.topPostCardHeader .circularImage {
     display: none;
     width: 40px;
     height: 40px;
@@ -23,29 +29,20 @@
     border: 1px solid grey;
 }
 
-.avatar {
-    width: 100%;
-}
-
-.postCardMain {
+.topPostCardMain {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 20px;
 }
 
-.postCardLink {
-    text-decoration: none;
-    color: black;
-}
-
-.postCardContent {
+.topPostCardContent {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.postCardTitle {
+.topPostCardTitle {
     font-size: 1.1rem;
 
     display: -webkit-box;
@@ -56,7 +53,7 @@
     word-wrap: break-word;
 }
 
-.postCardContent p {
+.topPostCardContent p {
     font-size: 0.9rem;
     display: none;
 
@@ -64,7 +61,7 @@
     word-wrap: break-word;
 }
 
-.postCardImageContainer {
+.topPostCardImageContainer {
     height: 50px;
     width: 80px;
     overflow: hidden;
@@ -76,93 +73,47 @@
     border-radius: 3px;
 }
 
-.postCardImage {
+.topPostCardImage {
     width: 100%;
 }
 
-.userLink {
-    text-decoration: none;
-    color: black;
-}
-
-.deletePostBtn {
-    padding: 2px 4px;
-    align-self: end;
-}
-
 @media (min-width: 300px) {
-    .postCardHeader .circularImage {
+    .topPostCardHeader .circularImage {
         display: block;
     }
 }
 
 @media (min-width: 360px) {
-    .postCardContent p {
+    .topPostCardContent p {
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
     }
 }
 
-@media (min-width: 620px) {
-    .postCardMain {
+@media (min-width: 520px) {
+    .topPostsContainer {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+    }
+}
+
+@media (min-width: 700px) {
+    .topPostCardMain {
         gap: 40px;
     }
 
-    .postCardTitle {
+    .topPostCardTitle {
         font-size: 1.4rem;
     }
 
-    .postCardContent p {
+    .topPostCardContent p {
         font-size: 1.1rem;
         -webkit-line-clamp: 3;
     }
 
-    .postCardImageContainer {
-        height: 90px;
-        width: 120px;
+    .topPostCardImageContainer {
+        height: 110px;
+        width: 140px;
     }
-}
-
-/* Styling for Post Buttons */
-
-.postBtns {
-    align-self: flex-end;
-
-    display: flex;
-    gap: 10px;
-}
-
-.postBtn {
-    padding: 2px 4px;
-}
-
-.postDeleteConfirm,
-.postDeleteBtn {
-    display: none;
-}
-
-.postDeleteBtn.display {
-    display: block;
-    cursor: pointer;
-}
-
-.postEditBtn {
-    cursor: pointer;
-}
-
-.postDeleteConfirm.display {
-    display: flex;
-    gap: 10px;
-}
-
-.postDeleteConfirmBtn {
-    color: red;
-}
-
-/* PostCard Error */
-
-.postCardError {
-    color: red;
-    font-size: 0.9rem;
 }
